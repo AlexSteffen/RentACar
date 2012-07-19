@@ -1,0 +1,12 @@
+<service>
+
+	<description>RentACar_Webservice</description>
+	<parameter name="ServiceClass" locked="false">
+      rentACar.RentACar_Webservice
+   </parameter>
+
+	<operation name="returnInteger">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+
+</service>
