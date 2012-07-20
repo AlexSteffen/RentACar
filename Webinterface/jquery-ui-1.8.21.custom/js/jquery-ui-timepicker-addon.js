@@ -38,20 +38,20 @@ $.extend($.ui, { timepicker: { version: "1.0.1" } });
 function Timepicker() {
 	this.regional = []; // Available regional settings, indexed by language code
 	this.regional[''] = { // Default regional settings
-		currentText: 'Now',
-		closeText: 'Done',
+		currentText: 'Jetzt',
+		closeText: 'Fertig',
 		ampm: false,
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
 		timeFormat: 'hh:mm tt',
 		timeSuffix: '',
-		timeOnlyTitle: 'Choose Time',
-		timeText: 'Time',
-		hourText: 'Hour',
+		timeOnlyTitle: 'Wähle Uhrzeit',
+		timeText: 'Zeit',
+		hourText: 'Stunde',
 		minuteText: 'Minute',
-		secondText: 'Second',
-		millisecText: 'Millisecond',
-		timezoneText: 'Time Zone'
+		secondText: 'Sekunde',
+		millisecText: 'Millisekunde',
+		timezoneText: 'Zeitzone'
 	};
 	this._defaults = { // Global defaults for all the datetime picker instances
 		showButtonPanel: true,

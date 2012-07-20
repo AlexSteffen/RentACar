@@ -17,6 +17,12 @@
                 $('#datepicker').datepicker({
                         inline: true
                 });
+                $('#datepicker2').datepicker({
+                        inline: true
+                });
+                $('#timepicker').timepicker({});
+                
+                $('#timepicker2').timepicker({});
                 
                 $.datepicker.regional['de'] = {
                     clearText: 'löschen', clearStatus: 'aktuelles Datum löschen',
@@ -40,7 +46,7 @@
                 
                 $.datepicker.setDefaults($.datepicker.regional['de']);
                 
-                $('#timepicker').timepicker({});
+                
                 
             });
 	</script>
@@ -48,55 +54,59 @@
 <body>
     <h1>Willkommen bei der RentACar Autovermietung</h1>
     
-    <table style="float:left">
-        <tr>
-            <td>Abholung</td>
-        </tr>
-        <tr>
-            <td>Ort wählen:</td>
-            <td>
-                <select>
-                <option>Osnabrück</option>
-                <option>Bielefeld</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Datum:</td>
-            <td>
-                <input type="text" id="datepicker">
-            </td>
-            <td>Uhrzeit:</td>
-            <td>
-                <input type="text" id="timepicker">
-            </td>
-        </tr>
-    </table>
-        
-    <table style="float:left;margin-left:20px;">
-        <tr>
-            <td>Rückgabe</td>
-        </tr>
-        <tr>
-            <td>Ort wählen:</td>
-            <td>
-                <select>
-                <option>Osnabrück</option>
-                <option>Bielefeld</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Datum:</td>
-            <td>
-                <input type="text" id="datepicker2">
-            </td>
-            <td>Uhrzeit:</td>
-            <td>
-                <input type="text" id="timepicker2">
-            </td>
-        </tr>
-    </table>
+    <div style="float:left;border: 1px solid grey">
+        <table>
+            <tr>
+                <td><b>Abholung</b></td>
+            </tr>
+            <tr>
+                <td>Ort wählen:</td>
+                <td>
+                    <select>
+                    <option>Osnabrück</option>
+                    <option>Bielefeld</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Datum:</td>
+                <td>
+                    <input type="text" id="datepicker">
+                </td>
+                <td>Uhrzeit:</td>
+                <td>
+                    <input type="text" id="timepicker">
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div style="float:left;border: 1px solid grey;margin-left:20px;">
+        <table>
+            <tr>
+                <td>Rückgabe</td>
+            </tr>
+            <tr>
+                <td>Ort wählen:</td>
+                <td>
+                    <select>
+                    <option>Osnabrück</option>
+                    <option>Bielefeld</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Datum:</td>
+                <td>
+                    <input type="text" id="datepicker2">
+                </td>
+                <td>Uhrzeit:</td>
+                <td>
+                    <input type="text" id="timepicker2">
+                </td>
+            </tr>
+        </table>
+    </div>
     
     <div style="float:left;clear: both;margin-top: 50px;">
         <input type='submit' name="btSend" value="Autos anzeigen">
