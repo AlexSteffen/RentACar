@@ -2,6 +2,50 @@
  * CSS
  */
 body{
-    font-family: arial;
+    font-family: georgia, Helvetica, impact, tahoma, arial;
     font-size: 10pt;
+    margin: 0;
+    padding:0;
+}
+
+table{
+    color: white;
+}
+
+input[type=text]{
+    border: 1px solid black;    
+}
+
+#head{
+    background-image: url(Bilder/bg-top.png);
+    float: left;
+    height: 103px;
+    width: 100%;
+}
+
+#head #logo{
+    background-image: url(Bilder/bg-top-logo.png);
+    float: left;
+    height: 103px;
+    width: 593px;
+}
+
+.box {
+    float:left;
+    margin-left: 20px;
+    margin-top: 20px;
+    height: 100px;
+    background-image: url(Bilder/bg-box.png);
+}
+
+.hWhite {
+    color: white;
+    font-size: 18pt;
+    font-weight: normal;
+}
+
+#btSend{
+    float:left;
+    margin-left: 20px;
+    margin-top: 20px;
 }
