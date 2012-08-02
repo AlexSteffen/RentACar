@@ -5,111 +5,80 @@
 <head>
     <title>RentACar Autovermietung</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link type="text/css" href="jquery-ui-1.8.21.custom/css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
-        <link type="text/css" href="style.css" rel="stylesheet" />
-        <script type="text/javascript" src="jquery-ui-1.8.21.custom/js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="jquery-ui-1.8.21.custom/js/jquery-ui-1.8.21.custom.min.js"></script>
-        <script type="text/javascript" src="jquery-ui-1.8.21.custom/js/jquery-ui-timepicker-addon.js"></script>
-        
-        <script type="text/javascript">
-            $(function(){
-                // Datepicker
-                $('#datepicker').datepicker({
-                        inline: true
-                });
-                $('#datepicker2').datepicker({
-                        inline: true
-                });
-                $('#timepicker').timepicker({});
-                
-                $('#timepicker2').timepicker({});
-                
-                $.datepicker.regional['de'] = {
-                    clearText: 'löschen', clearStatus: 'aktuelles Datum löschen',
-                    closeText: 'schließen', closeStatus: 'ohne Änderungen schließen',
-                    prevText: '<zurück', prevStatus: 'letzten Monat zeigen',
-                    nextText: 'Vor>', nextStatus: 'nächsten Monat zeigen',
-                    currentText: 'heute', currentStatus: '',
-                    monthNames: ['Januar','Februar','März','April','Mai','Juni',
-                    'Juli','August','September','Oktober','November','Dezember'],
-                    monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
-                    'Jul','Aug','Sep','Okt','Nov','Dez'],
-                    monthStatus: 'anderen Monat anzeigen', yearStatus: 'anderes Jahr anzeigen',
-                    weekHeader: 'Wo', weekStatus: 'Woche des Monats',
-                    dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
-                    dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-                    dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-                    dayStatus: 'Setze DD als ersten Wochentag', dateStatus: 'Wähle D, M d',
-                    dateFormat: 'dd.mm.yy', firstDay: 1, 
-                    initStatus: 'Wähle ein Datum', isRTL: false
-                };
-                
-                $.datepicker.setDefaults($.datepicker.regional['de']);
-                
-                
-                
-            });
-	</script>
+    <link type="text/css" href="style.css" rel="stylesheet" />    
 </head>
 <body>
     <div id='head'><div id='logo'></div></div>
-    <form action="post">
-    <div class='box'>
-        <table>
+    
+    <div style="float: left;margin:20px">
+        <table class='carlist' cellpadding="10" cellspacing="0">
             <tr>
-                <td colspan="2"><span class="hWhite">Abholung</span></td>
+                <td><img src="Bilder/auto1.jpg" width="100"></td>
+		<td width="200">
+		    <span style="font-size: 14pt;">Audi A1</span><br><br>
+		    <span style="font-size: 11pt;">Standort: Osnabrück</span><br>
+		</td>
+		<td width="100">
+		    <span style="font-size: 9pt;">
+		    Türen: 4<br>	
+		    PS: 123<br>
+		    Farbe: rot
+		    </span>
+		</td>
+		<td width="200" align="right">
+		    <span style="font-size: 14pt;">
+		    <a href="#" style="font-size: 10pt;">Details anzeigen</a><br>
+		    <a href="#">Jetzt reservieren</a>
+		    <img src="Bilder/verfuegbar.png">
+		    </span>
+		</td>
             </tr>
-            <tr>
-                <td>Ort wählen:</td>
-                <td>
-                    <select>
-                    <option>Osnabrück</option>
-                    <option>Bielefeld</option>
-                    </select>
-                </td>
+	    
+	    <tr>
+                <td><img src="Bilder/auto4.jpg" width="100"></td>
+		<td width="200">
+		    <span style="font-size: 14pt;">Mini Cabrio</span><br><br>
+		    <span style="font-size: 11pt;">Standort: Bielefeld</span><br>
+		</td>
+		<td width="100">
+		    <span style="font-size: 9pt;">
+		    Türen: 3<br>	
+		    PS: 272<br>
+		    Farbe: gelb
+		    </span>
+		</td>
+		<td width="200" align="right">
+		    <span style="font-size: 14pt;">
+		    <a href="#" style="font-size: 10pt;">Details anzeigen</a><br>	
+		    <a href="#">Jetzt reservieren</a>
+		    <img src="Bilder/nicht_verfuegbar.png">
+		    </span>
+		</td>
             </tr>
-            <tr>
-                <td>Datum:</td>
-                <td>
-                    <input type="text" id="datepicker">
-                </td>
-                <td>Uhrzeit:</td>
-                <td>
-                    <input type="text" id="timepicker">
-                </td>
-            </tr>
+	    
+	    <tr>
+                <td><img src="Bilder/auto3.jpg" width="100"></td>
+		<td width="200">
+		    <span style="font-size: 14pt;">Mercedes A-Klasse</span><br><br>
+		    <span style="font-size: 11pt;">Standort: Bielefeld</span><br>
+		</td>
+		<td width="100">
+		    <span style="font-size: 9pt;">
+		    Türen: 4<br>	
+		    PS: 250<br>
+		    Farbe: rot
+		    </span>
+		</td>
+		<td width="200" align="right">
+		    <span style="font-size: 14pt;">
+		    <a href="#" style="font-size: 10pt;">Details anzeigen</a><br>	
+		    <a href="#">Jetzt reservieren</a>
+		    <img src="Bilder/verfuegbar.png">
+		    </span>
+		</td>
+            </tr>	
         </table>
     </div>
-    
-    <div class='box'>
-        <table>
-            <tr>
-                <td colspan="2"><span class="hWhite">Rückgabe</span></td>
-            </tr>
-            <tr>
-                <td>Ort wählen:</td>
-                <td>
-                    <select>
-                    <option>Osnabrück</option>
-                    <option>Bielefeld</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Datum:</td>
-                <td>
-                    <input type="text" id="datepicker2">
-                </td>
-                <td>Uhrzeit:</td>
-                <td>
-                    <input type="text" id="timepicker2">
-                </td>
-            </tr>
-        </table>
-    </div>
-    
-    
-    <input type='image' src="Bilder/bg-start.png" name="btSend" id='btSend'>
-    </form>
+   
 </body>
 </html>

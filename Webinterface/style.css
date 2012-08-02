@@ -8,8 +8,27 @@ body{
     padding:0;
 }
 
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
 table{
     color: white;
+}
+
+table.carlist{
+    color: black;
+}
+
+table.carlist td{
+    vertical-align: top;
+    background-color: #dedede;
+    margin-bottom: 10px;
+    border-bottom: 5px solid white;
 }
 
 input[type=text]{

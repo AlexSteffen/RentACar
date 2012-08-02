@@ -17,9 +17,14 @@ public class RentACar_Webservice {
 		return "Hallo " + name;
 	}
 	
-	public Test meinTest(){
-		Test t= new Test();
-		t.test = "ein test";
-		return t;
+	public void meinTest(){
+		//return t;
+	}
+	
+	public Vehicle hey(){
+		Vehicle v = new Vehicle();
+		v.model = "sasa";
+		v.other = "sdssd";
+		return v;
 	}
 }

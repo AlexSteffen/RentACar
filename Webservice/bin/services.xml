@@ -6,12 +6,13 @@
 	<operation name="sayHello">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
-		
-	<parameter name="ServiceClass" locked="false">
-      rentACar.RentACar_Webservice
-   </parameter>
-
 	<operation name="returnInteger">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="meinTest">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="hey">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
 </service>
