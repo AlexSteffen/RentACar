@@ -20,6 +20,7 @@ table{
     color: white;
 }
 
+
 table.carlist{
     color: black;
 }
@@ -29,6 +30,15 @@ table.carlist td{
     background-color: #dedede;
     margin-bottom: 10px;
     border-bottom: 5px solid white;
+}
+table.detail{
+    color: black;
+    font-size: 12pt;
+
+}
+
+table.detail td{
+    vertical-align: top;
 }
 
 input[type=text]{
@@ -48,6 +58,7 @@ input[type=text]{
     height: 103px;
     width: 593px;
 }
+
 
 .box {
     float:left;
