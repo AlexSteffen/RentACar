@@ -31,6 +31,38 @@ public class RentACar_Webservice {
 		//return "Hallo2 " + name;
 	}
 	
+	public Location[] getAllLocations(){
+		
+		ArrayList<Location> locations = new ArrayList<Location>();
+		
+		try {
+			ResultSet result = DataSource.executeQuery("SELECT * FROM `locations`");
+						
+			// create a object from each record and add it to the ArrayList
+			while(result.next()) {
+				Location location = new Location();
+				location.setId(result.getInt("id"));
+				location.setCity(result.getString("city"));
+				location.setZip(result.getString("zip"));
+				location.setStreet(result.getString("street"));
+				location.setPhone(result.getString("phone"));
+				location.setEmail(result.getString("email"));
+				
+				locations.add(location);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+
+		}
+		
+		// Convert the ArrayList to an array. This is required because AXIS2 can not transport generic lists over SOAP
+		Location[] locationsArray = locations.toArray(new Location[locations.size()]);
+		
+		return locationsArray;
+	}
+	
 	public Vehicle[] findVehicles(String a){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 		int rowCount=0;

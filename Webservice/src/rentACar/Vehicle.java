@@ -1,5 +1,10 @@
 package rentACar;
 
+/**
+ * 
+ * @author G.Boeselager
+ * This class represents a vehicle. 
+ */
 public class Vehicle {
 
 	public String getModel() {

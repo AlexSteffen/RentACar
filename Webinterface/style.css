@@ -48,7 +48,7 @@ input[type=text]{
     color: gray;
 }
 
-select.cityPicker{
+select.locationPicker{
     width: 170px;
     font-size: 19pt;
     color: gray;

@@ -1,13 +1,12 @@
 <?php
-$startCity = $_REQUEST["startCity"];
+$startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $startTime = $_REQUEST["startTime"];
 
-$returnCity = $_REQUEST["returnCity"];
+$returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 $returnTime = $_REQUEST["returnTime"];
 
-echo $returnDate;
 ?>
 
 <table class='carlist' cellpadding="10" cellspacing="0">
