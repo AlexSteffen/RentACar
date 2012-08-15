@@ -42,7 +42,6 @@ $(function(){
 include_once('main.php');
 
 //******** read all locations from the webservice **********
-
 $returnObj = $webservice->getAllLocations();
 $locations = array();
 

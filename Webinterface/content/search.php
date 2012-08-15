@@ -1,4 +1,6 @@
 <?php
+include_once('main.php');
+
 $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $startTime = $_REQUEST["startTime"];
@@ -7,6 +9,14 @@ $returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 $returnTime = $_REQUEST["returnTime"];
 
+$ret = $webservice->findVehicles(array("a"=>""));
+echo var_dump($ret);
+
+foreach($ret->return as $i){
+  $v = new Vehicle;
+  $v = $i;
+  echo "<img src='renderImage.php?binary=" .$v->binaryImage. "'>";
+}
 ?>
 
 <table class='carlist' cellpadding="10" cellspacing="0">
@@ -27,7 +37,7 @@ $returnTime = $_REQUEST["returnTime"];
         <span style="font-size: 14pt;">
         <a href="#" style="font-size: 10pt;">Details anzeigen</a><br>
         <a href="#">Jetzt reservieren</a>
-        <img src="Bilder/verfuegbar.png">
+        <img src="renderImage.php?binary=$bin">
         </span>
     </td>
 </tr>

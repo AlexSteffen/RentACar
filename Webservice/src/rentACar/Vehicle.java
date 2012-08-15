@@ -1,5 +1,7 @@
 package rentACar;
 
+import java.io.InputStream;
+
 /**
  * 
  * @author G.Boeselager
@@ -30,8 +32,24 @@ public class Vehicle {
 		this.number = number;
 	}
 
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public InputStream getBinaryImage() {
+		return binaryImage;
+	}
+	public void setBinaryImage(InputStream binaryImage) {
+		this.binaryImage = binaryImage;
+	}
+
 	private String model;
 	private String other;
+	private String image;
+	private InputStream binaryImage;
 	private int number;
 	
 	

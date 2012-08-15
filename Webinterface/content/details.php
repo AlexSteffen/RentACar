@@ -1,5 +1,10 @@
 <?php
+include_once('main.php');
+$location = new Location;
+$returnObj = $webservice->getLocationById(array("id" => 1));
+$location = $returnObj->return;
 
+echo $location->city;
 ?>
 
 <table class='detail'>

@@ -1,5 +1,9 @@
 package rentACar;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +35,10 @@ public class RentACar_Webservice {
 		//return "Hallo2 " + name;
 	}
 	
+	/**
+	 * Returns all existing locations.
+	 * @return Array of locations.
+	 */
 	public Location[] getAllLocations(){
 		
 		ArrayList<Location> locations = new ArrayList<Location>();
@@ -63,10 +71,39 @@ public class RentACar_Webservice {
 		return locationsArray;
 	}
 	
+	/**
+	 * Returns the locations by the passed id.
+	 * @return Array of locations.
+	 */
+	public Location getLocationById(int id){
+		
+		try {
+			ResultSet result = DataSource.executeQuery("SELECT * FROM `locations` WHERE id=" + id);
+						
+			// create a object from each record and add it to the ArrayList
+			result.first();
+			Location location = new Location();
+			location.setId(result.getInt("id"));
+			location.setCity(result.getString("city"));
+			location.setZip(result.getString("zip"));
+			location.setStreet(result.getString("street"));
+			location.setPhone(result.getString("phone"));
+			location.setEmail(result.getString("email"));
+
+			return location;
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+
+		}
+		
+		return null;
+	}
+	
 	public Vehicle[] findVehicles(String a){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-		int rowCount=0;
-
+		
 		try {
 		
 			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
@@ -79,7 +116,8 @@ public class RentACar_Webservice {
 			while(result.next()) {
 				Vehicle v = new Vehicle();
 				v.setModel(result.getString("manufacturer") + " " + a);
-				
+				v.setImage(inputStreamToString(result.getBinaryStream("image")));
+				v.setBinaryImage(result.getBinaryStream("image"));
 				vehicles.add(v);
 			}
 			
@@ -87,13 +125,17 @@ public class RentACar_Webservice {
 			
 		} catch (SQLException e) {
 
-		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} 
 		
 		Vehicle[] vehiclesArray = (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
 		
 		return vehiclesArray;
 		
 	}
+	
 	
 	public Vehicle getVehicle(int id){
 
@@ -104,4 +146,27 @@ public class RentACar_Webservice {
 		
 		return v;
 	}
+	
+	private String inputStreamToString(InputStream in) 
+			throws IOException {
+		
+		return "";
+	}
+	/*
+	private String inputStreamToString(InputStream in) 
+			throws IOException {
+		if(in == null)
+			return "";
+		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+		StringBuilder stringBuilder = new StringBuilder();
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+		stringBuilder.append(line + "\n");
+		}
+
+		bufferedReader.close();
+		return stringBuilder.toString();
+	}*/
 }
