@@ -32,7 +32,7 @@ public class DataSource {
 			}catch (ClassNotFoundException e) {
 				throw new SQLException("Datenbanktreiber (JAVA JDBC) ist nicht vorhanden.");
 			}catch (SQLException e) {
-				throw new SQLException("Datenbankverbindung fehlgeschlagen.");
+				throw new SQLException("Datenbankverbindung fehlgeschlagen. "+ e.getMessage());
 			}	
 	}
 	
