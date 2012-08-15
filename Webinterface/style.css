@@ -2,7 +2,8 @@
  * CSS
  */
 body{
-    font-family: georgia, Helvetica, impact, tahoma, arial;
+    /*font-family: georgia, Helvetica, impact, tahoma, arial;*/
+    font-family: arial;
     font-size: 10pt;
     margin: 0;
     padding:0;
@@ -42,7 +43,15 @@ table.detail td{
 }
 
 input[type=text]{
-    border: 1px solid black;    
+    border: 3px solid #54a8de;
+    font-size: 14pt;
+    color: gray;
+}
+
+select.cityPicker{
+    width: 170px;
+    font-size: 19pt;
+    color: gray;
 }
 
 #head{
@@ -59,13 +68,18 @@ input[type=text]{
     width: 593px;
 }
 
+#content{
+    float: left;
+    margin-left: 40px;
+    margin-top: 20px;
+}
 
 .box {
     float:left;
-    margin-left: 20px;
-    margin-top: 20px;
-    height: 100px;
+    margin-right: 20px;
+    height: 130px;
     background-image: url(Bilder/bg-box.png);
+    border: 5px solid #54a8de;
 }
 
 .hWhite {

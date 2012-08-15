@@ -46,7 +46,7 @@ public class RentACar_Webservice {
 			// building each contact and add it to the ArrayList
 			while(result.next()) {
 				Vehicle v = new Vehicle();
-				v.setModel(result.getString("manufacturer"));
+				v.setModel(result.getString("manufacturer") + " " + a);
 				
 				vehicles.add(v);
 			}
