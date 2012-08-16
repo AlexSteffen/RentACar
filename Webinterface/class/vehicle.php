@@ -1,6 +1,6 @@
 <?php
 class Vehicle{
-    public $image;
+    public $id;
     public $binaryImage;
 }
 

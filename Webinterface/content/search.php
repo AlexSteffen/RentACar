@@ -14,25 +14,42 @@ $returnTime = $_REQUEST["returnTime"];
 $startDateTime = Converter::toDateTime($startDate, $startTime);
 $returnDateTime = Converter::toDateTime($returnDate, $returnTime);
 
-/*$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
+$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
                                        "startLocation"=>$startLocation,
                                        "returnDate"=>$returnDateTime,
                                        "returnLocation"=>$returnLocation
                                        ));
-                                       */
-$ret = $webservice->getImage();
+                                       
+//$ret = $webservice->getImage();
+//$bin = $ret->return;
 
+/*
+//Example for saving a picture by the binary data.
+$fp = fopen("content/test.jpg","w"); 
+fwrite($fp, $bin); 
+fclose($fp);
+*/
+      
 //echo var_dump($ret->return);
-echo "<img src='renderImage.php?binary=" .$ret->return. "'>";
+//echo "<img src='renderImage.php?SessionVarName=image&ImageType=jpg'>";
 
-/*foreach($ret->return as $i){
+foreach($ret->return as $i){
   $v = new Vehicle;
   $v = $i;
+  echo $v->model."<br>";
   echo $v->other."<br>";
-  //echo "<img src='renderImage.php?binary=" .$v->binaryImage. "'>";
-}*/
-?>
 
+  //Save the binary picture data into a session.
+//This session variable is used in the renderImage.php.
+//We took this way because it is not possible to send so many data per GET-request.
+//The brower returns "Request-URI Too Large" if we do this way.
+//$_SESSION["image"] = $v->binaryImage;
+echo "iD".$v->id;
+  echo "<img width='200' src='renderVehicleImage.php?id=".$v->id."'><br>";
+  
+}
+?>
+<!--
 <table class='carlist' cellpadding="10" cellspacing="0">
 <tr>
     <td><img src="Bilder/auto1.jpg" width="100"></td>
@@ -100,3 +117,4 @@ echo "<img src='renderImage.php?binary=" .$ret->return. "'>";
     </td>
 </tr>	
 </table>
+-->

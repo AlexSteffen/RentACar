@@ -6,7 +6,7 @@
 	<operation name="findVehicles">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
-	<operation name="getVehicle">
+	<operation name="getVehicleById">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
 	<operation name="getAllLocations">

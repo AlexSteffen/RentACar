@@ -1,7 +1,5 @@
 package rentACar;
 
-import java.io.InputStream;
-
 /**
  * 
  * @author G.Boeselager
@@ -9,6 +7,12 @@ import java.io.InputStream;
  */
 public class Vehicle {
 
+	private int id;
+	private String manufacturer;
+	private String model;
+	private String color;
+	private byte[] binaryImage;
+	
 	public String getModel() {
 		return model;
 	}
@@ -16,41 +20,33 @@ public class Vehicle {
 		this.model = model;
 	}
 
-	public String getOther() {
-		return other;
+	public int getId() {
+		return id;
 	}
 
-	public void setOther(String other) {
-		this.other = other;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public InputStream getBinaryImage() {
+	public byte[] getBinaryImage() {
 		return binaryImage;
 	}
-	public void setBinaryImage(InputStream binaryImage) {
+	public void setBinaryImage(byte[] binaryImage) {
 		this.binaryImage = binaryImage;
 	}
+	public String getManufacturer() {
+		return manufacturer;
+	}
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 
-	private String model;
-	private String other;
-	private String image;
-	private InputStream binaryImage;
-	private int number;
 	
 	
 }

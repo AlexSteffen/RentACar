@@ -145,10 +145,16 @@ public class RentACar_Webservice {
 			// building each contact and add it to the ArrayList
 			while(result.next()) {
 				Vehicle v = new Vehicle();
-				v.setModel(result.getString("manufacturer"));
-				v.setOther(startDateTime.toString());
-				//v.setImage(inputStreamToString(result.getBinaryStream("image")));
-				//v.setBinaryImage(result.getBinaryStream("image"));
+				
+				v.setId(result.getInt("id"));
+				v.setManufacturer(result.getString("manufacturer"));
+				v.setModel(result.getString("model"));
+				v.setColor(result.getString("color"));
+				
+				if(result.getBinaryStream("image") != null){
+					v.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
+				}
+				
 				vehicles.add(v);
 			}
 			
@@ -156,6 +162,8 @@ public class RentACar_Webservice {
 			
 		} catch (SQLException e) {
 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 		} 
 		
 		Vehicle[] vehiclesArray = (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
@@ -165,14 +173,36 @@ public class RentACar_Webservice {
 	}
 	
 	
-	public Vehicle getVehicle(int id){
+	public Vehicle getVehicleById(int id){
 
-		Vehicle v = new Vehicle();
-		v.setModel("Model Gerrit");
-		v.setOther("Other Gerrit");
-		v.setNumber(777);
+		try {
+			
+			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles` WHERE id=" + id);
+			
+			result.first();
+			
+			Vehicle v = new Vehicle();
+			v.setId(result.getInt("id"));
+			v.setManufacturer(result.getString("manufacturer"));
+			v.setModel(result.getString("model"));
+			v.setColor(result.getString("color"));
+			
+			if(result.getBinaryStream("image") != null){
+				v.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
+			}
 		
-		return v;
+			return v;
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public byte[] getImage(){
