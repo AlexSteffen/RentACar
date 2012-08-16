@@ -27,13 +27,9 @@ include_once("class/vehicle.php");
 $webservice = new SoapClient("http://localhost:8080/axis2/services/RentACar?wsdl", array('soap_version'=>SOAP_1_2,
                                                                                      'trace'=>1,
                                                                                      'classmap' => array('Vehicle' => "Vehicle",
-													 'Location' => "Location"
-													 )
+																																																				 'Location' => "Location"
+																																																				)
                                                                                      ));
-
-										     
-										     
-										     
 
 //*************
 //** Parameterübergabe an eine Webservice-Methode per Array mit korrekten Bezeichnern der Parameter
