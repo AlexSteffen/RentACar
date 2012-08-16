@@ -14,19 +14,23 @@ $returnTime = $_REQUEST["returnTime"];
 $startDateTime = Converter::toDateTime($startDate, $startTime);
 $returnDateTime = Converter::toDateTime($returnDate, $returnTime);
 
-$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
+/*$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
                                        "startLocation"=>$startLocation,
                                        "returnDate"=>$returnDateTime,
                                        "returnLocation"=>$returnLocation
                                        ));
-//echo var_dump($ret);
+                                       */
+$ret = $webservice->getImage();
 
-foreach($ret->return as $i){
+//echo var_dump($ret->return);
+echo "<img src='renderImage.php?binary=" .$ret->return. "'>";
+
+/*foreach($ret->return as $i){
   $v = new Vehicle;
   $v = $i;
   echo $v->other."<br>";
   //echo "<img src='renderImage.php?binary=" .$v->binaryImage. "'>";
-}
+}*/
 ?>
 
 <table class='carlist' cellpadding="10" cellspacing="0">

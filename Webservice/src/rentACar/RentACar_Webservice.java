@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.io.IOUtils;
+
+
 public class RentACar_Webservice {
 	
 	public RentACar_Webservice() 
@@ -170,6 +173,31 @@ public class RentACar_Webservice {
 		v.setNumber(777);
 		
 		return v;
+	}
+	
+	public byte[] getImage(){
+		try {
+			
+			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
+			
+			
+			result.first();
+			
+			
+			return IOUtils.toByteArray(result.getBinaryStream("image"));
+			
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return null;
+		
 	}
 	
 	private String inputStreamToString(InputStream in) 
