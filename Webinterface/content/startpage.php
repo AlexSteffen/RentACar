@@ -58,7 +58,7 @@ if(isset($returnObj->return)){
 }
 
 
-$currentDate = date("m.d.Y");
+$currentDate = date("d.m.Y");
 $currentTime = date("H:i");
 
 

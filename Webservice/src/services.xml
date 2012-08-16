@@ -3,9 +3,6 @@
 	<parameter name="ServiceClass" locked="false">
       rentACar.RentACar_Webservice
     </parameter>
-	<operation name="sayHello">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-	</operation>
 	<operation name="findVehicles">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>

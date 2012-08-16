@@ -15,6 +15,7 @@ ini_set('soap.wsdl_cache_enabled', '0');
 ini_set('soap.wsdl_cache_ttl', '0');
 
 //** Include all required classes
+include_once("class/converter.php");
 include_once("class/location.php");
 include_once("class/vehicle.php");
 

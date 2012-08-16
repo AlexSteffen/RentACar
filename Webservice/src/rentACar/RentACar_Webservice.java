@@ -6,7 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RentACar_Webservice {
 	
@@ -15,10 +19,11 @@ public class RentACar_Webservice {
 		
 	}
 	
-	public String sayHello(String name)
+	/*public String sayHello(String name)
 	{
-		/*DataSource.executeNonQuery("INSERT INTO `group` (id, user_id, name) " +
-				"VALUES (NULL, " + user.getId() + ", '" + name + "')");*/
+		//DataSource.executeNonQuery("INSERT INTO `group` (id, user_id, name) " +
+		//		"VALUES (NULL, " + user.getId() + ", '" + name + "')");
+		
 		int rowCount=0;
 		try {
 			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles");
@@ -33,7 +38,7 @@ public class RentACar_Webservice {
 			return e.getMessage();
 		}
 		//return "Hallo2 " + name;
-	}
+	}*/
 	
 	/**
 	 * Returns all existing locations.
@@ -101,9 +106,31 @@ public class RentACar_Webservice {
 		return null;
 	}
 	
-	public Vehicle[] findVehicles(String a){
+	/**
+	 * This webmethod finds all available vehicles to the passed start and return parameters
+	 * @param startDate
+	 * @param startLocation
+	 * @param returnDate
+	 * @param returnLocation
+	 * @return
+	 */
+	public Vehicle[] findVehicles(String startDate, int startLocation, String returnDate, int returnLocation){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 		
+		//Convert the dates
+		DateFormat formatter; 
+		Date startDateTime = null;
+		Date returnDateTime = null;
+		
+		formatter = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
+		try {
+			startDateTime = (Date)formatter.parse(startDate);
+		
+			returnDateTime = (Date)formatter.parse(returnDate);  
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 		
 			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
@@ -115,9 +142,10 @@ public class RentACar_Webservice {
 			// building each contact and add it to the ArrayList
 			while(result.next()) {
 				Vehicle v = new Vehicle();
-				v.setModel(result.getString("manufacturer") + " " + a);
-				v.setImage(inputStreamToString(result.getBinaryStream("image")));
-				v.setBinaryImage(result.getBinaryStream("image"));
+				v.setModel(result.getString("manufacturer"));
+				v.setOther(startDateTime.toString());
+				//v.setImage(inputStreamToString(result.getBinaryStream("image")));
+				//v.setBinaryImage(result.getBinaryStream("image"));
 				vehicles.add(v);
 			}
 			
@@ -125,9 +153,6 @@ public class RentACar_Webservice {
 			
 		} catch (SQLException e) {
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 		} 
 		
 		Vehicle[] vehiclesArray = (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);

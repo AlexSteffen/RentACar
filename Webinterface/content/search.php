@@ -1,6 +1,7 @@
 <?php
 include_once('main.php');
 
+//load all passed values from the search-form
 $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $startTime = $_REQUEST["startTime"];
@@ -9,13 +10,22 @@ $returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 $returnTime = $_REQUEST["returnTime"];
 
-$ret = $webservice->findVehicles(array("a"=>""));
-echo var_dump($ret);
+//convert the date and time to a DateTime string
+$startDateTime = Converter::toDateTime($startDate, $startTime);
+$returnDateTime = Converter::toDateTime($returnDate, $returnTime);
+
+$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
+                                       "startLocation"=>$startLocation,
+                                       "returnDate"=>$returnDateTime,
+                                       "returnLocation"=>$returnLocation
+                                       ));
+//echo var_dump($ret);
 
 foreach($ret->return as $i){
   $v = new Vehicle;
   $v = $i;
-  echo "<img src='renderImage.php?binary=" .$v->binaryImage. "'>";
+  echo $v->other."<br>";
+  //echo "<img src='renderImage.php?binary=" .$v->binaryImage. "'>";
 }
 ?>
 
