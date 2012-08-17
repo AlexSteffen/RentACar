@@ -27,6 +27,7 @@ session_start();
 	    //loads the page which is requested in the URL
 	    //e.g. http://localhost/index.php?section=startpage
 	    include_once("content.php");
+			
 	?>
     </div>
 </body>

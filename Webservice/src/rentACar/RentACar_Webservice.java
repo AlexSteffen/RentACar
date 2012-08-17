@@ -22,27 +22,6 @@ public class RentACar_Webservice {
 		
 	}
 	
-	/*public String sayHello(String name)
-	{
-		//DataSource.executeNonQuery("INSERT INTO `group` (id, user_id, name) " +
-		//		"VALUES (NULL, " + user.getId() + ", '" + name + "')");
-		
-		int rowCount=0;
-		try {
-			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles");
-			
-			rowCount = result.last() ? result.getRow() : 0; // Determine number of rows  
-			return "Anzahl " + rowCount + ", Name: "+ name;
-			
-		} catch (ClassNotFoundException e) {
-			return "Class not found";
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return e.getMessage();
-		}
-		//return "Hallo2 " + name;
-	}*/
-	
 	/**
 	 * Returns all existing locations.
 	 * @return Array of locations.
@@ -138,24 +117,32 @@ public class RentACar_Webservice {
 		
 			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
 			
-			// Determine number of rows
-			//rowCount = result.last() ? result.getRow() : 0;
-			//result.first();
-			
 			// building each contact and add it to the ArrayList
 			while(result.next()) {
-				Vehicle v = new Vehicle();
+				Vehicle vehicle = new Vehicle();
 				
-				v.setId(result.getInt("id"));
-				v.setManufacturer(result.getString("manufacturer"));
-				v.setModel(result.getString("model"));
-				v.setColor(result.getString("color"));
+				vehicle.setId(result.getInt("id"));
+				vehicle.setManufacturer(result.getString("manufacturer"));
+				vehicle.setModel(result.getString("model"));
+				vehicle.setColor(result.getString("color"));
+				vehicle.setEngineType(result.getString("engine_type"));
+				vehicle.setEngineSize(result.getDouble("engine_size"));
+				vehicle.setEngineHp(result.getInt("engine_hp"));
+				vehicle.setEngineConsum(result.getDouble("engine_consum"));
+				vehicle.setPricePerDay(result.getDouble("price_per_day"));
+				vehicle.setType(result.getString("type"));
+				vehicle.setDoors(result.getInt("doors"));
+				vehicle.setSmokers(result.getInt("smokers"));
+				vehicle.setGear(result.getInt("gear"));
+				vehicle.setClimatic(result.getInt("climatic"));
+				vehicle.setSeats(result.getInt("seats"));
+				vehicle.setNavigationSystem(result.getInt("navigation_system"));
 				
 				if(result.getBinaryStream("image") != null){
-					v.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
+					vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
 				}
 				
-				vehicles.add(v);
+				vehicles.add(vehicle);
 			}
 			
 		} catch (ClassNotFoundException e) {
