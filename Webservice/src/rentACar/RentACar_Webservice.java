@@ -148,7 +148,6 @@ public class RentACar_Webservice {
 		} catch (ClassNotFoundException e) {
 			
 		} catch (SQLException e) {
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		} 
@@ -160,7 +159,7 @@ public class RentACar_Webservice {
 	}
 	
 	/**
-	 * method to find a specific customer by its customer id
+	 * Method to find a specific customer by its customer id.
 	 * @param id: customer id 
 	 * @return specific customer object. In case of no result in the database it returns null
 	 */

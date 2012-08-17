@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
 -- Daten für Tabelle `customers`
 --
 
-INSERT INTO `customers` (`id`, `email`, `password`, `forname`, `lastname`, `phone`, `street`, `zip`, `city`) VALUES
+INSERT INTO `customers` (`id`, `email`, `password`, `forename`, `lastname`, `phone`, `street`, `zip`, `city`) VALUES
 (1, 'www.erwinb.90@googlemail.com', 'schlange', 'Erwin', 'Braun', '0170092746', 'Berlinerplatz', '33330', 'Gütersloh');
 
 -- --------------------------------------------------------
