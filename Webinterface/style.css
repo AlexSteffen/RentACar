@@ -1,6 +1,9 @@
-/*!
- * CSS
- */
+/**************
+ * Author: G.Boeselager
+ * 
+ * This file contains the styles for the project.
+ **************/
+
 body{
     /*font-family: georgia, Helvetica, impact, tahoma, arial;*/
     font-family: arial;
@@ -17,32 +20,48 @@ a:hover{
     text-decoration: underline;
 }
 
-table{
-    color: white;
-}
-
-
-table.carlist{
+/* styles for the list of cars */
+#cardetails{
+    float: left;
+    clear: both;
+    width: 900px;
     color: black;
-}
-
-table.carlist td{
     vertical-align: top;
     background-color: #dedede;
     margin-bottom: 10px;
     border-bottom: 5px solid white;
 }
+#cardetails div{
+    float: left;
+    margin: 10px;
+}
+#cardetails #picture{
+    float: left;
+    width: 200px;
+}
+#cardetails #left{
+    float: left;
+    width: 200px;
+}
+#cardetails #center{
+    float: left;
+    width: 200px;
+}
+#cardetails #right{
+    float: left;
+    width: 200px;
+}
+
 table.detail{
     color: black;
     font-size: 12pt;
-
 }
 
 table.detail td{
     vertical-align: top;
 }
 
-input[type=text]{
+input[type=text].large{
     border: 3px solid #54a8de;
     font-size: 14pt;
     color: gray;

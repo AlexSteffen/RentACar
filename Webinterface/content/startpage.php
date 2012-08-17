@@ -86,11 +86,11 @@ echo "
         <tr>
             <td>Datum:</td>
             <td>
-                <input type='text' id='datepicker' name='startDate' style='width:140px;' value='$currentDate'>
+                <input type='text' id='datepicker' name='startDate' class='large' style='width:140px;' value='$currentDate'>
             </td>
             <td>Uhrzeit:</td>
             <td>
-                <input type='text' id='timepicker' name='startTime' style='width:100px;' value='$currentTime'>
+                <input type='text' id='timepicker' name='startTime' class='large' style='width:100px;' value='$currentTime'>
             </td>
         </tr>
     </table>
@@ -112,11 +112,11 @@ echo "
         <tr>
             <td>Datum:</td>
             <td>
-                <input type='text' id='datepicker2' name='returnDate' style='width:140px;' value='$currentDate'>
+                <input type='text' id='datepicker2' name='returnDate' class='large' style='width:140px;' value='$currentDate'>
             </td>
             <td>Uhrzeit:</td>
             <td>
-                <input type='text' id='timepicker2' name='returnTime' style='width:100px;' value='$currentTime'>
+                <input type='text' id='timepicker2' name='returnTime' class='large' style='width:100px;' value='$currentTime'>
             </td>
         </tr>
     </table>

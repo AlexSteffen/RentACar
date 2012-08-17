@@ -11,6 +11,10 @@ class Converter{
         $datetime = $year."-".$month."-".$day." ".$germanTime.":00";
         return $datetime;
     }
+    
+    public static function toDecimalString($number, $decimals=2) {
+        return number_format($number, $decimals, ",", "");
+    }
 }
 
 ?>

@@ -19,42 +19,47 @@ $ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
                                        "returnDate"=>$returnDateTime,
                                        "returnLocation"=>$returnLocation
                                        ));
-                                       
-//$ret = $webservice->getImage();
-//$bin = $ret->return;
 
-echo "<table class='carlist' cellpadding='10' cellspacing='0'>";
 
 foreach($ret->return as $i){
   $v = new Vehicle;
   $v = $i;
   
-  echo "<tr>
-            <td><img width='200' src='renderVehicleImage.php?id=".$v->id."'></td>
-            <td width='200'>
-                <span style='font-size: 14pt;'>".$v->manufacturer." ".$v->model."</span><br><br>
-                <span style='font-size: 11pt;'>Standort: Osnabrück</span><br>
-            </td>
-            <td width='100'>
-                <span style='font-size: 9pt;'>
-                Türen: 4<br>	
-                PS: 123<br>
-                Farbe: ".$v->color."
-                </span>
-            </td>
-            <td width='200' align='right'>
-                <span style='font-size: 14pt;'>
-                <a href='#' style='font-size: 10pt;'>Details anzeigen</a><br>
-                <a href='#'>Jetzt reservieren</a>
-                <img src='Bilder/verfuegbar.png'>
-                </span>
-            </td>
-        </tr>
+  echo "
+        <div id='cardetails'>
+                <div id='picture'>
+                        <img width='200' src='renderVehicleImage.php?id=".$v->id."'>
+                </div>
+                
+                <div id='left'>
+                        <span style='font-size: 14pt;'>".$v->manufacturer." ".$v->model."</span><br><br>
+                        <span style='font-size: 11pt;'>Standort: Osnabrück</span><br>
+                </div>
+                
+                <div id='center'>
+                        <table id='detailInfos'>
+                        <tr><td>Farbe:</td><td>".$v->color."</td></tr>
+                        <tr><td>Türen:</td><td>".$v->doors."</td></tr>
+                        <tr><td>PS:</td><td>".$v->engineHp."</td></tr>
+                        <tr><td>Hubraum:</td><td>".Converter::toDecimalString($v->engineSize, 1)."</td></tr>
+                        <tr><td>Verbrauch:</td><td>".Converter::toDecimalString($v->engineConsum, 1)." Liter / 100 km</td></tr>
+                        </table>
+                </div>
+                <div id='right'>
+                        <span style='font-size: 14pt;'>
+                        nur <b>".Converter::toDecimalString($v->pricePerDay, 2)." €</b> pro Tag<br>
+                        <img src='Bilder/verfuegbar.png'><br>
+                        <a href='index.php?section=details&id=".$v->id."' style='font-size: 10pt;'>Details anzeigen</a><br>
+                        <a href='index.php?section=reservation&id=".$v->id."'>Jetzt reservieren</a>
+                        </span>
+                </div>
+        </div>
+        
+        
         ";
   
 }
 
-echo "</table>";
 ?>
 <!--
 <table class='carlist' cellpadding='10' cellspacing='0'>
