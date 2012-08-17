@@ -172,6 +172,43 @@ public class RentACar_Webservice {
 		
 	}
 	
+	/**
+	 * method to find a specific customer by its customer id
+	 * @param id: customer id 
+	 * @return specific customer object. In case of no result in the database it returns null
+	 */
+	public Customer getCustomerById(int id) 
+	{
+			try {
+				
+				// getting customer from the database
+				ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE id=" + id);
+				result.first();
+				
+				// creating a new instance of a customer
+				Customer customer = new Customer();
+				
+				// filling customer informations
+				customer.setId(result.getInt("id"));
+				customer.setEmail(result.getString("email"));
+				customer.setForename(result.getString("forename"));
+				customer.setLastname(result.getString("lastname"));
+				customer.setPhone(result.getString("phone"));
+				customer.setStreet(result.getString("street"));
+				customer.setCity(result.getString("city"));
+				customer.setZip(result.getString("zip"));
+				
+				// returning the customer
+				return customer;
+				
+			}
+			catch (Exception e) {
+				
+				Customer customer = new Customer();
+				customer.setLastname(e.getMessage()); // returning null in case of any exception thrown
+				return customer;
+			}
+	}
 	
 	public Vehicle getVehicleById(int id){
 

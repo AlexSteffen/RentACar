@@ -18,6 +18,7 @@ ini_set('soap.wsdl_cache_ttl', '0');
 include_once("class/converter.php");
 include_once("class/location.php");
 include_once("class/vehicle.php");
+include_once("class/customer.php");
 
 //** Create a SoapClient-Object to determine the place of the WSDL file.
 //** The first parameter requires the URI to the WSDL document. The second parameter is optional for
@@ -27,8 +28,8 @@ include_once("class/vehicle.php");
 $webservice = new SoapClient("http://localhost:8080/axis2/services/RentACar?wsdl", array('soap_version'=>SOAP_1_2,
                                                                                      'trace'=>1,
                                                                                      'classmap' => array('Vehicle' => "Vehicle",
-																																																				 'Location' => "Location"
-																																																				)
+                                                                                                         'Location' => "Location",
+                                                                                                         'Customer' => "Customer")
                                                                                      ));
 
 //*************

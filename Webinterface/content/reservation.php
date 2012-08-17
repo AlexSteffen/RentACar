@@ -1,5 +1,13 @@
 <?php
 
+include_once("main.php");
+
+$result = $webservice->getCustomerById(array("id" => 1));
+
+$cust = new Customer();
+$cust = $result->return;
+// echo var_dump($cust);
+echo $cust->lastname;
 ?>
 
 <table class='detail'>
