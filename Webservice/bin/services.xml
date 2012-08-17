@@ -18,4 +18,7 @@
 	<operation name="getImage">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
+	<operation name="doRegistration">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
 </service>
