@@ -15,9 +15,6 @@
 	<operation name="getLocationById">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>
-	<operation name="getImage">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-	</operation>
 	<operation name="getCustomerById">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</operation>

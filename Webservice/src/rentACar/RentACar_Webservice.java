@@ -1,9 +1,6 @@
 package rentACar;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -31,7 +28,7 @@ public class RentACar_Webservice {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		
 		try {
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `locations`");
+			ResultSet result = DataSource.executeQuery("SELECT * FROM locations");
 						
 			// create a object from each record and add it to the ArrayList
 			while(result.next()) {
@@ -65,7 +62,7 @@ public class RentACar_Webservice {
 	public Location getLocationById(int id){
 		
 		try {
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `locations` WHERE id=" + id);
+			ResultSet result = DataSource.executeQuery("SELECT * FROM locations WHERE id=" + id);
 						
 			// create a object from each record and add it to the ArrayList
 			result.first();
@@ -115,7 +112,7 @@ public class RentACar_Webservice {
 		}
 		try {
 		
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
+			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles");
 			
 			// building each contact and add it to the ArrayList
 			while(result.next()) {
@@ -148,6 +145,7 @@ public class RentACar_Webservice {
 		} catch (ClassNotFoundException e) {
 			
 		} catch (SQLException e) {
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		} 
@@ -200,7 +198,7 @@ public class RentACar_Webservice {
 
 		try {
 			
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles` WHERE id=" + id);
+			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles WHERE id=" + id);
 			
 			result.first();
 			
@@ -227,52 +225,4 @@ public class RentACar_Webservice {
 		
 		return null;
 	}
-	
-	public byte[] getImage(){
-		try {
-			
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
-			
-			
-			result.first();
-			
-			
-			return IOUtils.toByteArray(result.getBinaryStream("image"));
-			
-			
-		} catch (ClassNotFoundException e) {
-			
-		} catch (SQLException e) {
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		return null;
-		
-	}
-	
-	private String inputStreamToString(InputStream in) 
-			throws IOException {
-		
-		return "";
-	}
-	/*
-	private String inputStreamToString(InputStream in) 
-			throws IOException {
-		if(in == null)
-			return "";
-		
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-		StringBuilder stringBuilder = new StringBuilder();
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-		stringBuilder.append(line + "\n");
-		}
-
-		bufferedReader.close();
-		return stringBuilder.toString();
-	}*/
 }
