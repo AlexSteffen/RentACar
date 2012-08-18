@@ -12,6 +12,9 @@ switch($_REQUEST["section"]){
     case "reservation":
         include_once("content/reservation.php");
         break;
+    case "registration":
+        include_once("content/registration.php");
+        break;
     default: 
         include_once("content/startpage.php");
         break;

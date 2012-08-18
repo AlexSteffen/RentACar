@@ -225,4 +225,83 @@ public class RentACar_Webservice {
 		
 		return null;
 	}
+	
+	/**
+	 * Method to register a customer. It checks if the customer already exists. 
+	 * If not, it adds the customer to the database
+	 * @param email
+	 * @param forename
+	 * @param lastname
+	 * @param street
+	 * @param city
+	 * @param zip
+	 * @param phone
+	 * @return It returns if the customer has been created or not. 
+	 * In case of an error it returns null.
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
+	 */
+	public Boolean register(String email, String forename, 
+			String lastname, String street, String city, 
+			String zip, String phone) throws SQLException, ClassNotFoundException 
+	{
+
+				DataSource.executeNonQuery("INSERT INTO customers(email, forename, lastname, street, city, zip, phone) " +
+						"VALUES('" + email + "', '" + forename + "', '" 
+						+ lastname + "', '" + street + "', '" + city + "', '" + zip + "', '" + phone + "')");
+				
+				return true;
+
+	}
+	
+	
+	
+	public byte[] getImage(){
+		try {
+			
+			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
+			
+			
+			result.first();
+			
+			
+			return IOUtils.toByteArray(result.getBinaryStream("image"));
+			
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return null;
+		
+	}
+	
+	private String inputStreamToString(InputStream in) 
+			throws IOException {
+		
+		return "";
+	}
+	/*
+	private String inputStreamToString(InputStream in) 
+			throws IOException {
+		if(in == null)
+			return "";
+		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+		StringBuilder stringBuilder = new StringBuilder();
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+		stringBuilder.append(line + "\n");
+		}
+
+		bufferedReader.close();
+		return stringBuilder.toString();
+	}*/
+
 }

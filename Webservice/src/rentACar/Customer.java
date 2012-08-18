@@ -1,5 +1,8 @@
 package rentACar;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Customer {
 
 	private int id;
@@ -62,7 +65,28 @@ public class Customer {
 		this.city = city;
 	}
 	
+	/***
+	 * This method checks if a customer already exists by id.
+	 * @param email 
+	 * @return It returns a boolean wheater it exists or not.
+	 */
+	public static Boolean exists(String email)
+	{
+		try {
+			
+			// checking the email-address in the database
+			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email=" + email);
+			Boolean exists = result.first();
 	
+			return exists;
+			
+		}  catch (Exception e) {
+			
+			// returns null in case of an error
+			return null;
+		}
+	}
 	
+
 	
 }
