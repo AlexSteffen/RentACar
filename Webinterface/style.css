@@ -10,6 +10,7 @@ body{
     font-size: 10pt;
     margin: 0;
     padding:0;
+    background-color: #e1e1e1;
 }
 
 a{
@@ -27,7 +28,7 @@ a:hover{
     width: 900px;
     color: black;
     vertical-align: top;
-    background-color: #dedede;
+    background-color: #f0f0f0;
     margin-bottom: 10px;
     border-bottom: 5px solid white;
 }

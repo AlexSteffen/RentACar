@@ -1,16 +1,15 @@
 <?php
-include_once('main.php');
-$location = new Location;
-$returnObj = $webservice->getLocationById(array("id" => 1));
-$location = $returnObj->return;
+$vehicleId = $_REQUEST["vehicle_id"];
 
-echo $location->city;
-?>
+$vehicle = new Vehicle;
+$returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
+$vehicle = $returnObj->return;
 
+echo "
 <table class='detail'>
 <tr>
     <td>
-        <img src='Bilder\Audi_A1.jpg' id='pic' title='Picture' width='300px'>
+        <img width='300px' id='pic' src='renderVehicleImage.php?id=".$vehicle->id."'>
     </td>
     <td>
         <table class='detail'>
@@ -25,7 +24,7 @@ echo $location->city;
                     Hersteller:
                 </td>
                 <td>
-                    Audi
+                    ".$vehicle->manufacturer."
                 </td>
             </tr>
             <tr>
@@ -33,7 +32,7 @@ echo $location->city;
                     Modell:
                 </td>
                 <td>
-                    A1
+                    ".$vehicle->model."
                 </td>
             </tr>
             <tr>
@@ -41,7 +40,7 @@ echo $location->city;
                     Typ:
                 </td>
                 <td>
-                    Coupé
+                    ".$vehicle->type."
                 </td>
             </tr>
             <tr>
@@ -49,7 +48,7 @@ echo $location->city;
                     Farbe:
                 </td>
                 <td>
-                    Weiß
+                    ".$vehicle->color."
                 </td>
             </tr>
             <tr>
@@ -67,7 +66,7 @@ echo $location->city;
                     Kraftstoff:
                 </td>
                 <td>
-                    Diesel
+                    ".$vehicle->engineType."
                 </td>
             </tr>
             <tr>
@@ -75,15 +74,7 @@ echo $location->city;
                     PS:
                 </td>
                 <td>
-                    160 PS
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    kW:
-                </td>
-                <td>
-                    119 kW
+                    ".$vehicle->engineHp." PS
                 </td>
             </tr>
             <tr>
@@ -91,7 +82,7 @@ echo $location->city;
                     Verbrauch:
                 </td>
                 <td>
-                    5,5 l/100km
+                    ".Converter::toDecimalString($vehicle->engineConsum)." l/100km
                 </td>
             </tr>
             <tr>
@@ -99,7 +90,7 @@ echo $location->city;
                     Schaltung:
                 </td>
                 <td>
-                    Automatik
+                    ".($vehicle->gear == 1 ? "Schaltgetriebe" : "Automatik")."
                 </td>
             </tr>
             <tr>
@@ -117,7 +108,7 @@ echo $location->city;
                     Anzahl Türen:
                 </td>
                 <td>
-                    5
+                    ".$vehicle->doors."
                 </td>
             </tr>
             <tr>
@@ -125,7 +116,7 @@ echo $location->city;
                     Raucherfahrzeug:
                 </td>
                 <td>
-                    Ja
+                    ".($vehicle->smokers == 1 ? "Ja" : "Nein")."
                 </td>
             </tr>
             <tr>
@@ -133,7 +124,7 @@ echo $location->city;
                     Navigation:
                 </td>
                 <td>
-                    Ja
+                    ".($vehicle->navigationSystem == 1 ? "Ja" : "Nein")."
                 </td>
             </tr>
             <tr>
@@ -141,7 +132,7 @@ echo $location->city;
                     Sitze:
                 </td>
                 <td>
-                    Leder
+                    ".$vehicle->seats."
                 </td>
             </tr>
             <tr>
@@ -149,7 +140,7 @@ echo $location->city;
                     Klimaanlage:
                 </td>
                 <td>
-                    Ja
+                    ".($vehicle->climatic == 1 ? "Ja" : "Nein")."
                 </td>
             </tr>
             <tr>
@@ -171,7 +162,7 @@ echo $location->city;
                     Preis:
                 </td>
                 <td>
-                    39 € / Tag
+                    ".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag
                 </td>
             </tr>
             <tr>
@@ -192,3 +183,5 @@ echo $location->city;
     </td>
 </tr>
 </table>
+";
+?>

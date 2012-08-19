@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+include_once('main.php');
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -19,7 +21,7 @@ session_start();
 <body>
     
     <div id='head'>
-	<div id='logo'></div>
+				<a id='logo' href="index.php"></a>
     </div>
     
     <div id='content'>

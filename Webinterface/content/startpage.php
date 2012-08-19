@@ -1,3 +1,26 @@
+<?php
+//******** read all locations from the webservice **********
+$returnObj = $webservice->getAllLocations();
+$locations = array();
+
+// check if there are some records in the result
+if(isset($returnObj->return)){
+    
+    // loop at all records and store them in an array for better handling
+    foreach($returnObj->return as $item){
+        $location = new Location();
+        $location = $item;
+        
+        $locations[] = $location;
+    }
+}
+
+
+$currentDate = date("d.m.Y");
+$currentTime = date("H:i");
+
+?>
+
 <script type="text/javascript">
 $(function(){
     // Datepicker
@@ -39,33 +62,11 @@ $(function(){
 </script>
 
 <?php
-include_once('main.php');
-
-//******** read all locations from the webservice **********
-$returnObj = $webservice->getAllLocations();
-$locations = array();
-
-// check if there are some records in the result
-if(isset($returnObj->return)){
-    
-    // loop at all records and store them in an array for better handling
-    foreach($returnObj->return as $item){
-        $location = new Location();
-        $location = $item;
-        
-        $locations[] = $location;
-    }
-}
-
-
-$currentDate = date("d.m.Y");
-$currentTime = date("H:i");
-
 
 foreach($locations as $l){
-    
         $locationOptions .= "<option value='".$l->id."'>".$l->city."</option>";
 }
+
 echo "
 <form action='index.php?section=search' method='post'>
 

@@ -209,6 +209,9 @@ public class RentACar_Webservice {
 			}
 	}
 	
+	/**
+	 * Method to return a vehicle by its id.
+	 */
 	public Vehicle getVehicleById(int id){
 
 		try {
@@ -217,17 +220,30 @@ public class RentACar_Webservice {
 			
 			result.first();
 			
-			Vehicle v = new Vehicle();
-			v.setId(result.getInt("id"));
-			v.setManufacturer(result.getString("manufacturer"));
-			v.setModel(result.getString("model"));
-			v.setColor(result.getString("color"));
+			Vehicle vehicle = new Vehicle();
+			
+			vehicle.setId(result.getInt("id"));
+			vehicle.setManufacturer(result.getString("manufacturer"));
+			vehicle.setModel(result.getString("model"));
+			vehicle.setColor(result.getString("color"));
+			vehicle.setEngineType(result.getString("engine_type"));
+			vehicle.setEngineSize(result.getDouble("engine_size"));
+			vehicle.setEngineHp(result.getInt("engine_hp"));
+			vehicle.setEngineConsum(result.getDouble("engine_consum"));
+			vehicle.setPricePerDay(result.getDouble("price_per_day"));
+			vehicle.setType(result.getString("type"));
+			vehicle.setDoors(result.getInt("doors"));
+			vehicle.setSmokers(result.getInt("smokers"));
+			vehicle.setGear(result.getInt("gear"));
+			vehicle.setClimatic(result.getInt("climatic"));
+			vehicle.setSeats(result.getInt("seats"));
+			vehicle.setNavigationSystem(result.getInt("navigation_system"));
 			
 			if(result.getBinaryStream("image") != null){
-				v.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
+				vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
 			}
-		
-			return v;
+			
+			return vehicle;
 			
 		} catch (ClassNotFoundException e) {
 			
@@ -267,5 +283,27 @@ public class RentACar_Webservice {
 				
 				return true;
 
+	}
+	
+	/***
+	 * This method checks if a customer already exists by id.
+	 * @param email 
+	 * @return It returns a boolean wheater it exists or not.
+	 */
+	public Boolean customerExists(String email)
+	{
+		try {
+			
+			// checking the email-address in the database
+			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email=" + email);
+			Boolean exists = result.first();
+	
+			return exists;
+			
+		}  catch (Exception e) {
+			
+			// returns null in case of an error
+			return null;
+		}
 	}
 }
