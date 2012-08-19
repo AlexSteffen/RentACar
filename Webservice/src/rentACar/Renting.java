@@ -6,13 +6,13 @@ package rentACar;
  * This class represents a renting.
  */
 public class Renting {
+	
 	private int id;
 	private int vehicleId;
 	private int customerId;
 	private String startDate;
 	private String endDate;
 	private int returnplace;
-	
 	
 	public int getId() {
 		return id;
@@ -61,7 +61,4 @@ public class Renting {
 	public void setReturnplace(int returnplace) {
 		this.returnplace = returnplace;
 	}
-	
-	
-	
 }

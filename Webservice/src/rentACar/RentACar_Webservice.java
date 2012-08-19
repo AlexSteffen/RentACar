@@ -97,7 +97,7 @@ public class RentACar_Webservice {
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 		
 		//Convert the dates
-		DateFormat formatter; 
+		/*DateFormat formatter; 
 		Date startDateTime = null;
 		Date returnDateTime = null;
 		
@@ -109,12 +109,24 @@ public class RentACar_Webservice {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-		try {
+		}*/
 		
-			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles");
-			
-			// building each contact and add it to the ArrayList
+		//In this query is the logic implemented that only cars are found if they are available
+		//in the requested timeframe
+		String query = 	"SELECT * FROM vehicles "+ 
+						"WHERE NOT EXISTS " +
+						"("+
+							"SELECT * FROM rentings WHERE "+
+							"vehicle_id = vehicles.id "+
+							"AND "+
+							"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
+							"OR "+
+							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date) " +
+						")";
+		
+		try {		
+			ResultSet result = DataSource.executeQuery(query);
+
 			while(result.next()) {
 				Vehicle vehicle = new Vehicle();
 				
@@ -145,6 +157,14 @@ public class RentACar_Webservice {
 		} catch (ClassNotFoundException e) {
 			
 		} catch (SQLException e) {
+			Vehicle vehicle = new Vehicle();
+			
+			vehicle.setManufacturer(e.getMessage());
+			
+			Vehicle[] vehiclesArray = new Vehicle[1];
+			vehiclesArray[0] = vehicle; 
+			
+			return vehiclesArray;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
