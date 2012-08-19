@@ -3,12 +3,7 @@ package rentACar;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import org.apache.commons.io.IOUtils;
 
 
@@ -273,55 +268,4 @@ public class RentACar_Webservice {
 				return true;
 
 	}
-	
-	
-	
-	public byte[] getImage(){
-		try {
-			
-			ResultSet result = DataSource.executeQuery("SELECT * FROM `vehicles`");
-			
-			
-			result.first();
-			
-			
-			return IOUtils.toByteArray(result.getBinaryStream("image"));
-			
-			
-		} catch (ClassNotFoundException e) {
-			
-		} catch (SQLException e) {
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		return null;
-		
-	}
-	
-	private String inputStreamToString(InputStream in) 
-			throws IOException {
-		
-		return "";
-	}
-	/*
-	private String inputStreamToString(InputStream in) 
-			throws IOException {
-		if(in == null)
-			return "";
-		
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-		StringBuilder stringBuilder = new StringBuilder();
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-		stringBuilder.append(line + "\n");
-		}
-
-		bufferedReader.close();
-		return stringBuilder.toString();
-	}*/
-
 }
