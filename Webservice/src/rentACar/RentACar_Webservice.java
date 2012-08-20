@@ -209,6 +209,42 @@ public class RentACar_Webservice {
 			}
 	}
 	
+	public Customer checkLogin(String email, String password) throws ClassNotFoundException, SQLException
+	{
+		ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email=" + email);
+		
+		if (result.next()) 
+		{	
+			// creating a new instance of a customer
+			Customer customer = new Customer();
+			
+			// filling customer informations
+			customer.setId(result.getInt("id"));
+			customer.setEmail(result.getString("email"));
+			customer.setForename(result.getString("forename"));
+			customer.setLastname(result.getString("lastname"));
+			customer.setPhone(result.getString("phone"));
+			customer.setStreet(result.getString("street"));
+			customer.setCity(result.getString("city"));
+			customer.setZip(result.getString("zip"));
+			customer.setPassword(result.getString("password"));
+			
+			if(customer.getPassword().equals(password))
+			{
+				return customer;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	
 	/**
 	 * Method to return a vehicle by its id.
 	 */

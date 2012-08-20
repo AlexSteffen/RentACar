@@ -10,6 +10,7 @@ public class Customer {
 	private String street;
 	private String zip;
 	private String city;
+	private String password;
 	
 	// Getter and setter methodes 
 	
@@ -60,5 +61,11 @@ public class Customer {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
