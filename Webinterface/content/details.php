@@ -1,10 +1,27 @@
 <?php
+//load all passed get parameters passed from the site before
 $vehicleId = $_REQUEST["vehicle_id"];
 
+$startLocation = $_REQUEST["startLocation"];
+$startDate = $_REQUEST["startDate"];
+
+$returnLocation = $_REQUEST["returnLocation"];
+$returnDate = $_REQUEST["returnDate"];
+
+//users search parameters have to be passed to each site 
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$startDate."&returnLocation=".$returnLocation;
+
+//webservice call to read the requested vehicle
 $vehicle = new Vehicle;
 $returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = $returnObj->return;
 
+echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
+        Converter::toGermanDateTimeString($startDate) .
+        "</b> bis <b>".
+        Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
+
+        
 echo "
 <table class='detail'>
 <tr>

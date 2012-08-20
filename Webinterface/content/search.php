@@ -10,16 +10,25 @@ $returnDate = $_REQUEST["returnDate"];
 $returnTime = $_REQUEST["returnTime"];
 
 //convert the date and time to a DateTime string
-$startDateTime = Converter::toDateTime($startDate, $startTime);
-$returnDateTime = Converter::toDateTime($returnDate, $returnTime);
+$startDate = Converter::toDateTime($startDate, $startTime);
+$returnDate = Converter::toDateTime($returnDate, $returnTime);
 
-$ret = $webservice->findVehicles(array("startDate"=>$startDateTime,
+//users search parameters have to be passed to each site 
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$startDate."&returnLocation=".$returnLocation;
+
+//webservice call to find all available vehicles
+$ret = $webservice->findVehicles(array("startDate"=>$startDate,
                                        "startLocation"=>$startLocation,
-                                       "returnDate"=>$returnDateTime,
+                                       "returnDate"=>$returnDate,
                                        "returnLocation"=>$returnLocation
                                        ));
 
+echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
+        Converter::toGermanDateTimeString($startDate) .
+        "</b> bis <b>".
+        Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
 
+//loop at all found vehicles and render HTML
 foreach($ret->return as $item){
   $vehicle = new Vehicle;
   $vehicle = $item;
@@ -48,8 +57,8 @@ foreach($ret->return as $item){
                         <span style='font-size: 14pt;'>
                         nur <b>".Converter::toDecimalString($vehicle->pricePerDay, 2)." €</b> pro Tag<br>
                         <img src='Bilder/verfuegbar.png'><br>
-                        <a href='index.php?section=details&vehicle_id=".$vehicle->id."' style='font-size: 10pt;'>Details anzeigen</a><br>
-                        <a href='index.php?section=reservation&vehicle_id=".$vehicle->id."'>Jetzt reservieren</a>
+                        <a href='index.php?section=details&vehicle_id=".$vehicle->id."&".$urlGetParams."' style='font-size: 10pt;'>Details anzeigen</a><br>
+                        <a href='index.php?section=reservation&vehicle_id=".$vehicle->id."&".$urlGetParams."'>Jetzt reservieren</a>
                         </span>
                 </div>
         </div>

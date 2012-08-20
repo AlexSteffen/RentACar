@@ -12,8 +12,28 @@ class Converter{
         return $datetime;
     }
     
+    //*********
+    // Converts a number to a decimal string.
+    // The parameter 'decimals' sets the number of digits after the decimal point
+    // E.g. input:   14.5 with 2 digits after the decimal point
+    //      output:  14,50
+    //*********
     public static function toDecimalString($number, $decimals=2) {
         return number_format($number, $decimals, ",", "");
+    }
+    
+    //*********
+    // Converts a datetime to a german format. (without seconds)
+    // E.g. input:  2012-12-01 13:20:00
+    //      output: 01.12.2012 13:20
+    //*********
+    public static function toGermanDateTimeString($datetime) {
+        list($date, $time) = explode(' ', $datetime);
+        list($year, $month, $day) = explode('-', $date);
+        list($hour, $minute, $second) = explode(':', $time);
+        
+        $output = $day.".".$month.".".$year." ".$hour.":".$minute;
+        return $output;
     }
 }
 
