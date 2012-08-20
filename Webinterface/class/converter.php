@@ -35,6 +35,22 @@ class Converter{
         $output = $day.".".$month.".".$year." ".$hour.":".$minute;
         return $output;
     }
+    
+    //*********
+    // Calculates the difference in days between the passed dates.
+    // The result is rounded up to the next integer.
+    // E.g. input:  2012-12-01 13:20:00 and 2012-12-04 16:20:00
+    //      output: 4
+    //*********
+    public static function dateDifferenceInDays($startdate, $enddate) {
+        $diffSeconds = strtotime($enddate) - strtotime($startdate);
+        $diffMinutes = $diffSeconds / 60;
+        $diffHours = $diffMinutes / 60;
+        $diffDays = $diffHours / 24;
+        return ceil($diffDays);
+    }
+    
+    
 }
 
 ?>

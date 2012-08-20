@@ -14,7 +14,7 @@ $startDate = Converter::toDateTime($startDate, $startTime);
 $returnDate = Converter::toDateTime($returnDate, $returnTime);
 
 //users search parameters have to be passed to each site 
-$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$startDate."&returnLocation=".$returnLocation;
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate."&returnLocation=".$returnLocation;
 
 //webservice call to find all available vehicles
 $ret = $webservice->findVehicles(array("startDate"=>$startDate,

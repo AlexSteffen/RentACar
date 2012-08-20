@@ -9,7 +9,9 @@ $returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 
 //users search parameters have to be passed to each site 
-$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$startDate."&returnLocation=".$returnLocation;
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
+                "&returnDate=".$returnDate."&returnLocation=".$returnLocation.
+                "&vehicle_id=".$vehicleId;
 
 //webservice call to read the requested vehicle
 $vehicle = new Vehicle;
