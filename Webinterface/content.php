@@ -15,6 +15,9 @@ switch($_REQUEST["section"]){
     case "registration":
         include_once("content/registration.php");
         break;
+    case "test":
+        include_once("content/test.php");
+        break;
     default: 
         include_once("content/startpage.php");
         break;

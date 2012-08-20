@@ -211,7 +211,7 @@ public class RentACar_Webservice {
 	
 	public Customer checkLogin(String email, String password) throws ClassNotFoundException, SQLException
 	{
-		ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email=" + email);
+		ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
 		
 		if (result.next()) 
 		{	
