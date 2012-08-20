@@ -209,37 +209,52 @@ public class RentACar_Webservice {
 			}
 	}
 	
-	public Customer checkLogin(String email, String password) throws ClassNotFoundException, SQLException
+	/***
+	 * Checks if a email adress is already in the database.
+	 * @param email address of potential customer
+	 * @param the customers password
+	 * @return Customer-Object in case of positive match of email address and password. Otherwise, or in case of errors it returns null.
+	 */
+	public Customer checkLogin(String email, String password)
 	{
-		ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
+		try {	
 		
-		if (result.next()) 
-		{	
-			// creating a new instance of a customer
-			Customer customer = new Customer();
+			// getting a customer with a specific email adress from the database
+			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
 			
-			// filling customer informations
-			customer.setId(result.getInt("id"));
-			customer.setEmail(result.getString("email"));
-			customer.setForename(result.getString("forename"));
-			customer.setLastname(result.getString("lastname"));
-			customer.setPhone(result.getString("phone"));
-			customer.setStreet(result.getString("street"));
-			customer.setCity(result.getString("city"));
-			customer.setZip(result.getString("zip"));
-			customer.setPassword(result.getString("password"));
-			
-			if(customer.getPassword().equals(password))
-			{
-				return customer;
+			if (result.next()) 
+			{	
+				// creating a new instance of a customer
+				Customer customer = new Customer();
+				
+				// filling customer informations
+				customer.setId(result.getInt("id"));
+				customer.setEmail(result.getString("email"));
+				customer.setForename(result.getString("forename"));
+				customer.setLastname(result.getString("lastname"));
+				customer.setPhone(result.getString("phone"));
+				customer.setStreet(result.getString("street"));
+				customer.setCity(result.getString("city"));
+				customer.setZip(result.getString("zip"));
+				customer.setPassword(result.getString("password"));
+				
+				// checking if the entered password matches to the customer
+				// in case of matching: returning the customer-instance
+				// in all other cases: returning null
+				if(customer.getPassword().equals(password))
+				{
+					return customer;
+				}
+				else
+				{
+					return null;
+				}
 			}
-			else
+			else 
 			{
 				return null;
 			}
-		}
-		else 
-		{
+		} catch (Exception e) {
 			return null;
 		}
 	}
