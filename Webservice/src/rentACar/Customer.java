@@ -3,6 +3,7 @@ package rentACar;
 public class Customer {
 
 	private int id;
+	private String salutation;
 	private String email;
 	private String forename;
 	private String lastname;
@@ -67,5 +68,11 @@ public class Customer {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getSalutation() {
+		return salutation;
+	}
+	public void setSalutation(String salutation) {
+		this.salutation = salutation;
 	}
 }

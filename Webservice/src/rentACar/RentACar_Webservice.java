@@ -189,7 +189,9 @@ public class RentACar_Webservice {
 				
 				// filling customer informations
 				customer.setId(result.getInt("id"));
+				customer.setPassword(result.getString("password"));
 				customer.setEmail(result.getString("email"));
+				customer.setSalutation(result.getString("salutation"));
 				customer.setForename(result.getString("forename"));
 				customer.setLastname(result.getString("lastname"));
 				customer.setPhone(result.getString("phone"));
@@ -230,6 +232,7 @@ public class RentACar_Webservice {
 				// filling customer informations
 				customer.setId(result.getInt("id"));
 				customer.setEmail(result.getString("email"));
+				customer.setSalutation(result.getString("salutation"));
 				customer.setForename(result.getString("forename"));
 				customer.setLastname(result.getString("lastname"));
 				customer.setPhone(result.getString("phone"));
