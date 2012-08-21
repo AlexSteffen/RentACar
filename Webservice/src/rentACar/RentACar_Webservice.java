@@ -210,7 +210,7 @@ public class RentACar_Webservice {
 	}
 	
 	/***
-	 * Checks if a email adress is already in the database.
+	 * Checks if a email address is already in the database.
 	 * @param email address of potential customer
 	 * @param the customers password
 	 * @return Customer-Object in case of positive match of email address and password. Otherwise, or in case of errors it returns null.
@@ -219,7 +219,7 @@ public class RentACar_Webservice {
 	{
 		try {	
 		
-			// getting a customer with a specific email adress from the database
+			// getting a customer with a specific email address from the database
 			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
 			
 			if (result.next()) 
@@ -339,14 +339,14 @@ public class RentACar_Webservice {
 	/***
 	 * This method checks if a customer already exists by id.
 	 * @param email 
-	 * @return It returns a boolean wheater it exists or not.
+	 * @return It returns a boolean whether it exists or not.
 	 */
 	public Boolean customerExists(String email)
 	{
 		try {
 			
 			// checking the email-address in the database
-			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email=" + email);
+			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
 			Boolean exists = result.first();
 	
 			return exists;
