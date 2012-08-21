@@ -29,11 +29,11 @@ if($newOrExistingCustomer == "existingCustomer"){
     
     //check if the email address is correct
     if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
-        $error .= "Die E-Mail-Adresse ist nicht korrekt.<br>";
+        $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
     }
     
     if($loginPassword=="") {
-        $error .= "Bitte geben Sie ein Passwort an.<br>";
+        $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
     }
     
     //if some error occurs reload the registraton-site to allow userchanges
@@ -49,42 +49,42 @@ if($newOrExistingCustomer == "existingCustomer"){
     
     //check if the email address is correct
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error .= "Die E-Mail-Adresse ist nicht korrekt.<br>";
+        $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
     }
     
     //webservice call to check if there is already a customer with the email address    
     $result = $webservice->customerExists(array("email"=>$email));
     
     if($result==NULL) {
-        $error .= "Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.<br>";
+        $error .= "<li>Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.</li>";
     }
     
     if($password=="") {
-        $error .= "Bitte geben Sie ein Passwort an.<br>";
+        $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
     }
     
     if($lastname=="") {
-        $error .= "Bitte geben Sie Ihren Nachnamen an.<br>";
+        $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
     }
     
     if($lastname=="") {
-        $error .= "Bitte geben Sie Ihren Nachnamen an.<br>";
+        $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
     }
     
     if($forename=="") {
-        $error .= "Bitte geben Sie Ihren Vornamen an.<br>";
+        $error .= "<li>Bitte geben Sie Ihren Vornamen an.</li>";
     }
     
     if($street=="") {
-        $error .= "Bitte geben Sie Ihre Straße an.<br>";
+        $error .= "<li>Bitte geben Sie Ihre Straße an.</li>";
     }
     
     if($zip=="") {
-        $error .= "Bitte geben Sie Ihre PLZ an.<br>";
+        $error .= "<li>Bitte geben Sie Ihre PLZ an.</li>";
     }
     
     if($city=="") {
-        $error .= "Bitte geben Sie Ihre Stadt an.<br>";
+        $error .= "<li>Bitte geben Sie Ihre Stadt an.</li>";
     }
        
     //if some error occurs reload the registraton-site to allow userchanges
@@ -102,7 +102,17 @@ if($newOrExistingCustomer == "existingCustomer"){
 
     if($returnValue != True)
     {
-        echo "Fehler!!!";
+        echo $email."<<<br>";
+        echo $password."<<<br>";
+        echo $salutation."<<<br>";
+        echo $forename."<<<br>";
+        echo $lastname."<<<br>";
+        echo $street."<<<br>";
+        echo $city."<<<br>";
+        echo $zip."<<<br>";
+        echo $phone."<<<br>";
+        
+        echo "Unerwarteter Fehler beim Registrieren des Kunden.";
         exit;
     }
     

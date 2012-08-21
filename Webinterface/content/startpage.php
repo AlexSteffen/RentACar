@@ -18,7 +18,7 @@ if(isset($returnObj->return)){
 
 $currentDate = date("d.m.Y");
 $currentTime = date("H:i");
-
+$tomorrowDate =  date("d.m.Y", strtotime("+1 days"));
 ?>
 
 <script type="text/javascript">
@@ -110,7 +110,7 @@ echo "
         <tr>
             <td>Datum:</td>
             <td>
-                <input type='text' id='datepicker2' name='returnDate' class='large' style='width:140px;' value='$currentDate'>
+                <input type='text' id='datepicker2' name='returnDate' class='large' style='width:140px;' value='$tomorrowDate'>
             </td>
             <td>Uhrzeit:</td>
             <td>

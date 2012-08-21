@@ -70,6 +70,16 @@ input[type=text].large{
     color: gray;
 }
 
+input[type=text].registration{
+    width:200px;
+}
+input[type=password].registration{
+    width:200px;
+}
+select.registration{
+    width:200px;
+}
+
 select.locationPicker{
     width: 170px;
     font-size: 19pt;
@@ -122,7 +132,8 @@ select.locationPicker{
     width: 200px;
 }
 
-#errorBox{
+#error_box{
     float: left;
-    clear: both;
+    width: 300px;
+    color: red;
 }

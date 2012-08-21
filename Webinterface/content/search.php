@@ -17,10 +17,12 @@ $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&retur
 
 //webservice call to find all available vehicles
 $ret = $webservice->findVehicles(array("startDate"=>$startDate,
-                                       "returnDate"=>$returnDate,
-                                       "startLocation"=>$startLocation
+                                       "startLocation"=>$startLocation,
+                                       "returnDate"=>$returnDate                                       
                                        ));
-
+//echo var_dump($ret->return);
+                                       
+                                       
 echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
         "</b> bis <b>".

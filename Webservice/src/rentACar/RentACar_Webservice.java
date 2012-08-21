@@ -109,7 +109,7 @@ public class RentACar_Webservice {
 		//In this query is the logic implemented that only cars are found if they are available
 		//in the requested timeframe
 		String query = 	"SELECT * FROM vehicles "+ 
-						"WHERE" +
+						"WHERE " +
 						"location_id=" + startLocation + " " +
 						"AND NOT EXISTS " +
 						"("+
@@ -128,6 +128,7 @@ public class RentACar_Webservice {
 				Vehicle vehicle = new Vehicle();
 				
 				vehicle.setId(result.getInt("id"));
+				vehicle.setLocationId(result.getInt("location_id"));
 				vehicle.setManufacturer(result.getString("manufacturer"));
 				vehicle.setModel(result.getString("model"));
 				vehicle.setColor(result.getString("color"));
@@ -329,15 +330,16 @@ public class RentACar_Webservice {
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
-	public Boolean register(String email,String password,String salutation, String forename, 
+	public Boolean register(String email,String password, String salutation, String forename, 
 			String lastname, String street, String city, 
 			String zip, String phone) throws SQLException, ClassNotFoundException 
 	{
+		
 		if(customerExists(email))
 		{
-				DataSource.executeNonQuery("INSERT INTO customers(email, password, salutation, forename, lastname, street, city, zip, phone) " +
+				DataSource.executeNonQuery("INSERT INTO customers (`email`, `password`, `salutation`, `forename`, `lastname`, `street`, `zip`, `city`, `phone`) " +
 						"VALUES('" + email + "', '" + password + "', '" + salutation + "', '" + forename + "', '" 
-						+ lastname + "', '" + street + "', '" + city + "', '" + zip + "', '" + phone + "')");
+						+ lastname + "', '" + street + "', '" + zip + "', '" + city + "', '" + phone + "')");
 				
 				return true;
 		}
