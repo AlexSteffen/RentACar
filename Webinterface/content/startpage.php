@@ -103,11 +103,8 @@ echo "
             <td colspan='2'><span class='hWhite'>Rückgabe</span></td>
         </tr>
         <tr>
-            <td>Ort wählen:</td>
+            <td><br><br></td>
             <td>
-                <select class='locationPicker' name='returnLocation'>
-                $locationOptions
-                </select>
             </td>
         </tr>
         <tr>

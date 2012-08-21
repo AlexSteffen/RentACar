@@ -1,6 +1,7 @@
 <?php
 class Vehicle{
     public $id;
+    public $location_id;
     public $manufacturer;
     public $model;
     public $color;

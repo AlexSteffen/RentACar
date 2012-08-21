@@ -121,3 +121,8 @@ select.locationPicker{
     clear: both;
     width: 200px;
 }
+
+#errorBox{
+    float: left;
+    clear: both;
+}

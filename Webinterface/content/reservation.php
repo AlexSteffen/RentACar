@@ -1,18 +1,13 @@
 <?php
-
 //load all passed get parameters passed from the site before
 $vehicleId = $_REQUEST["vehicle_id"];
-
 $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
-
-$returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
-                "&returnDate=".$returnDate."&returnLocation=".$returnLocation.
-                "&vehicle_id=".$vehicleId;
+                "&returnDate=".$returnDate."&vehicle_id=".$vehicleId;
                 
                 
 //webservice call to get the customer
@@ -24,8 +19,6 @@ $cust = $result->return;
 $result = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = new Vehicle();
 $vehicle = $result->return;
-
-echo $error;
 
 echo "
 <script type='text/javascript'>
@@ -65,8 +58,11 @@ $(document).ready(function(){
 });
 
 
-</script>
+</script>";
 
+echo "<div id='error_box'><p>$error</p></div>;
+
+echo "
 <img width='300px' style='float:left;' src='renderVehicleImage.php?id=".$vehicleId."'>
 
 

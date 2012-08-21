@@ -5,7 +5,6 @@ $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $startTime = $_REQUEST["startTime"];
 
-$returnLocation = $_REQUEST["returnLocation"];
 $returnDate = $_REQUEST["returnDate"];
 $returnTime = $_REQUEST["returnTime"];
 
@@ -14,13 +13,12 @@ $startDate = Converter::toDateTime($startDate, $startTime);
 $returnDate = Converter::toDateTime($returnDate, $returnTime);
 
 //users search parameters have to be passed to each site 
-$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate."&returnLocation=".$returnLocation;
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate;
 
 //webservice call to find all available vehicles
 $ret = $webservice->findVehicles(array("startDate"=>$startDate,
-                                       "startLocation"=>$startLocation,
                                        "returnDate"=>$returnDate,
-                                       "returnLocation"=>$returnLocation
+                                       "startLocation"=>$startLocation
                                        ));
 
 echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
