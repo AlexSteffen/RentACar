@@ -30,6 +30,16 @@ echo $error;
 echo "
 <script type='text/javascript'>
 
+function showNewCustomer(){
+    $('#formNewCustomer').show('fast');
+    $('#formExistingCustomer').hide('fast');
+}
+
+function showExistingCustomer(){
+    $('#formNewCustomer').hide('fast');
+    $('#formExistingCustomer').show('fast');
+}
+
 function toggleForm(){
     if($('#formExistingCustomer').is(':visible')) {
         $('#formNewCustomer').show('fast');
@@ -41,7 +51,7 @@ function toggleForm(){
 }
 
 $(document).ready(function(){
-
+    
     if('".$newOrExistingCustomer."' == 'existingCustomer'){
     
         $('#formExistingCustomer').show();
@@ -63,7 +73,7 @@ $(document).ready(function(){
 <div style='float:left;margin-left:20px;'>
 
     <form action='index.php?section=registration&".$urlGetParams."' method=post>
-    <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='toggleForm()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
+    <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
     <div id='formExistingCustomer'>
         <table>
         <tr>
@@ -77,7 +87,7 @@ $(document).ready(function(){
         </table>
     </div>
     
-    <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='toggleForm()'><label for='newCustomer'>Ich bin Neukunde</label><br>
+    <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'><label for='newCustomer'>Ich bin Neukunde</label><br>
     <div id='formNewCustomer'>
         <table>
         <tr>

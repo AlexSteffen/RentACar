@@ -40,6 +40,15 @@ if($newOrExistingCustomer == "existingCustomer"){
         $error .= "Bitte geben Sie ein Passwort an.<br>";
     }
     
+    //if some error occurs reload the registraton-site to allow userchanges
+    if($error != ""){
+        include_once('reservation.php');
+        exit;
+    }
+    
+    //Webservice call to do the customer login
+    $loginResult = $webservice->checkLogin(array("email"=>$loginEmail, "password"=>$loginPassword));
+    
 }else{ //the user is going to register as a new customer
     
     //check if the email address is correct
@@ -82,30 +91,40 @@ if($newOrExistingCustomer == "existingCustomer"){
         $error .= "Bitte geben Sie Ihre Stadt an.<br>";
     }
        
+    //if some error occurs reload the registraton-site to allow userchanges
+    if($error != ""){
+        include_once('reservation.php');
+        exit;
+    }
+
+    //No error occurs. Webservice call to register the new customer.
+    $registrationResult = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
+                                                    "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
+                                                    "city"=>$city, "zip"=>$zip, "phone"=>$phone));
+    
+    $returnValue = $registrationResult->return;
+
+    if($returnValue != True)
+    {
+        echo "Fehler!!!";
+        exit;
+    }
+    
+    //Webservice call to do the customer login
+    $loginResult = $webservice->checkLogin(array("email"=>$email, "password"=>$password));
 }
 
-//if some error occurs reload the registraton-site to allow userchanges
-if($error != ""){
+
+if($loginResult->return == NULL){
+    $error.="Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.";
     include_once('reservation.php');
     exit;
+}else{
+    $customer = new Customer;
+    $customer = $loginResult->return;
+    echo $customer->lastname;    
 }
 
-//No error occurs. Webservice call to register the new customer.
-$registrationDone = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
-                                                "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
-                                                "city"=>$city, "zip"=>$zip, "phone"=>$phone));
 
-
-$returnValue = $registrationDone->return;
-
-
-if($returnValue == True)
-{
-    echo "Registrierung erfolgreich!";
-}
-else
-{
-    echo "Fehler!!!";
-}
 
 ?>
