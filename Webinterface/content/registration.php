@@ -14,10 +14,13 @@ $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
                 "&vehicle_id=".$vehicleId;
                 
 //users information
+$newOrExistingCustomer = $_REQUEST["newOrExistingCustomer"];
 $loginEmail = $_REQUEST["login_email"];
 $loginPassword = $_REQUEST["login_password"];
 
 $email = $_REQUEST["email"];
+$password = $_REQUEST["password"];
+$salutation = $_REQUEST["salutation"];
 $lastname = $_REQUEST["lastname"];
 $forename = $_REQUEST["forename"];
 $street = $_REQUEST["street"];
@@ -26,7 +29,7 @@ $zip = $_REQUEST["zip"];
 $phone = $_REQUEST["phone"];
 
 //if the login email isset the user is going to login with an existing customer account
-if(isset($loginEmail)){
+if($newOrExistingCustomer == "existingCustomer"){
     
     //check if the email address is correct
     if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
@@ -37,14 +40,11 @@ if(isset($loginEmail)){
         $error .= "Bitte geben Sie ein Passwort an.<br>";
     }
     
-    
-    
-    
 }else{ //the user is going to register as a new customer
     
     //check if the email address is correct
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error .= "Die E-Mail-Adresse ccc ist nicht korrekt.<br>";
+        $error .= "Die E-Mail-Adresse ist nicht korrekt.<br>";
     }
     
     //webservice call to check if there is already a customer with the email address    
@@ -54,9 +54,12 @@ if(isset($loginEmail)){
         $error .= "Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.<br>";
     }
     
-    
     if($password=="") {
         $error .= "Bitte geben Sie ein Passwort an.<br>";
+    }
+    
+    if($lastname=="") {
+        $error .= "Bitte geben Sie Ihren Nachnamen an.<br>";
     }
     
     if($lastname=="") {
@@ -68,7 +71,7 @@ if(isset($loginEmail)){
     }
     
     if($street=="") {
-        $error .= "Bitte geben Sie Ihre Straße an.<br>";
+        $error .= "Bitte geben Sie Ihre Stra√üe an.<br>";
     }
     
     if($zip=="") {
@@ -81,19 +84,19 @@ if(isset($loginEmail)){
        
 }
 
-//if some error occurs reload the registraton-site again
+//if some error occurs reload the registraton-site to allow userchanges
 if($error != ""){
     include_once('reservation.php');
     exit;
 }
 
-$registrationDone = $webservice->register(array("email"=>$email, "password"=>$password, "forename"=>$forename, "lastname"=>$lastname,
-                            "street"=>$street, "city"=>$city, "zip"=>$zip, "phone"=>$phone));
+//No error occurs. Webservice call to register the new customer.
+$registrationDone = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
+                                                "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
+                                                "city"=>$city, "zip"=>$zip, "phone"=>$phone));
 
 
 $returnValue = $registrationDone->return;
-
-
 
 
 if($returnValue == True)

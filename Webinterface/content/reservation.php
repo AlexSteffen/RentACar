@@ -27,24 +27,30 @@ $vehicle = $result->return;
 
 echo $error;
 
-
 echo "
 <script type='text/javascript'>
 
 function toggleForm(){
     if($('#formExistingCustomer').is(':visible')) {
-        $('#formNewCustomer').show('slow');
-        $('#formExistingCustomer').hide('slow');
+        $('#formNewCustomer').show('fast');
+        $('#formExistingCustomer').hide('fast');
     }else{
-        $('#formNewCustomer').hide('slow');
-        $('#formExistingCustomer').show('slow');
+        $('#formNewCustomer').hide('fast');
+        $('#formExistingCustomer').show('fast');
     }
 }
 
 $(document).ready(function(){
 
-    $('#formExistingCustomer').hide();
-    $('#existingCustomer').click();
+    if('".$newOrExistingCustomer."' == 'existingCustomer'){
+    
+        $('#formExistingCustomer').show();
+        $('#existingCustomer').click();
+
+    }else{
+        $('#formNewCustomer').show();
+        $('#newCustomer').click();
+    }
     
 });
 
@@ -57,58 +63,64 @@ $(document).ready(function(){
 <div style='float:left;margin-left:20px;'>
 
     <form action='index.php?section=registration&".$urlGetParams."' method=post>
-    <input type='radio' name='newOrExistingCustomer' id='existingCustomer' onclick='toggleForm()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
+    <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='toggleForm()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
     <div id='formExistingCustomer'>
         <table>
         <tr>
             <td>E-Mail:</td>
-            <td><input type='text' name='login_email' size='35'></td>
+            <td><input type='text' name='login_email' size='35' value='".$loginEmail."'></td>
         </tr>
         <tr>
             <td>Passwort:</td>
-            <td><input type='password' name='login_password' size='35'></td>
+            <td><input type='password' name='login_password' size='35' value='".$loginPassword."'></td>
         </tr>
         </table>
     </div>
     
-    <input type='radio' name='newOrExistingCustomer' id='newCustomer' onclick='toggleForm()'><label for='newCustomer'>Ich bin Neukunde</label><br>
+    <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='toggleForm()'><label for='newCustomer'>Ich bin Neukunde</label><br>
     <div id='formNewCustomer'>
         <table>
         <tr>
             <td>E-Mail:</td>
-            <td><input type='text' name='email' size='35'></td>
+            <td><input type='text' name='email' size='35' value='".$email."'></td>
         </tr>
         <tr>
             <td>Passwort:</td>
-            <td><input type='password' name='password' size='35'></td>
+            <td><input type='password' name='password' size='35' value='".$password."'></td>
         </tr>
         <tr>
             <td>Anrede:</td>
-            <td><input type='text' name='salutation' size='35'></td>
+            <td>
+            <select name='salutation'>
+            <option value='Herr' ".($salutation=="Herr"?"selected":"").">Herr</option>
+            <option value='Frau' ".($salutation=="Frau"?"selected":"").">Frau</option>
+            <option value='Firma' ".($salutation=="Firma"?"selected":"").">Firma</option>
+            </select>
+            </td>
         </tr>
         <tr>
             <td>Nachname:</td>
-            <td><input type='text' name='lastname' size='35'></td>
+            <td><input type='text' name='lastname' size='35' value='".$lastname."'></td>
         </tr>
         <tr>
             <td>Vorname:</td>
-            <td><input type='text' name='forename' size='35'></td>
+            <td><input type='text' name='forename' size='35' value='".$forename."'></td>
         </tr>
         <tr>
             <td>Straße:</td>
-            <td><input type='text' name='street' size='35'></td>
-        </tr>
-        <tr>
-            <td>Wohnort:</td>
-            <td><input type='text' name='city' size='35'></td>
+            <td><input type='text' name='street' size='35' value='".$street."'></td>
         </tr>
         <tr>
             <td>PLZ:</td>
-            <td><input type='text' name='zip' size='35'></td>
+            <td><input type='text' name='zip' size='35' value='".$zip."'></td>
+        </tr>
+        <tr>
+            <td>Wohnort:</td>
+            <td><input type='text' name='city' size='35' value='".$city."'></td>
         </tr>
         <tr>
             <td>Telefon:</td>
-            <td><input type='text' name='phone' size='35'></td>
+            <td><input type='text' name='phone' size='35' value='".$phone."'></td>
         </tr>
         <tr>
             <td><br></td>
