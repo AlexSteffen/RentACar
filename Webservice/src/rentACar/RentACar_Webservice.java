@@ -88,7 +88,7 @@ public class RentACar_Webservice {
 	 * @param returnLocation
 	 * @return
 	 */
-	public Vehicle[] findVehicles(String startDate, int startLocation, String returnDate, int returnLocation){
+	public Vehicle[] findVehicles(String startDate, int startLocation, String returnDate){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 		
 		//Convert the dates
@@ -109,7 +109,9 @@ public class RentACar_Webservice {
 		//In this query is the logic implemented that only cars are found if they are available
 		//in the requested timeframe
 		String query = 	"SELECT * FROM vehicles "+ 
-						"WHERE NOT EXISTS " +
+						"WHERE" +
+						"location_id=" + startLocation + " " +
+						"AND NOT EXISTS " +
 						"("+
 							"SELECT * FROM rentings WHERE "+
 							"vehicle_id = vehicles.id "+
@@ -277,6 +279,7 @@ public class RentACar_Webservice {
 			Vehicle vehicle = new Vehicle();
 			
 			vehicle.setId(result.getInt("id"));
+			vehicle.setLocationId(result.getInt("location_id"));
 			vehicle.setManufacturer(result.getString("manufacturer"));
 			vehicle.setModel(result.getString("model"));
 			vehicle.setColor(result.getString("color"));
@@ -330,13 +333,18 @@ public class RentACar_Webservice {
 			String lastname, String street, String city, 
 			String zip, String phone) throws SQLException, ClassNotFoundException 
 	{
-
+		if(customerExists(email))
+		{
 				DataSource.executeNonQuery("INSERT INTO customers(email, password, salutation, forename, lastname, street, city, zip, phone) " +
 						"VALUES('" + email + "', '" + password + "', '" + salutation + "', '" + forename + "', '" 
 						+ lastname + "', '" + street + "', '" + city + "', '" + zip + "', '" + phone + "')");
 				
 				return true;
-
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/***

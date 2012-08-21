@@ -8,6 +8,7 @@ package rentACar;
 public class Vehicle {
 
 	private int id;
+	private int locationId;
 	private String manufacturer;
 	private String model;
 	private String color;
@@ -158,5 +159,11 @@ public class Vehicle {
 	
 	public void setNavigationSystem(int navigationSystem) {
 		this.navigationSystem = navigationSystem;
+	}
+	public int getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
 	}
 }

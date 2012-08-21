@@ -11,8 +11,7 @@ public class Renting {
 	private int vehicleId;
 	private int customerId;
 	private String startDate;
-	private String endDate;
-	private int returnplace;
+	private String returnDate;
 	
 	public int getId() {
 		return id;
@@ -46,19 +45,13 @@ public class Renting {
 		this.startDate = startDate;
 	}
 	
-	public String getEndDate() {
-		return endDate;
+
+	public String getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
 	}
 	
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	
-	public int getReturnplace() {
-		return returnplace;
-	}
-	
-	public void setReturnplace(int returnplace) {
-		this.returnplace = returnplace;
-	}
 }
