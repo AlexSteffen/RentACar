@@ -1,6 +1,21 @@
 <?php
+//load all passed get parameters passed from the site before
+$vehicleId = $_REQUEST["vehicle_id"];
 
-include_once('main.php');
+$startLocation = $_REQUEST["startLocation"];
+$startDate = $_REQUEST["startDate"];
+
+$returnLocation = $_REQUEST["returnLocation"];
+$returnDate = $_REQUEST["returnDate"];
+
+//users search parameters have to be passed to each site 
+$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
+                "&returnDate=".$returnDate."&returnLocation=".$returnLocation.
+                "&vehicle_id=".$vehicleId;
+                
+//users information
+$loginEmail = $_REQUEST["login_email"];
+$loginPassword = $_REQUEST["login_password"];
 
 $email = $_REQUEST["email"];
 $lastname = $_REQUEST["lastname"];
@@ -10,11 +25,75 @@ $city = $_REQUEST["city"];
 $zip = $_REQUEST["zip"];
 $phone = $_REQUEST["phone"];
 
-$registrationDone = $webservice->register(array("email"=>$email, "forename"=>$forename, "lastname"=>$lastname,
+//if the login email isset the user is going to login with an existing customer account
+if(isset($loginEmail)){
+    
+    //check if the email address is correct
+    if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
+        $error .= "Die E-Mail-Adresse ist nicht korrekt.<br>";
+    }
+    
+    if($loginPassword=="") {
+        $error .= "Bitte geben Sie ein Passwort an.<br>";
+    }
+    
+    
+    
+    
+}else{ //the user is going to register as a new customer
+    
+    //check if the email address is correct
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error .= "Die E-Mail-Adresse ccc ist nicht korrekt.<br>";
+    }
+    
+    //webservice call to check if there is already a customer with the email address    
+    $result = $webservice->customerExists(array("email"=>$email));
+    
+    if($result==NULL) {
+        $error .= "Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.<br>";
+    }
+    
+    
+    if($password=="") {
+        $error .= "Bitte geben Sie ein Passwort an.<br>";
+    }
+    
+    if($lastname=="") {
+        $error .= "Bitte geben Sie Ihren Nachnamen an.<br>";
+    }
+    
+    if($forename=="") {
+        $error .= "Bitte geben Sie Ihren Vornamen an.<br>";
+    }
+    
+    if($street=="") {
+        $error .= "Bitte geben Sie Ihre Stra§e an.<br>";
+    }
+    
+    if($zip=="") {
+        $error .= "Bitte geben Sie Ihre PLZ an.<br>";
+    }
+    
+    if($city=="") {
+        $error .= "Bitte geben Sie Ihre Stadt an.<br>";
+    }
+       
+}
+
+//if some error occurs reload the registraton-site again
+if($error != ""){
+    include_once('reservation.php');
+    exit;
+}
+
+$registrationDone = $webservice->register(array("email"=>$email, "password"=>$password, "forename"=>$forename, "lastname"=>$lastname,
                             "street"=>$street, "city"=>$city, "zip"=>$zip, "phone"=>$phone));
 
 
 $returnValue = $registrationDone->return;
+
+
 
 
 if($returnValue == True)

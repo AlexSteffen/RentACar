@@ -323,13 +323,13 @@ public class RentACar_Webservice {
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
-	public Boolean register(String email, String forename, 
+	public Boolean register(String email,String password, String forename, 
 			String lastname, String street, String city, 
 			String zip, String phone) throws SQLException, ClassNotFoundException 
 	{
 
-				DataSource.executeNonQuery("INSERT INTO customers(email, forename, lastname, street, city, zip, phone) " +
-						"VALUES('" + email + "', '" + forename + "', '" 
+				DataSource.executeNonQuery("INSERT INTO customers(email, password, forename, lastname, street, city, zip, phone) " +
+						"VALUES('" + email + "','" + password + "', '" + forename + "', '" 
 						+ lastname + "', '" + street + "', '" + city + "', '" + zip + "', '" + phone + "')");
 				
 				return true;

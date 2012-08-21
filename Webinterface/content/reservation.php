@@ -11,7 +11,7 @@ $returnDate = $_REQUEST["returnDate"];
 
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
-                "&returnDate=".$startDate."&returnLocation=".$returnLocation.
+                "&returnDate=".$returnDate."&returnLocation=".$returnLocation.
                 "&vehicle_id=".$vehicleId;
                 
                 
@@ -25,6 +25,7 @@ $result = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = new Vehicle();
 $vehicle = $result->return;
 
+echo $error;
 
 
 echo "
@@ -32,11 +33,11 @@ echo "
 
 function toggleForm(){
     if($('#formExistingCustomer').is(':visible')) {
-        $('#formNewCustomer').show('fast');
-        $('#formExistingCustomer').hide('fast');
+        $('#formNewCustomer').show('slow');
+        $('#formExistingCustomer').hide('slow');
     }else{
-        $('#formNewCustomer').hide('fast');
-        $('#formExistingCustomer').show('fast');
+        $('#formNewCustomer').hide('slow');
+        $('#formExistingCustomer').show('slow');
     }
 }
 
@@ -55,7 +56,7 @@ $(document).ready(function(){
 
 <div style='float:left;margin-left:20px;'>
 
-    <form action='index.php?section=reservation&".$urlGetParams."' method=post>
+    <form action='index.php?section=registration&".$urlGetParams."' method=post>
     <input type='radio' name='newOrExistingCustomer' id='existingCustomer' onclick='toggleForm()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
     <div id='formExistingCustomer'>
         <table>
