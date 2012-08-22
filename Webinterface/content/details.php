@@ -24,6 +24,10 @@ echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
 
         
 echo "
+<span style='font-size: 14pt;'>
+<a href='index.php?section=reservation&vehicle_id=".$vehicle->id."&".$urlGetParams."'>Jetzt reservieren</a>
+</span>
+
 <table class='detail'>
 <tr>
     <td>
@@ -183,20 +187,6 @@ echo "
                     ".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag
                 </td>
             </tr>
-            <tr>
-                <td><br><br></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    
-                </td>
-                <td>
-                    <input type='button' id='order' value='Hier geht´s zur Reservierung'>
-                </td>
-            </tr>
-            
-            
         </table>
     </td>
 </tr>
