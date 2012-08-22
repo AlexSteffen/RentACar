@@ -335,9 +335,10 @@ public class RentACar_Webservice {
 			String zip, String phone) throws SQLException, ClassNotFoundException 
 	{
 		
-		if(customerExists(email))
+		if(!customerExists(email))
 		{
-				DataSource.executeNonQuery("INSERT INTO customers (`email`, `password`, `salutation`, `forename`, `lastname`, `street`, `zip`, `city`, `phone`) " +
+				DataSource.executeNonQuery("INSERT INTO customers (`email`, `password`, `salutation`, `forename`, " +
+						"`lastname`, `street`, `zip`, `city`, `phone`) " +
 						"VALUES('" + email + "', '" + password + "', '" + salutation + "', '" + forename + "', '" 
 						+ lastname + "', '" + street + "', '" + zip + "', '" + city + "', '" + phone + "')");
 				

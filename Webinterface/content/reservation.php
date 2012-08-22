@@ -64,7 +64,9 @@ $(document).ready(function(){
 
 </script>";
 
-$errorOutput .= "<div id='error_box'>Es sind Fehler aufgetreten:<br><ul>$error</ul></div>";
+if($error != ""){
+    $errorOutput .= "<div id='error_box'>Es sind Fehler aufgetreten:<br><ul>$error</ul></div>";
+}
 
 
 echo "
