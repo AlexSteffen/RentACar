@@ -5,6 +5,9 @@ $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $returnDate = $_REQUEST["returnDate"];
 
+
+echo Converter::checkDateTime($startDate);
+
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
                 "&returnDate=".$returnDate."&vehicle_id=".$vehicleId;

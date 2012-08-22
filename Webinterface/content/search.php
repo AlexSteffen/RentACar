@@ -12,6 +12,7 @@ $returnTime = $_REQUEST["returnTime"];
 $startDate = Converter::toDateTime($startDate, $startTime);
 $returnDate = Converter::toDateTime($returnDate, $returnTime);
 
+
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate;
 
