@@ -414,9 +414,114 @@ public class RentACar_Webservice {
 			
 		} catch (Exception e) 
 		{
-			Renting newrent = new Renting();
-			newrent.setReturnDate(e.getMessage());
-			return newrent;
+			return null;
 		}
+	}
+	
+	/***
+	 * adding a rating to a vehicle. Max value for a rating is 5.
+	 * @param id of the renting which should be rated
+	 * @param rating value
+	 */
+	public void doRating(int rentingId, int ratingValue) 
+	{
+		try 
+		{
+			// updating the database with the new rating value
+			DataSource.executeNonQuery("UPDATE rentings " +
+					"SET rating=" + (ratingValue>4?5:ratingValue) + " WHERE id=" + rentingId);
+			
+					
+		} catch (Exception e) 
+		{
+
+		}
+	}
+	
+	/***
+	 * getting the rating for a specific vehicle
+	 * @param vehicle id
+	 * @return rating as a double
+	 */
+	public double getRating(int vehicle_id)
+	{
+		int number = 0;
+		double sum = 0;
+		double rating = 0;
+		
+		try 
+		{
+			// getting each renting from the rentings table where the specific vehicle was used
+			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE vehicle_id=" + vehicle_id);
+			
+			if (result != null) 
+			{
+				// sum up the ratings and count the number of ratings
+				while (result.next()) 
+				{
+					// only sum up ratings with a minimum value of 1 and only count those
+					if(result.getDouble("rating") != 0)
+					{
+						sum += result.getDouble("rating");
+						number++;
+					}
+				}
+				
+				// prohibit division by zero
+				if(number != 0)
+				{
+					// calculate the rating
+					rating = sum / number;
+				}
+			}
+			
+			return rating;
+			
+		} catch (Exception e) {
+
+			return rating;
+		}
+	}
+	
+	/***
+	 * getting all rentings of a customer
+	 * @param customerId
+	 * @return an array of rentings 
+	 */
+	public Renting[] getRentingsByCustomerId(int customerId)
+	{
+		// creating an ArrayList-instance 
+		ArrayList<Renting> rentings = new ArrayList<Renting>();
+		
+		try 
+		{
+			// getting all rentings of a customer from the database
+			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE customer_id=" + customerId);
+			
+			// adding all rentings to the ArrayList
+			while(result.next())
+			{
+				Renting renting = new Renting();
+				
+				renting.setId(result.getInt("id"));
+				renting.setVehicleId(result.getInt("vehicle_id"));
+				renting.setCustomerId(result.getInt("customer_id"));
+				renting.setStartDate(result.getString("start_date"));
+				renting.setReturnDate(result.getString("return_date"));
+				renting.setTotalPrice(result.getDouble("total_price"));
+				renting.setRating(result.getInt("rating"));
+				
+				rentings.add(renting);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		// converting the ArrayList into an Array
+		Renting[] rentingArray = (Renting[])rentings.toArray(new Renting[rentings.size()]);
+		
+		return rentingArray;
+		
 	}
 }

@@ -2,13 +2,20 @@
 
 include_once('main.php');
 
-$user = $webservice->checkLogin(array("email"=>"a.steffen@me.com",
-                              "password"=>"test"));
-
-var_dump($user->return);
 
 
-$reservation = $webservice->doReservation(array("vehicleId"=>1,"customerId"=>1, "startDate"=>"2012-08-12 13:00:00","returnDate"=>"2012-08-15 13:00:00", "totalPrice"=>345));
 
-echo var_dump($reservation->return);
+$webservice->doRating(array("rentingId"=>1, "ratingValue"=>5));
+$webservice->doRating(array("rentingId"=>2, "ratingValue"=>4));
+$webservice->doRating(array("rentingId"=>3, "ratingValue"=>3));
+
+
+$rating = $webservice->getRating(array("vehicle_id"=>1));
+
+echo var_dump($rating->return);
+
+$rentings = $webservice->getRentingsByCustomerId(array("customerId"=>1));
+
+echo var_dump($rentings->return);
+
 ?>
