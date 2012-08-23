@@ -137,6 +137,8 @@ if($loginResult->return == NULL){
     $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
     $sum = $vehicle->pricePerDay * $rentalDays;
 
+    echo "<h1>Reservierung bestätigen</h1>";
+    
     echo "<b>Guten Tag ".$customer->salutation." ".$customer->lastname.", </b><br>
     bitte prüfen Sie Ihre Auswahl und klicken Sie auf 'Jetzt reservieren' um das Fahrzeug zu reservieren.<br><br>";
     
@@ -297,21 +299,10 @@ if($loginResult->return == NULL){
                     <td></td>
                 </tr>
                 <tr>
-                    <td>
-                        <b>Reservierung:</b>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Verfügbarkeit:</td>
-                    <td>Nein</td>
-                </tr>
-                <tr>
-                    <td>
-                        Preis:
-                    </td>
-                    <td>
-                        ".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag
+                    <td colspan='2'>
+                        <form action='index.php?section=confirmation&$urlGetParams' method='post'>
+                            <input type='submit' value='Jetzt reservieren' style='width:300px;font-size:22px;'>
+                        </form>
                     </td>
                 </tr>
             </table>
@@ -319,7 +310,7 @@ if($loginResult->return == NULL){
     </tr>
     </table>
     
-    <a href='index.php?section=confirmation'>Jetzt reservieren</a>
+    
     ";
 }
 

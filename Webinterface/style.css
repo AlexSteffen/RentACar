@@ -13,14 +13,19 @@ body{
     background-color: #e1e1e1;
 }
 
-a{
+a:link, a:active, a:visited{
     text-decoration: none;
+    color: #3f7fa8;
 }
 
 a:hover{
     text-decoration: underline;
 }
 
+h1{
+    color: #3f7fa8;
+    font-size: 18pt;
+}
 /* styles for the list of cars */
 #cardetails{
     float: left;
@@ -136,4 +141,8 @@ select.locationPicker{
     float: left;
     width: 300px;
     color: red;
+}
+
+#login{
+    color: white;
 }

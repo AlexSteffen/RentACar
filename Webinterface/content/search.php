@@ -2,27 +2,36 @@
 
 //load all passed values from the search-form
 $startLocation = $_REQUEST["startLocation"];
-$startDate = $_REQUEST["startDate"];
-$startTime = $_REQUEST["startTime"];
 
-$returnDate = $_REQUEST["returnDate"];
-$returnTime = $_REQUEST["returnTime"];
-
-//convert the date and time to a DateTime string
-$startDate = Converter::toDateTime($startDate, $startTime);
-$returnDate = Converter::toDateTime($returnDate, $returnTime);
-
+//check if the page is loaded in context of a search query
+if(isset($_REQUEST["startSearchDate"])){
+        
+        $startDate = $_REQUEST["startSearchDate"];
+        $startTime = $_REQUEST["startSearchTime"];
+        $returnDate = $_REQUEST["returnSearchDate"];
+        $returnTime = $_REQUEST["returnSearchTime"];
+        
+        //convert the date and time to a DateTime string
+        $startDate = Converter::toDateTime($startDate, $startTime);
+        $returnDate = Converter::toDateTime($returnDate, $returnTime);
+}else{
+        $startDate = $_REQUEST["startDate"];
+        $returnDate = $_REQUEST["returnDate"];
+        
+}
 
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate;
 
 //webservice call to find all available vehicles
-$ret = $webservice->findVehicles(array("startDate"=>$startDate,
+$vehiclesResult = $webservice->findVehicles(array("startDate"=>$startDate,
                                        "startLocation"=>$startLocation,
                                        "returnDate"=>$returnDate                                       
                                        ));
-//echo var_dump($ret->return);
-                                       
+                                  
+
+echo "<h1>Verfügbare Fahrzeuge</h1>";
+                                  
                                        
 echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
@@ -30,7 +39,7 @@ echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
 
 //loop at all found vehicles and render HTML
-foreach($ret->return as $item){
+foreach($vehiclesResult->return as $item){
   $vehicle = new Vehicle;
   $vehicle = $item;
   

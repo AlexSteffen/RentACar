@@ -68,7 +68,8 @@ foreach($locations as $l){
 }
 
 echo "
-<form action='index.php?section=search' method='post'>
+<form action='index.php' method='get'>
+<input type='hidden' name='section' value='search'>
 
 <div class='box'>
 
@@ -87,11 +88,11 @@ echo "
         <tr>
             <td>Datum:</td>
             <td>
-                <input type='text' id='datepicker' name='startDate' class='large' style='width:140px;' value='$currentDate'>
+                <input type='text' id='datepicker' name='startSearchDate' class='large' style='width:140px;' value='$currentDate'>
             </td>
             <td>Uhrzeit:</td>
             <td>
-                <input type='text' id='timepicker' name='startTime' class='large' style='width:100px;' value='$currentTime'>
+                <input type='text' id='timepicker' name='startSearchTime' class='large' style='width:100px;' value='$currentTime'>
             </td>
         </tr>
     </table>
@@ -110,11 +111,11 @@ echo "
         <tr>
             <td>Datum:</td>
             <td>
-                <input type='text' id='datepicker2' name='returnDate' class='large' style='width:140px;' value='$tomorrowDate'>
+                <input type='text' id='datepicker2' name='returnSearchDate' class='large' style='width:140px;' value='$tomorrowDate'>
             </td>
             <td>Uhrzeit:</td>
             <td>
-                <input type='text' id='timepicker2' name='returnTime' class='large' style='width:100px;' value='$currentTime'>
+                <input type='text' id='timepicker2' name='returnSearchTime' class='large' style='width:100px;' value='$currentTime'>
             </td>
         </tr>
     </table>

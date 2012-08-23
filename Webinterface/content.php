@@ -26,6 +26,9 @@ switch($_REQUEST["section"]){
     case "confirmation":
         include_once("content/confirmation.php");
         break;
+    case "login":
+        include_once("content/login.php");
+        break;
     case "test":
         include_once("content/test.php");
         break;

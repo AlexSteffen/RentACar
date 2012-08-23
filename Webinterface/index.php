@@ -11,6 +11,32 @@ session_start();
 
 //include the important main.php file
 include_once('main.php');
+
+//login
+if(isset($_REQUEST["login"])){
+		//load all passed get parameters passed from the site before
+		$email = $_REQUEST["email"];
+		$password = $_REQUEST["password"];
+		
+		//webservice call to check the login
+		$customer = new Customer;
+		$customerResult = $webservice->checkLogin(array("email" => $email, "password" => $password));
+		$customer = $customerResult->return;
+		
+		if($customer != NULL){
+				$_SESSION["customer_id"] = $customer->id;
+		}
+}
+
+//logout
+If($_REQUEST["logout"]=="1"){
+		//remove all the variable in the session 
+		session_unset(); 
+	 
+		//destroy the session 
+		session_destroy(); 
+}
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -31,6 +57,28 @@ include_once('main.php');
     
     <div id='head'>
 				<a id='logo' href="index.php"></a>
+				<div id='login'>
+						<form action='index.php?section=login' method='post'>
+								<?
+								if(isset($_SESSION["customer_id"])){
+										$customerResult = $webservice->getCustomerById(array("id" => $_SESSION["customer_id"]));
+										
+										//get the customer
+										$customer = new Customer;
+										$customer = $customerResult->return;
+										
+										echo "Hallo ".$customer->salutation." ".$customer->lastname.", sie sind eingeloggt. <a href='index.php?logout=1' style='color:black'>Logout</a>";
+								}else{
+								
+										echo "
+										<b>Kundenlogin:</b><br>
+										E-Mail: <input type='text' name='email' value='".$_REQUEST['email']."'> Passwort: <input type='password' name='password'>
+										<input type='submit' name='login' value='Login'>
+										";
+								}
+								?>
+						</form>
+				</div>
     </div>
     
     <div id='content'>

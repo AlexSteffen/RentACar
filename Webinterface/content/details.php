@@ -5,9 +5,6 @@ $startLocation = $_REQUEST["startLocation"];
 $startDate = $_REQUEST["startDate"];
 $returnDate = $_REQUEST["returnDate"];
 
-
-echo Converter::checkDateTime($startDate);
-
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
                 "&returnDate=".$returnDate."&vehicle_id=".$vehicleId;
@@ -16,6 +13,10 @@ $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
 $vehicle = new Vehicle;
 $returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = $returnObj->return;
+
+echo "
+<a href='index.php?section=search&".$urlGetParams."'><< zurück zur Liste</a>
+<h1>Detailansicht</h1>";
 
 echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
