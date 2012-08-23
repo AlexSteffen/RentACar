@@ -22,6 +22,7 @@ include_once("class/converter.php");
 include_once("class/location.php");
 include_once("class/vehicle.php");
 include_once("class/customer.php");
+include_once("class/renting.php");
 
 //** Create a SoapClient-Object to determine the place of the WSDL file.
 //** The first parameter requires the URI to the WSDL document. The second parameter is optional for
@@ -32,7 +33,8 @@ $webservice = new SoapClient("http://localhost:8080/axis2/services/RentACar?wsdl
                                                                                      'trace'=>1,
                                                                                      'classmap' => array('Vehicle' => "Vehicle",
                                                                                                          'Location' => "Location",
-                                                                                                         'Customer' => "Customer")
+                                                                                                         'Customer' => "Customer",
+                                                                                                         'Renting' => "Renting")
                                                                                      ));
 
 //*************

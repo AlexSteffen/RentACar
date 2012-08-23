@@ -12,6 +12,8 @@ public class Renting {
 	private int customerId;
 	private String startDate;
 	private String returnDate;
+	private double totalPrice;
+	private int rating;
 	
 	public int getId() {
 		return id;
@@ -52,6 +54,22 @@ public class Renting {
 
 	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 	
 }

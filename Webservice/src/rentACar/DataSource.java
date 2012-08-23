@@ -80,4 +80,34 @@ public class DataSource {
 		//close the database connection 
 		con.close();
 	}
+	
+	/**
+	 * Executes a statement, which might be an INSERT, UPDATE or DELETE statement.
+	 * Call this method if you do not expect a returning ResultSet from the database.
+	 * @param statement: SQL-statement string
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public static int executeNonQuery(String statement, Boolean returnValue) 
+		throws SQLException, ClassNotFoundException{
+		
+		int id = 0;
+		
+		if (returnValue) {
+			
+			//database connection
+			Connection con = DataSource.getConnection();
+			
+			//create a SQL statement
+			Statement stmt = con.createStatement();
+			
+			//execute the statement now
+			id = stmt.executeUpdate(statement);
+			
+			//close the database connection 
+			con.close();
+		}
+		
+		return id;
+	}
 }

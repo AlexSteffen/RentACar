@@ -350,6 +350,7 @@ public class RentACar_Webservice {
 		}
 	}
 	
+	
 	/***
 	 * This method checks if a customer already exists by id.
 	 * @param email 
@@ -369,6 +370,53 @@ public class RentACar_Webservice {
 			
 			// returns null in case of an error
 			return null;
+		}
+	}
+	
+	/***
+	 * Method to do a reservation 
+	 * @param vehicle id
+	 * @param customer Id 
+	 * @param startDate
+	 * @param returnDate
+	 * @param totalPrice
+	 * @return It returns the renting
+	 */			   
+	public Renting doReservation(int vehicleId, int customerId, String startDate, String returnDate, double totalPrice)
+	{
+		try {
+			
+			
+			int rentingId = DataSource.executeNonQuery("INSERT INTO rentings " +
+					"(vehicle_id, customer_id, start_date, return_date, total_price) " +
+					"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
+							", 234.12)", true);
+			
+			
+			
+			
+			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE id=" + rentingId);
+			
+			result.first();
+			
+			Renting renting = new Renting();
+			
+			renting.setId(result.getInt("id"));
+			renting.setVehicleId(result.getInt("vehicle_id"));
+			renting.setCustomerId(result.getInt("customer_id"));
+			renting.setStartDate(result.getString("start_date"));
+			renting.setReturnDate(result.getString("return_date"));
+			renting.setTotalPrice(result.getDouble("total_price"));
+			
+			return renting;
+			
+			
+			
+		} catch (Exception e) 
+		{
+			Renting newrent = new Renting();
+			newrent.setReturnDate(e.getMessage());
+			return newrent;
 		}
 	}
 }
