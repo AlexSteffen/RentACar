@@ -1,6 +1,15 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 16.8.2012
+//
+// Description:
+// This is the main site. Every request for pages will load this file at first.
+//*********************
+
 session_start();
 
+//include the important main.php file
 include_once('main.php');
 ?>
 

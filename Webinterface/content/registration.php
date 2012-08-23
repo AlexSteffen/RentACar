@@ -102,17 +102,7 @@ if($newOrExistingCustomer == "existingCustomer"){
 
     if($returnValue != True)
     {
-        echo $email."<<<br>";
-        echo $password."<<<br>";
-        echo $salutation."<<<br>";
-        echo $forename."<<<br>";
-        echo $lastname."<<<br>";
-        echo $street."<<<br>";
-        echo $city."<<<br>";
-        echo $zip."<<<br>";
-        echo $phone."<<<br>";
-        
-        echo "Unerwarteter Fehler beim Registrieren des Kunden.";
+        echo "Ein unerwarteter Fehler beim Registrieren des Kunden ist aufgetreten.";
         exit;
     }
     
@@ -120,15 +110,217 @@ if($newOrExistingCustomer == "existingCustomer"){
     $loginResult = $webservice->checkLogin(array("email"=>$email, "password"=>$password));
 }
 
-
+//if the login was not successful show an error message else show rental information for confirmation
 if($loginResult->return == NULL){
-    $error.="Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.";
+    $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
     include_once('reservation.php');
     exit;
+    
 }else{
+    
+    //get the customer
     $customer = new Customer;
     $customer = $loginResult->return;
-    echo $customer->lastname;    
+    
+    //Webservice call to get the vehicle
+    $vehicleResult = $webservice->getVehicleById(array("id"=>$vehicleId));
+    
+    $vehicle = new Vehicle;
+    $vehicle = $vehicleResult->return;
+    
+    //Webservice call to get the location
+    $locationResult = $webservice->getLocationById(array("id"=>$vehicle->locationId));
+    $location = new Location;
+    $location = $locationResult->return;
+    
+    //calculate the difference between the dates to get the total_price
+    $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
+    $sum = $vehicle->pricePerDay * $rentalDays;
+
+    echo "<b>Guten Tag ".$customer->salutation." ".$customer->lastname.", </b><br>
+    bitte prüfen Sie Ihre Auswahl und klicken Sie auf 'Jetzt reservieren' um das Fahrzeug zu reservieren.<br><br>";
+    
+    
+    echo "
+    <table>
+    <tr><td valign='top'>Abholort:</td><td valign='top'><b>".$location->city."</b><br>".$location->street.", ".$location->zip." ".$location->city."</td></tr>
+    <tr><td>Mietbeginn:</td><td><b>".Converter::toGermanDateTimeString($startDate)."</b></td></tr>
+    <tr><td>Mietende:</td><td><b>".Converter::toGermanDateTimeString($returnDate)."</b></td></tr>
+    <tr><td>Miettage:</td><td><b>".$rentalDays."</b></td></tr>
+    
+    <tr><td>Kosten:</td><td><b>".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag</b></td></tr>
+    <tr><td>Gesamtbetrag:</td><td><b>".Converter::toDecimalString($sum)." €</b></td></tr>
+    </table>
+    <br><br>";
+
+        
+    echo "
+    <table class='detail'>
+    <tr>
+        <td>
+            <img width='300px' id='pic' src='renderVehicleImage.php?id=".$vehicle->id."'>
+        </td>
+        <td>
+            <table class='detail'>
+                <tr>
+                    <td style='width: 150px'>
+                        <b>Allgemeines:</b>
+                    </td>
+                    <td   style='width: 150px'></td>
+                </tr>
+                <tr>
+                    <td>
+                        Hersteller:
+                    </td>
+                    <td>
+                        ".$vehicle->manufacturer."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Modell:
+                    </td>
+                    <td>
+                        ".$vehicle->model."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Typ:
+                    </td>
+                    <td>
+                        ".$vehicle->type."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Farbe:
+                    </td>
+                    <td>
+                        ".$vehicle->color."
+                    </td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                    <td></td>
+                </tr>			
+                <tr>
+                    <td>
+                        <b>Motorisierung:</b>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        Kraftstoff:
+                    </td>
+                    <td>
+                        ".$vehicle->engineType."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        PS:
+                    </td>
+                    <td>
+                        ".$vehicle->engineHp." PS
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Verbrauch:
+                    </td>
+                    <td>
+                        ".Converter::toDecimalString($vehicle->engineConsum)." l/100km
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Schaltung:
+                    </td>
+                    <td>
+                        ".($vehicle->gear == 1 ? "Schaltgetriebe" : "Automatik")."
+                    </td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                    <td></td>
+                </tr>			
+                <tr>
+                    <td>
+                        <b>Ausstattung:</b>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        Anzahl Türen:
+                    </td>
+                    <td>
+                        ".$vehicle->doors."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Raucherfahrzeug:
+                    </td>
+                    <td>
+                        ".($vehicle->smokers == 1 ? "Ja" : "Nein")."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Navigation:
+                    </td>
+                    <td>
+                        ".($vehicle->navigationSystem == 1 ? "Ja" : "Nein")."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sitze:
+                    </td>
+                    <td>
+                        ".$vehicle->seats."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Klimaanlage:
+                    </td>
+                    <td>
+                        ".($vehicle->climatic == 1 ? "Ja" : "Nein")."
+                    </td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Reservierung:</b>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Verfügbarkeit:</td>
+                    <td>Nein</td>
+                </tr>
+                <tr>
+                    <td>
+                        Preis:
+                    </td>
+                    <td>
+                        ".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </table>
+    
+    <a href='index.php?section=confirmation'>Jetzt reservieren</a>
+    ";
 }
 
 
