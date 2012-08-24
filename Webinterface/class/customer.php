@@ -1,6 +1,7 @@
 <?php
 class Customer{
     public $id;
+    public $salutation;
     public $forename;
     public $lastname;
     public $password;

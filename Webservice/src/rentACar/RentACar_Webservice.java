@@ -115,10 +115,10 @@ public class RentACar_Webservice {
 						"("+
 							"SELECT * FROM rentings WHERE "+
 							"vehicle_id = vehicles.id "+
-							"AND "+
+							"AND ("+
 							"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
 							"OR "+
-							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date) " +
+							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date) )" +
 						")";
 		
 		try {		
@@ -146,6 +146,7 @@ public class RentACar_Webservice {
 				vehicle.setNavigationSystem(result.getInt("navigation_system"));
 				
 				if(result.getBinaryStream("image") != null){
+					//convert the image (blob) from the database in a bytearray. 
 					vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
 				}
 				
@@ -374,7 +375,7 @@ public class RentACar_Webservice {
 	}
 	
 	/***
-	 * Method to do a reservation 
+	 * Method to do a reservation.
 	 * @param vehicle id
 	 * @param customer Id 
 	 * @param startDate
@@ -419,17 +420,23 @@ public class RentACar_Webservice {
 	}
 	
 	/***
-	 * adding a rating to a vehicle. Max value for a rating is 5.
+	 * Adding a rating to a vehicle. Max value for a rating is 5.
 	 * @param id of the renting which should be rated
 	 * @param rating value
 	 */
-	public void doRating(int rentingId, int ratingValue) 
+	public void doRating(int customerId, int rentingId, int ratingValue) 
 	{
 		try 
 		{
+			// catch wrong values
+			if(ratingValue < 1)
+				ratingValue = 0;
+			else if(ratingValue >4)
+				ratingValue = 5;
+			
 			// updating the database with the new rating value
 			DataSource.executeNonQuery("UPDATE rentings " +
-					"SET rating=" + (ratingValue>4?5:ratingValue) + " WHERE id=" + rentingId);
+					"SET rating=" + ratingValue + " WHERE id=" + rentingId + " AND customer_id="+customerId+" AND rating=0");
 			
 					
 		} catch (Exception e) 
@@ -439,7 +446,7 @@ public class RentACar_Webservice {
 	}
 	
 	/***
-	 * getting the rating for a specific vehicle
+	 * Getting the rating for a specific vehicle.
 	 * @param vehicle id
 	 * @return rating as a double
 	 */
@@ -484,7 +491,7 @@ public class RentACar_Webservice {
 	}
 	
 	/***
-	 * getting all rentings of a customer
+	 * Getting all rentings of a customer.
 	 * @param customerId
 	 * @return an array of rentings 
 	 */

@@ -144,5 +144,7 @@ select.locationPicker{
 }
 
 #login{
+    float:left;
     color: white;
+    margin-top: 12px;
 }

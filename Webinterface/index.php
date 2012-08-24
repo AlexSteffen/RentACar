@@ -12,29 +12,37 @@ session_start();
 //include the important main.php file
 include_once('main.php');
 
-//login
+//login the customer
 if(isset($_REQUEST["login"])){
 		//load all passed get parameters passed from the site before
 		$email = $_REQUEST["email"];
 		$password = $_REQUEST["password"];
 		
 		//webservice call to check the login
-		$customer = new Customer;
-		$customerResult = $webservice->checkLogin(array("email" => $email, "password" => $password));
-		$customer = $customerResult->return;
+		$loginResult = $webservice->checkLogin(array("email" => $email, "password" => $password));
+		$customer = $loginResult->return;
 		
 		if($customer != NULL){
 				$_SESSION["customer_id"] = $customer->id;
 		}
 }
 
-//logout
+//logout the customer
 If($_REQUEST["logout"]=="1"){
 		//remove all the variable in the session 
 		session_unset(); 
 	 
 		//destroy the session 
 		session_destroy(); 
+}
+
+//get the logged in customer
+if(isset($_SESSION["customer_id"])){
+		$customerResult = $webservice->getCustomerById(array("id" => $_SESSION["customer_id"]));
+										
+		//get the customer
+		$logincustomer = new Customer;
+		$logincustomer = $customerResult->return;	
 }
 
 ?>
@@ -60,14 +68,9 @@ If($_REQUEST["logout"]=="1"){
 				<div id='login'>
 						<form action='index.php?section=login' method='post'>
 								<?
-								if(isset($_SESSION["customer_id"])){
-										$customerResult = $webservice->getCustomerById(array("id" => $_SESSION["customer_id"]));
+								if($logincustomer!=NULL){
 										
-										//get the customer
-										$customer = new Customer;
-										$customer = $customerResult->return;
-										
-										echo "Hallo ".$customer->salutation." ".$customer->lastname.", sie sind eingeloggt. <a href='index.php?logout=1' style='color:black'>Logout</a>";
+										echo "Hallo ".$logincustomer->salutation." ".$logincustomer->lastname.", sie sind im <a href='index.php?section=login' style='color:black'>Kundenbereich</a> eingeloggt. <a href='index.php?logout=1' style='color:black'>Logout</a>";
 								}else{
 								
 										echo "
