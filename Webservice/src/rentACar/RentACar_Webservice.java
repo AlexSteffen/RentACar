@@ -118,7 +118,7 @@ public class RentACar_Webservice {
 							"AND ("+
 							"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
 							"OR "+
-							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date) )" +
+							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date))" +
 						")";
 		
 		try {		
