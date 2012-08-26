@@ -11,39 +11,31 @@ session_start();
 
 //include the important main.php file
 include_once('main.php');
-
+			
 //login the customer
 if(isset($_REQUEST["login"])){
 		//load all passed get parameters passed from the site before
-		$email = $_REQUEST["email"];
-		$password = $_REQUEST["password"];
+		$loginEmail = $_REQUEST["login_email"];
+		$loginPassword = $_REQUEST["login_password"];
 		
-		//webservice call to check the login
-		$loginResult = $webservice->checkLogin(array("email" => $email, "password" => $password));
-		$customer = $loginResult->return;
-		
-		if($customer != NULL){
-				$_SESSION["customer_id"] = $customer->id;
-		}
+		//login the customer if its possible
+		CustomerLogin::login($loginEmail,$loginPassword);
 }
 
 //logout the customer
 If($_REQUEST["logout"]=="1"){
-		//remove all the variable in the session 
-		session_unset(); 
-	 
-		//destroy the session 
-		session_destroy(); 
+		
+		CustomerLogin::logout();
 }
 
-//get the logged in customer
-if(isset($_SESSION["customer_id"])){
-		$customerResult = $webservice->getCustomerById(array("id" => $_SESSION["customer_id"]));
-										
-		//get the customer
-		$logincustomer = new Customer;
-		$logincustomer = $customerResult->return;	
-}
+
+//if a customer is logged in this method will return the object of the customer
+$logincustomer = CustomerLogin::getLoginCustomer();
+
+//Loads the page which is requested in the URL.
+//In every content file the output to render is written in the variable $output.
+//e.g. http://localhost/index.php?section=startpage
+include_once("content.php");
 
 ?>
 
@@ -75,7 +67,7 @@ if(isset($_SESSION["customer_id"])){
 								
 										echo "
 										<b>Kundenlogin:</b><br>
-										E-Mail: <input type='text' name='email' value='".$_REQUEST['email']."'> Passwort: <input type='password' name='password'>
+										E-Mail: <input type='text' name='login_email' value='".$_REQUEST['login_email']."'> Passwort: <input type='password' name='login_password'>
 										<input type='submit' name='login' value='Login'>
 										";
 								}
@@ -85,12 +77,7 @@ if(isset($_SESSION["customer_id"])){
     </div>
     
     <div id='content'>
-	<?php
-	    //loads the page which is requested in the URL
-	    //e.g. http://localhost/index.php?section=startpage
-	    include_once("content.php");
-			
-	?>
+	<?php echo $output; ?>
     </div>
 </body>
 </html>

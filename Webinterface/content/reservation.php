@@ -33,7 +33,7 @@ $vehicle = $result->return;
 $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
 $sum = $vehicle->pricePerDay * $rentalDays;
 
-echo "
+$output .= "
 <script type='text/javascript'>
 
 function showNewCustomer(){
@@ -78,7 +78,7 @@ if($error != ""){
 }
 
 
-echo "
+$output .= "
 <div style='float:left;margin-left:20px;width:300px;'>
     <img width='300px' style='float:left;' src='renderVehicleImage.php?id=".$vehicleId."'>
     
@@ -114,90 +114,101 @@ echo "
 
 
 <div style='float:left;margin-left:20px;'>
-    $errorOutput
-
     <form action='index.php?section=registration&".$urlGetParams."' method=post>
-    <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
-    <div id='formExistingCustomer'>
-        <table cellspacing='0' cellpadding='0'>
-        <tr>
-            <td width='100'>E-Mail:</td>
-            <td><input type='text' name='login_email' size='35' value='".$loginEmail."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Passwort:</td>
-            <td><input type='password' name='login_password' size='35' value='".$loginPassword."' class='registration'></td>
-        </tr>
-        <tr>
-            <td><br></td>
-            <td></td>
-        </tr>
-        </table>
-    </div>
-    
-    <br>
-    <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'><label for='newCustomer'>Ich bin Neukunde</label><br>
-    <div id='formNewCustomer'>
-        <table cellspacing='0' cellpadding='0'>
-        <tr>
-            <td width='100'>E-Mail:</td>
-            <td><input type='text' name='email' size='35' value='".$email."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Passwort:</td>
-            <td><input type='password' name='password' size='35' value='".$password."' class='registration'></td>
-        </tr>
-        <tr>
-            <td><br></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Anrede:</td>
-            <td>
-            <select name='salutation' class='registration'>
-            <option value='Herr' ".($salutation=="Herr"?"selected":"").">Herr</option>
-            <option value='Frau' ".($salutation=="Frau"?"selected":"").">Frau</option>
-            <option value='Firma' ".($salutation=="Firma"?"selected":"").">Firma</option>
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Nachname:</td>
-            <td><input type='text' name='lastname' size='35' value='".$lastname."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Vorname:</td>
-            <td><input type='text' name='forename' size='35' value='".$forename."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Straße:</td>
-            <td><input type='text' name='street' size='35' value='".$street."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>PLZ:</td>
-            <td><input type='text' name='zip' size='35' value='".$zip."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Wohnort:</td>
-            <td><input type='text' name='city' size='35' value='".$city."' class='registration'></td>
-        </tr>
-        <tr>
-            <td>Telefon:</td>
-            <td><input type='text' name='phone' size='35' value='".$phone."' class='registration'></td>
-        </tr>
-        <tr>
-            <td><br></td>
-            <td></td>
-        </tr>
+";
+
+    if($logincustomer != NULL){
+        $output .= "Sie sind bereits eingeloggt und können mit der Reservierung fortfahren.";
         
-    </table>
-    </div>
+    }else{
+        $output .= "    
+        $errorOutput
+    
+        
+        <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
+        <div id='formExistingCustomer'>
+            <table cellspacing='0' cellpadding='0'>
+            <tr>
+                <td width='100'>E-Mail:</td>
+                <td><input type='text' name='login_email' size='35' value='".$loginEmail."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Passwort:</td>
+                <td><input type='password' name='login_password' size='35' value='".$loginPassword."' class='registration'></td>
+            </tr>
+            <tr>
+                <td><br></td>
+                <td></td>
+            </tr>
+            </table>
+        </div>
+        
+        <br>
+        <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'><label for='newCustomer'>Ich bin Neukunde</label><br>
+        <div id='formNewCustomer'>
+            <table cellspacing='0' cellpadding='0'>
+            <tr>
+                <td width='100'>E-Mail:</td>
+                <td><input type='text' name='email' size='35' value='".$email."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Passwort:</td>
+                <td><input type='password' name='password' size='35' value='".$password."' class='registration'></td>
+            </tr>
+            <tr>
+                <td><br></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Anrede:</td>
+                <td>
+                <select name='salutation' class='registration'>
+                <option value='Herr' ".($salutation=="Herr"?"selected":"").">Herr</option>
+                <option value='Frau' ".($salutation=="Frau"?"selected":"").">Frau</option>
+                <option value='Firma' ".($salutation=="Firma"?"selected":"").">Firma</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Nachname:</td>
+                <td><input type='text' name='lastname' size='35' value='".$lastname."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Vorname:</td>
+                <td><input type='text' name='forename' size='35' value='".$forename."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Straße:</td>
+                <td><input type='text' name='street' size='35' value='".$street."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>PLZ:</td>
+                <td><input type='text' name='zip' size='35' value='".$zip."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Wohnort:</td>
+                <td><input type='text' name='city' size='35' value='".$city."' class='registration'></td>
+            </tr>
+            <tr>
+                <td>Telefon:</td>
+                <td><input type='text' name='phone' size='35' value='".$phone."' class='registration'></td>
+            </tr>
+            <tr>
+                <td><br></td>
+                <td></td>
+            </tr>
+            
+        </table>
+        </div>
+        
+        ";
+    }
+    
+$output .= "
     <br>
     <input type='submit' name='register' style='width:300px;font-size:22px;' value='Weiter >>'>
     </form>
-
 </div>
-
 ";
 
 

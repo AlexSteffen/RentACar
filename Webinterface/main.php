@@ -37,6 +37,9 @@ $webservice = new SoapClient("http://localhost:8080/axis2/services/RentACar?wsdl
                                                                                                          'Renting' => "Renting")
                                                                                      ));
 
+include_once("class/customerLogin.php");
+
+
 //*************
 //** Parameterübergabe an eine Webservice-Methode per Array mit korrekten Bezeichnern der Parameter
 //$result = $client->sayHello(array("name" =>"Mein Name Test"));

@@ -8,119 +8,150 @@ $returnDate = $_REQUEST["returnDate"];
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
                 "&returnDate=".$returnDate."&vehicle_id=".$vehicleId;
+        
+
+if($logincustomer == NULL){        
+    //users information
+    $newOrExistingCustomer = $_REQUEST["newOrExistingCustomer"];
+    $loginEmail = $_REQUEST["login_email"];
+    $loginPassword = $_REQUEST["login_password"];
+    
+    $email = $_REQUEST["email"];
+    $password = $_REQUEST["password"];
+    $salutation = $_REQUEST["salutation"];
+    $lastname = $_REQUEST["lastname"];
+    $forename = $_REQUEST["forename"];
+    $street = $_REQUEST["street"];
+    $city = $_REQUEST["city"];
+    $zip = $_REQUEST["zip"];
+    $phone = $_REQUEST["phone"];
+    
+    //if the login email isset the user is going to login with an existing customer account
+    if($newOrExistingCustomer == "existingCustomer"){
+        
+        //check if the email address is correct
+        /*if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
+            $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
+        }
+        
+        if($loginPassword=="") {
+            $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
+        }
+        */
+        
+        //if the login was not successful show an error message else show rental information for confirmation
+        if(!CustomerLogin::login($loginEmail,$loginPassword)){
+            $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
+            include_once('reservation.php');
+            
+        }else{
+            //if a customer is logged in this method will return the object of the customer
+            $logincustomer = CustomerLogin::getLoginCustomer();
+            
+        }
+        
+        
+        //if some error occurs reload the registraton-site to allow userchanges
+        if($error != ""){
+            include_once('reservation.php');
+        }
+        
+        //if the login was successful
+        /*if(!isset($logincustomer)){
+            $error .= "<li>Login nicht möglich. Bitte prüfen Sie E-Mail und Passwort!</li>";
+            include_once('reservation.php');
+            exit;
+        }*/
+        
+        //Webservice call to do the customer login
+        //$loginResult = $webservice->checkLogin(array("email"=>$loginEmail, "password"=>$loginPassword));
+        
+    }else{ //the user is going to register as a new customer
+        
+        //check if the email address is correct
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
+        }
+        
+        //webservice call to check if there is already a customer with the email address    
+        $result = $webservice->customerExists(array("email"=>$email));
+        
+        if($result==NULL) {
+            $error .= "<li>Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.</li>";
+        }
+        
+        if($password=="") {
+            $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
+        }
+        
+        if($lastname=="") {
+            $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
+        }
+        
+        if($lastname=="") {
+            $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
+        }
+        
+        if($forename=="") {
+            $error .= "<li>Bitte geben Sie Ihren Vornamen an.</li>";
+        }
+        
+        if($street=="") {
+            $error .= "<li>Bitte geben Sie Ihre Straße an.</li>";
+        }
+        
+        if($zip=="") {
+            $error .= "<li>Bitte geben Sie Ihre PLZ an.</li>";
+        }
+        
+        if($city=="") {
+            $error .= "<li>Bitte geben Sie Ihre Stadt an.</li>";
+        }
+           
+        //if some error occurs reload the registraton-site to allow userchanges
+        if($error != ""){
+            include_once('reservation.php');
+        }
+    
+        //No error occurs. Webservice call to register the new customer.
+        $registrationResult = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
+                                                        "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
+                                                        "city"=>$city, "zip"=>$zip, "phone"=>$phone));
+        
+        $returnValue = $registrationResult->return;
+    
+        if($returnValue != True)
+        {
+            $output .= "Ein unerwarteter Fehler beim Registrieren des Kunden ist aufgetreten.";
+            exit;
+        }else{
+            //Webservice call to do the customer login
+            //$loginResult = $webservice->checkLogin(array("email"=>$email, "password"=>$password));
+            
+            //if the login was not successful show an error message else show rental information for confirmation
+            if(!CustomerLogin::login($email,$password)){
+                $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
+                include_once('reservation.php');
                 
-//users information
-$newOrExistingCustomer = $_REQUEST["newOrExistingCustomer"];
-$loginEmail = $_REQUEST["login_email"];
-$loginPassword = $_REQUEST["login_password"];
-
-$email = $_REQUEST["email"];
-$password = $_REQUEST["password"];
-$salutation = $_REQUEST["salutation"];
-$lastname = $_REQUEST["lastname"];
-$forename = $_REQUEST["forename"];
-$street = $_REQUEST["street"];
-$city = $_REQUEST["city"];
-$zip = $_REQUEST["zip"];
-$phone = $_REQUEST["phone"];
-
-//if the login email isset the user is going to login with an existing customer account
-if($newOrExistingCustomer == "existingCustomer"){
-    
-    //check if the email address is correct
-    if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
-        $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
+            }else{
+                //if a customer is logged in this method will return the object of the customer
+                $logincustomer = CustomerLogin::getLoginCustomer();
+                
+            }
+        }
     }
-    
-    if($loginPassword=="") {
-        $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
-    }
-    
-    //if some error occurs reload the registraton-site to allow userchanges
-    if($error != ""){
-        include_once('reservation.php');
-        exit;
-    }
-    
-    //Webservice call to do the customer login
-    $loginResult = $webservice->checkLogin(array("email"=>$loginEmail, "password"=>$loginPassword));
-    
-}else{ //the user is going to register as a new customer
-    
-    //check if the email address is correct
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
-    }
-    
-    //webservice call to check if there is already a customer with the email address    
-    $result = $webservice->customerExists(array("email"=>$email));
-    
-    if($result==NULL) {
-        $error .= "<li>Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.</li>";
-    }
-    
-    if($password=="") {
-        $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
-    }
-    
-    if($lastname=="") {
-        $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
-    }
-    
-    if($lastname=="") {
-        $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
-    }
-    
-    if($forename=="") {
-        $error .= "<li>Bitte geben Sie Ihren Vornamen an.</li>";
-    }
-    
-    if($street=="") {
-        $error .= "<li>Bitte geben Sie Ihre Straße an.</li>";
-    }
-    
-    if($zip=="") {
-        $error .= "<li>Bitte geben Sie Ihre PLZ an.</li>";
-    }
-    
-    if($city=="") {
-        $error .= "<li>Bitte geben Sie Ihre Stadt an.</li>";
-    }
-       
-    //if some error occurs reload the registraton-site to allow userchanges
-    if($error != ""){
-        include_once('reservation.php');
-        exit;
-    }
-
-    //No error occurs. Webservice call to register the new customer.
-    $registrationResult = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
-                                                    "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
-                                                    "city"=>$city, "zip"=>$zip, "phone"=>$phone));
-    
-    $returnValue = $registrationResult->return;
-
-    if($returnValue != True)
-    {
-        echo "Ein unerwarteter Fehler beim Registrieren des Kunden ist aufgetreten.";
-        exit;
-    }
-    
-    //Webservice call to do the customer login
-    $loginResult = $webservice->checkLogin(array("email"=>$email, "password"=>$password));
-}
+}//if($logincustomer==NULL)
 
 //if the login was not successful show an error message else show rental information for confirmation
-if($loginResult->return == NULL){
+/*if($loginResult->return == NULL){
     $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
     include_once('reservation.php');
     exit;
     
-}else{
-    
-    //get the customer
-    $customer = new Customer;
-    $customer = $loginResult->return;
+}*/
+
+//if the custoemr is logged in, show the vehicle data to confirm
+if($logincustomer != NULL){
     
     //Webservice call to get the vehicle
     $vehicleResult = $webservice->getVehicleById(array("id"=>$vehicleId));
@@ -137,13 +168,13 @@ if($loginResult->return == NULL){
     $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
     $sum = $vehicle->pricePerDay * $rentalDays;
 
-    echo "<h1>Reservierung bestätigen</h1>";
+    $output .= "<h1>Reservierung bestätigen</h1>";
     
-    echo "<b>Guten Tag ".$customer->salutation." ".$customer->lastname.", </b><br>
+    $output .= "<b>Guten Tag ".$logincustomer->salutation." ".$logincustomer->lastname.", </b><br>
     bitte prüfen Sie Ihre Auswahl und klicken Sie auf 'Jetzt reservieren' um das Fahrzeug zu reservieren.<br><br>";
     
     
-    echo "
+    $output .= "
     <table>
     <tr><td valign='top'>Abholort:</td><td valign='top'><b>".$location->city."</b><br>".$location->street.", ".$location->zip." ".$location->city."</td></tr>
     <tr><td>Mietbeginn:</td><td><b>".Converter::toGermanDateTimeString($startDate)."</b></td></tr>
@@ -156,7 +187,7 @@ if($loginResult->return == NULL){
     <br><br>";
 
         
-    echo "
+    $output .= "
     <table class='detail'>
     <tr>
         <td>

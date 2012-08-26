@@ -75,7 +75,7 @@ foreach($locations as $l){
         $locationOptions .= "<option value='".$l->id."'>".$l->city."</option>";
 }
 
-echo "
+$output .= "
 <form action='index.php' method='get'>
 <input type='hidden' name='section' value='search'>
 

@@ -14,17 +14,17 @@ $vehicle = new Vehicle;
 $returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = $returnObj->return;
 
-echo "
+$output .= "
 <a href='index.php?section=search&".$urlGetParams."'><< zurück zur Liste</a>
 <h1>Detailansicht</h1>";
 
-echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
+$output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
         "</b> bis <b>".
         Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
 
         
-echo "
+$output .= "
 <span style='font-size: 14pt;'>
 <a href='index.php?section=reservation&vehicle_id=".$vehicle->id."&".$urlGetParams."'>Jetzt reservieren</a>
 </span>

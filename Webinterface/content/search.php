@@ -37,17 +37,17 @@ $vehiclesResult = $webservice->findVehicles(array("startDate"=>$startDate,
                                        ));
                                   
 
-echo "<h1>Verfügbare Fahrzeuge</h1>";
+$output .= "<h1>Verfügbare Fahrzeuge</h1>";
                                   
                                        
-echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
+$output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
         "</b> bis <b>".
         Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
 
 if(count($vehiclesResult->return) == 0){
         
-        echo "Keine verfügbaren Autos gefunden. Bitte ändern Sie Ihre Suchparameter.";
+        $output .= "Keine verfügbaren Autos gefunden. Bitte ändern Sie Ihre Suchparameter.";
         
 }else{
         //loop at all found vehicles and render HTML
@@ -80,7 +80,7 @@ if(count($vehiclesResult->return) == 0){
                 $i++;
           }
           
-          echo "
+          $output .= "
                 <div id='cardetails'>
                         <div id='picture'>
                                 <img width='200' src='renderVehicleImage.php?id=".$vehicle->id."'>
