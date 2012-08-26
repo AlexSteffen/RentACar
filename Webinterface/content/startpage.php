@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 16.08.2012
+//
+// Description:
+// This file contains the code for the startpage with the form to search for vehicles.
+//*********************
+
 //******** read all locations from the webservice **********
 $returnObj = $webservice->getAllLocations();
 $locations = array();

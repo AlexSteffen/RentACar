@@ -1,7 +1,7 @@
 <?php
 //*********************
 // Author: G.Böselager
-// Date: 16.8.2012
+// Date: 16.08.2012
 //
 // Description:
 // This is the main site. Every request for pages will load this file at first.

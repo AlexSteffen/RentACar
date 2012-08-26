@@ -1,4 +1,11 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 18.08.2012
+//
+// Description:
+// This file contains the code for viewing a list of cars after the user starts a search.
+//*********************
 
 //load all passed values from the search-form
 $startLocation = $_REQUEST["startLocation"];
@@ -39,10 +46,13 @@ echo "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
 
 if(count($vehiclesResult->return) == 0){
+        
         echo "Keine verfügbaren Autos gefunden. Bitte ändern Sie Ihre Suchparameter.";
+        
 }else{
         //loop at all found vehicles and render HTML
         foreach($vehiclesResult->return as $item){
+                
           $vehicle = new Vehicle;
           $vehicle = $item;
           
@@ -62,6 +72,7 @@ if(count($vehiclesResult->return) == 0){
           
           while($i <= 5){
                 
+                //decide if there has to be a gray or yellow star
                 if($i > $ratingValue) $gray = "_gray";
                 else $gray = "";
                 
@@ -100,10 +111,7 @@ if(count($vehiclesResult->return) == 0){
                                 </span>
                         </div>
                 </div>
-                
-                
                 ";
-          
         }
 }
 

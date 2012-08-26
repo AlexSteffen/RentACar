@@ -1,4 +1,13 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 20.08.2012
+//
+// Description:
+// This file contains the code for viewing the user an interface to reservate a vehicle. The user can do a
+// registration as a new or as an existing customer.
+//*********************
+
 //load all passed get parameters passed from the site before
 $vehicleId = $_REQUEST["vehicle_id"];
 $startLocation = $_REQUEST["startLocation"];
