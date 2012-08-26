@@ -6,8 +6,8 @@
    <property name="src.dir" value="src"/>
    <property name="aar.dir" value="aar"/>
    <property name="bin.dir" value="bin"/>
-	<!--<property name="deploy.file" value="RentACar.aar"/>-->
-	<property name="deploy.path" value="/Users/Alex/Development/axis2-1.6.2/repository/services"/>
+	<property name="deploy.file" value="RentACar.aar"/>
+	<!--<property name="deploy.path" value="/Users/Alex/Development/axis2-1.6.2/repository/services"/>-->
 	<property name="deploy.path" value="/Users/gboeselager/Develop/axis2-1.6.2/repository/services"/>
 
    <target name="Structure" depends="" 

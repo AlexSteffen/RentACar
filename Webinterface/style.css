@@ -105,6 +105,14 @@ select.locationPicker{
     width: 593px;
 }
 
+#login{
+    float:left;
+    color: white;
+    height:50px;
+    width: 450px;
+    margin-top: 12px;
+}
+
 #content{
     float: left;
     margin-left: 40px;
@@ -141,10 +149,4 @@ select.locationPicker{
     float: left;
     width: 300px;
     color: red;
-}
-
-#login{
-    float:left;
-    color: white;
-    margin-top: 12px;
 }

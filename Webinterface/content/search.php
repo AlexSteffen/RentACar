@@ -46,6 +46,29 @@ if(count($vehiclesResult->return) == 0){
           $vehicle = new Vehicle;
           $vehicle = $item;
           
+          //webservicec call to get the location
+          $location = new Location;
+          $locationResult = $webservice->getLocationById(array("id"=>$vehicle->locationId));
+          $location = $locationResult->return;
+          
+          //webservicec call to get the rating
+          $ratingResult = $webservice->getRating(array("vehicleId"=>$vehicle->id));
+          $ratingValue = $ratingResult->return;
+          $ratingValue = round($ratingValue,0);
+          
+          //generate the rating stars
+          $i=1;
+          $stars="";
+          
+          while($i <= 5){
+                
+                if($i > $ratingValue) $gray = "_gray";
+                else $gray = "";
+                
+                $stars.="<img src='Bilder/star".$gray.".png'>";
+                $i++;
+          }
+          
           echo "
                 <div id='cardetails'>
                         <div id='picture'>
@@ -54,7 +77,9 @@ if(count($vehiclesResult->return) == 0){
                         
                         <div id='left'>
                                 <span style='font-size: 14pt;'>".$vehicle->manufacturer." ".$vehicle->model."</span><br><br>
-                                <span style='font-size: 11pt;'>Standort: Osnabrück</span><br>
+                                ".$stars."<br><br>
+                                <span style='font-size: 11pt;'>Standort: ".$location->city."</span><br>
+                                
                         </div>
                         
                         <div id='center'>

@@ -450,7 +450,7 @@ public class RentACar_Webservice {
 	 * @param vehicle id
 	 * @return rating as a double
 	 */
-	public double getRating(int vehicle_id)
+	public double getRating(int vehicleId)
 	{
 		int number = 0;
 		double sum = 0;
@@ -459,7 +459,7 @@ public class RentACar_Webservice {
 		try 
 		{
 			// getting each renting from the rentings table where the specific vehicle was used
-			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE vehicle_id=" + vehicle_id);
+			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE vehicle_id=" + vehicleId);
 			
 			if (result != null) 
 			{
