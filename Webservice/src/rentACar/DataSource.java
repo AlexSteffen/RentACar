@@ -88,26 +88,29 @@ public class DataSource {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static int executeNonQuery(String statement, Boolean returnValue) 
+	public static int executeInsert(String statement) 
 		throws SQLException, ClassNotFoundException{
 		
 		int id = 0;
 		
-		if (returnValue) {
 			
-			//database connection
-			Connection con = DataSource.getConnection();
-			
-			//create a SQL statement
-			Statement stmt = con.createStatement();
-			
-			//execute the statement now
-			id = stmt.executeUpdate(statement);
-			
-			//close the database connection 
-			con.close();
-		}
+		//database connection
+		Connection con = DataSource.getConnection();
 		
+		//create a SQL statement
+		Statement stmt = con.createStatement();
+		
+		//execute the statement now
+		stmt.executeUpdate(statement, Statement.RETURN_GENERATED_KEYS);
+		
+		ResultSet res = stmt.getGeneratedKeys();
+		
+		res.first();
+		id = res.getInt(1);
+		
+		//close the database connection 
+		con.close();
+	
 		return id;
 	}
 }

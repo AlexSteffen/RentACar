@@ -388,10 +388,10 @@ public class RentACar_Webservice {
 		try {
 			
 			
-			int rentingId = DataSource.executeNonQuery("INSERT INTO rentings " +
+			int rentingId = DataSource.executeInsert("INSERT INTO rentings " +
 					"(vehicle_id, customer_id, start_date, return_date, total_price) " +
 					"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
-							", 234.12)", true);
+							", " + totalPrice + ")");
 			
 			
 			
@@ -407,13 +407,14 @@ public class RentACar_Webservice {
 			renting.setCustomerId(result.getInt("customer_id"));
 			renting.setStartDate(result.getString("start_date"));
 			renting.setReturnDate(result.getString("return_date"));
-			renting.setTotalPrice(result.getDouble("total_price"));
+			renting.setTotalPrice(result.getDouble("total_price")); 
 			
 			return renting;
 			
 			
 			
-		} catch (Exception e) 
+		} 
+		catch (Exception e) 
 		{
 			return null;
 		}
