@@ -15,11 +15,7 @@ if($invalidParameters==true){
     //stop execution of this file
     return;
 }
-                
-//webservice call to get the customer
-$result = $webservice->getCustomerById(array("id" => 1));
-$cust = new Customer();
-$cust = $result->return;
+
 
 //webservice call to get the vehicle
 $result = $webservice->getVehicleById(array("id" => $vehicleId));
