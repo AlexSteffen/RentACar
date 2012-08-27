@@ -19,6 +19,7 @@ date_default_timezone_set("Europe/Paris");
 
 //** Include all required classes
 include_once("class/converter.php");
+include_once("class/validation.php");
 include_once("class/location.php");
 include_once("class/vehicle.php");
 include_once("class/customer.php");

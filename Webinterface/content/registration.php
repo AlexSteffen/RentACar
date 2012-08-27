@@ -1,13 +1,11 @@
 <?php
 //load all passed get parameters passed from the site before
-$vehicleId = $_REQUEST["vehicle_id"];
-$startLocation = $_REQUEST["startLocation"];
-$startDate = $_REQUEST["startDate"];
-$returnDate = $_REQUEST["returnDate"];
+include("parameter.php");
 
-//users search parameters have to be passed to each site 
-$urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation.
-                "&returnDate=".$returnDate."&vehicle_id=".$vehicleId;
+if($invalidParameters==true){
+    //stop execution of this file
+    return;
+}
         
 
 if($logincustomer == NULL){        

@@ -27,9 +27,9 @@ if(isset($returnObj->return)){
 $currentDate = date("d.m.Y");
 $currentTime = date("H:i");
 $tomorrowDate =  date("d.m.Y", strtotime("+1 days"));
-?>
 
-<script type="text/javascript">
+$output .= "
+<script type='text/javascript'>
 $(function(){
     // Datepicker
     $('#datepicker').datepicker({
@@ -67,9 +67,8 @@ $(function(){
     
     
 });
-</script>
+</script>";
 
-<?php
 
 foreach($locations as $l){
         $locationOptions .= "<option value='".$l->id."'>".$l->city."</option>";

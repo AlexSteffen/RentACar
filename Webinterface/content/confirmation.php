@@ -1,9 +1,11 @@
 <?php
 //load all passed get parameters passed from the site before
-$vehicleId = $_REQUEST["vehicle_id"];
-$startLocation = $_REQUEST["startLocation"];
-$startDate = $_REQUEST["startDate"];
-$returnDate = $_REQUEST["returnDate"];
+include("parameter.php");
+
+if($invalidParameters==true){
+    //stop execution of this file
+    return;
+}
 
 $renting = $webservice->doReservation(array("vehicleId"=>$vehicleId, "customerId"=>$logincustomer->id,
                                             "startDate"=>$startDate, "returnDate"=>$returnDate, "totalPrice"=>1111.34));

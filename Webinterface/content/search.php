@@ -22,24 +22,27 @@ if(isset($_REQUEST["startSearchDate"])){
         $startDate = Converter::toDateTime($startDate, $startTime);
         $returnDate = Converter::toDateTime($returnDate, $returnTime);
 }else{
-        $startDate = $_REQUEST["startDate"];
-        $returnDate = $_REQUEST["returnDate"];
+        //load all passed get parameters passed from the site before
+        include("parameter.php");
         
+        if($invalidParameters==true){
+            //stop execution of this file
+            return;
+        }
 }
 
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate;
+
 
 //webservice call to find all available vehicles
 $vehiclesResult = $webservice->findVehicles(array("startDate"=>$startDate,
                                        "startLocation"=>$startLocation,
                                        "returnDate"=>$returnDate                                       
                                        ));
-                                  
+
 
 $output .= "<h1>Verfügbare Fahrzeuge</h1>";
-                                  
-                                       
 $output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
         "</b> bis <b>".
