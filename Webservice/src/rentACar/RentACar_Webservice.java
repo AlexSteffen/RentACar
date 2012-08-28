@@ -81,6 +81,39 @@ public class RentACar_Webservice {
 	}
 	
 	/**
+	 * This Method deals with verification if a vehicle is available in the passed timeframe.
+	 * @param vehicleId
+	 * @param startDate
+	 * @param returnDate
+	 * @return
+	 */
+	public Boolean isVehicleAvailable(int vehicleId, String startDate, String returnDate){
+		//This query checks if the vehicle is available in the specified timeframe
+		String query = 	"SELECT count(*) FROM rentings WHERE " +
+						"vehicle_id = "+ vehicleId + 
+						"AND ("+
+						"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
+						"OR "+
+						"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date)";
+		
+		try {		
+			ResultSet result = DataSource.executeQuery(query);
+			
+			result.first();
+			
+			if(result.getInt(1) > 0){
+				return false;
+			}else{
+				return true;
+			}
+			
+		}catch(Exception e){
+			return false;
+		}
+	
+	}
+	
+	/**
 	 * This webmethod finds all available vehicles to the passed start and return parameters
 	 * @param startDate
 	 * @param startLocation
@@ -90,21 +123,6 @@ public class RentACar_Webservice {
 	 */
 	public Vehicle[] findVehicles(String startDate, int startLocation, String returnDate){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-		
-		//Convert the dates
-		/*DateFormat formatter; 
-		Date startDateTime = null;
-		Date returnDateTime = null;
-		
-		formatter = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
-		try {
-			startDateTime = (Date)formatter.parse(startDate);
-		
-			returnDateTime = (Date)formatter.parse(returnDate);  
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		
 		//In this query is the logic implemented that only cars are found if they are available
 		//in the requested timeframe
@@ -154,19 +172,11 @@ public class RentACar_Webservice {
 			}
 			
 		} catch (ClassNotFoundException e) {
-			
+			return null;
 		} catch (SQLException e) {
-			Vehicle vehicle = new Vehicle();
-			
-			vehicle.setManufacturer(e.getMessage());
-			
-			Vehicle[] vehiclesArray = new Vehicle[1];
-			vehiclesArray[0] = vehicle; 
-			
-			return vehiclesArray;
-			
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			return null;
 		} 
 		
 		Vehicle[] vehiclesArray = (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
@@ -387,30 +397,31 @@ public class RentACar_Webservice {
 	{
 		try {
 			
-			
-			int rentingId = DataSource.executeInsert("INSERT INTO rentings " +
-					"(vehicle_id, customer_id, start_date, return_date, total_price) " +
-					"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
-							", " + totalPrice + ")");
-			
-			
-			
-			
-			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE id=" + rentingId);
-			
-			result.first();
-			
-			Renting renting = new Renting();
-			
-			renting.setId(result.getInt("id"));
-			renting.setVehicleId(result.getInt("vehicle_id"));
-			renting.setCustomerId(result.getInt("customer_id"));
-			renting.setStartDate(result.getString("start_date"));
-			renting.setReturnDate(result.getString("return_date"));
-			renting.setTotalPrice(result.getDouble("total_price")); 
-			
-			return renting;
-			
+			if(isVehicleAvailable(vehicleId, startDate, returnDate)){
+				int rentingId = DataSource.executeInsert("INSERT INTO rentings " +
+						"(vehicle_id, customer_id, start_date, return_date, total_price) " +
+						"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
+								", " + totalPrice + ")");
+				
+
+				ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE id=" + rentingId);
+				
+				result.first();
+				
+				Renting renting = new Renting();
+				
+				renting.setId(result.getInt("id"));
+				renting.setVehicleId(result.getInt("vehicle_id"));
+				renting.setCustomerId(result.getInt("customer_id"));
+				renting.setStartDate(result.getString("start_date"));
+				renting.setReturnDate(result.getString("return_date"));
+				renting.setTotalPrice(result.getDouble("total_price")); 
+				
+				return renting;
+			}else{
+				
+				return null;
+			}
 			
 			
 		} 
@@ -504,7 +515,14 @@ public class RentACar_Webservice {
 		try 
 		{
 			// getting all rentings of a customer from the database
-			ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE customer_id=" + customerId);
+			ResultSet result = DataSource.executeQuery("SELECT id," +
+														"vehicle_id, " +
+														"customer_id, " +
+														"DATE_FORMAT(start_date, '%Y-%m-%d %H:%i:%s') as start_date, " +
+														"DATE_FORMAT(return_date, '%Y-%m-%d %H:%i:%s') as return_date, " +
+														"total_price, " +
+														"rating " +
+														"FROM rentings WHERE customer_id=" + customerId);
 			
 			// adding all rentings to the ArrayList
 			while(result.next())

@@ -18,8 +18,7 @@ $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
 $sum = round($vehicle->pricePerDay * $rentalDays, 2);
 
 
-//***>>>> HIER MUSS NOCH PRÜFUNG EINGEBAUT WERDEN, OB DAS AUTO WIRKLICH ZU DEM ZEITPUNKT VERFÜGBAR IST!!!
-
+//webservice call to excecute the reservation
 $renting = $webservice->doReservation(array("vehicleId"=>$vehicleId, "customerId"=>$logincustomer->id,
                                             "startDate"=>$startDate, "returnDate"=>$returnDate, "totalPrice"=>$sum));
 
@@ -30,7 +29,8 @@ if($renting->return != null)
 }
 else
 {
-    $output .= "Bei Ihrer Reservierung ist ein Fehler aufgetreten!";
+    $output .= "Bei Ihrer Reservierung ist ein Fehler aufgetreten! Möglicherweise haben Sie die Seite nach der Reservierung aktualisiert.
+    In dem Fall wurde die Reservierung erflgreich abgeschlossen.";
 }
 
 ?>

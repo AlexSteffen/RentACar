@@ -21,7 +21,7 @@ if(isset($_REQUEST["startSearchDate"])){
         //convert the date and time to a DateTime string
         $startDate = Converter::toDateTime($startDate, $startTime);
         $returnDate = Converter::toDateTime($returnDate, $returnTime);
-}else{
+}
         //load all passed get parameters passed from the site before
         include("parameter.php");
         
@@ -29,7 +29,7 @@ if(isset($_REQUEST["startSearchDate"])){
             //stop execution of this file
             return;
         }
-}
+
 
 //users search parameters have to be passed to each site 
 $urlGetParams = "startDate=".$startDate."&startLocation=".$startLocation."&returnDate=".$returnDate;

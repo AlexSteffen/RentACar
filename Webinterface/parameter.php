@@ -9,10 +9,17 @@
 //*********************
 
 //load all passed get parameters passed from the site before
-$vehicleId = $_REQUEST["vehicle_id"];
-$startLocation = $_REQUEST["startLocation"];
-$startDate = $_REQUEST["startDate"];
-$returnDate = $_REQUEST["returnDate"];
+if(!isset($vehicleId))
+    $vehicleId = $_REQUEST["vehicle_id"];
+    
+if(!isset($startLocation))
+    $startLocation = $_REQUEST["startLocation"];
+
+if(!isset($startDate))
+    $startDate = $_REQUEST["startDate"];
+
+if(!isset($returnDate))
+    $returnDate = $_REQUEST["returnDate"];
 
 //check if the parameters are valid
 if(!Validation::isValidDateTime($startDate) || !Validation::isValidDateTime($returnDate)){
@@ -29,6 +36,11 @@ else
 //check if the start date is greater equal the return date
 if($startDate >= $returnDate){
     $output .= "Das Startdatum darf nicht größer oder gleich des Rückgabedatums sein.";
+    $invalidParameters=true;
+}else
+//check if the dates are in the past
+if($startDate < date("Y-m-d H:i:s") || $returnDate < date("Y-m-d H:i:s")){
+    $output .= "Die Datum dürfen nicht in der Vergangenheit.";
     $invalidParameters=true;
 }
 

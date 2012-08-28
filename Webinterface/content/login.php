@@ -41,7 +41,7 @@ if($logincustomer != NULL){
         <tr>
         <td><b>Mietbeginn</b></td><td><b>Mietende</b>
         <td><b>Fahrzeughersteller</b></td><td><b>Modell</b></td>
-        <td><b>Bewertung</b></td>
+        <td><b>Gesamtbetrag</b></td><td><b>Bewertung</b></td>
         <tr>
     ";
     
@@ -52,8 +52,9 @@ if($logincustomer != NULL){
         
         $output .= "
         <tr>
-        <td height='40'>".$renting->startDate."</td><td>".$renting->returnDate."
+        <td height='40'>".Converter::toGermanDateTimeString($renting->startDate)."</td><td>".Converter::toGermanDateTimeString($renting->returnDate)."
         <td>".$vehicle->manufacturer."</td><td>".$vehicle->model."</td>
+        <td align='right'>".Converter::toDecimalString($renting->totalPrice,2)." €</td>
         <td>";
         
         if($renting->rating != 0){
