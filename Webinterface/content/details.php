@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 17.08.2012
+//
+// Description:
+// This file contains code to view a detail page for a vehicle.
+//*********************
+
 //load all passed get parameters passed from the site before
 include("parameter.php");
 
@@ -11,10 +19,6 @@ if($invalidParameters==true){
 $vehicle = new Vehicle;
 $returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = $returnObj->return;
-
-$output .= "
-<a href='index.php?section=search&".$urlGetParams."'><< zurück zur Liste</a>
-<h1>Detailansicht</h1>";
 
 $output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .

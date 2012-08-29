@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 27.08.2012
+//
+// Description:
+// This file contains code to do a reservation and show a confirmation for the user.
+//*********************
+
 //load all passed get parameters passed from the site before
 include("parameter.php");
 

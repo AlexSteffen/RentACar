@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Bšselager
+// Date: 23.08.2012
+//
+// Description:
+// The class CustomerLogin contains function to login or logout a customer.
+//*********************
+
 class CustomerLogin{
     
     //*********

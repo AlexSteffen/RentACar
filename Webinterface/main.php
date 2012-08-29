@@ -1,7 +1,7 @@
 <?php
 //*********************
 // Author: G.Böselager
-// Date: 15.8.2012
+// Date: 15.08.2012
 //
 // Description:
 // In this file are important scripts which have to be included in all PHP-Files of this project.
@@ -18,12 +18,13 @@ ini_set('soap.wsdl_cache_ttl', '0');
 date_default_timezone_set("Europe/Paris");
 
 //** Include all required classes
-include_once("class/converter.php");
-include_once("class/validation.php");
-include_once("class/location.php");
-include_once("class/vehicle.php");
-include_once("class/customer.php");
-include_once("class/renting.php");
+include_once("core/converter.php");
+include_once("core/validation.php");
+
+include_once("model/location.php");
+include_once("model/vehicle.php");
+include_once("model/customer.php");
+include_once("model/renting.php");
 
 //** Create a SoapClient-Object to determine the place of the WSDL file.
 //** The first parameter requires the URI to the WSDL document. The second parameter is optional for
@@ -38,7 +39,8 @@ $webservice = new SoapClient("http://localhost:8080/axis2/services/RentACar?wsdl
                                                                                                          'Renting' => "Renting")
                                                                                      ));
 
-include_once("class/customerLogin.php");
+//** Include the CustomerLogin. This include has to be called AFTER the SoapClient is created.
+include_once("core/customerLogin.php");
 
 
 //*************

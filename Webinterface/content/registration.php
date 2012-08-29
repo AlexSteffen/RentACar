@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 27.08.2012
+//
+// Description:
+// This file contains code to register a new customer if he is going to reservate a vehicle.
+//*********************
+
 //load all passed get parameters passed from the site before
 include("parameter.php");
 
@@ -6,8 +14,8 @@ if($invalidParameters==true){
     //stop execution of this file
     return;
 }
-        
 
+//if the customer is not logged in check his inputs and do a registration
 if($logincustomer == NULL){        
     //users information
     $newOrExistingCustomer = $_REQUEST["newOrExistingCustomer"];
@@ -27,20 +35,9 @@ if($logincustomer == NULL){
     //if the login email isset the user is going to login with an existing customer account
     if($newOrExistingCustomer == "existingCustomer"){
         
-        //check if the email address is correct
-        /*if (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
-            $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
-        }
-        
-        if($loginPassword=="") {
-            $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
-        }
-        */
-        
         //if the login was not successful show an error message else show rental information for confirmation
         if(!CustomerLogin::login($loginEmail,$loginPassword)){
             $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
-            include_once('reservation.php');
             
         }else{
             //if a customer is logged in this method will return the object of the customer
@@ -48,26 +45,17 @@ if($logincustomer == NULL){
             
         }
         
-        
         //if some error occurs reload the registraton-site to allow userchanges
         if($error != ""){
             include_once('reservation.php');
+            return;
         }
         
-        //if the login was successful
-        /*if(!isset($logincustomer)){
-            $error .= "<li>Login nicht möglich. Bitte prüfen Sie E-Mail und Passwort!</li>";
-            include_once('reservation.php');
-            exit;
-        }*/
-        
-        //Webservice call to do the customer login
-        //$loginResult = $webservice->checkLogin(array("email"=>$loginEmail, "password"=>$loginPassword));
         
     }else{ //the user is going to register as a new customer
         
         //check if the email address is correct
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!Validation::isValidEmail($email)) {
             $error .= "<li>Die E-Mail-Adresse ist nicht korrekt.</li>";
         }
         
@@ -109,10 +97,11 @@ if($logincustomer == NULL){
         //if some error occurs reload the registraton-site to allow userchanges
         if($error != ""){
             include_once('reservation.php');
+            return;
         }
     
         //No error occurs. Webservice call to register the new customer.
-        $registrationResult = $webservice->register(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
+        $registrationResult = $webservice->doRegistration(array("email"=>$email, "password"=>$password, "salutation"=>$salutation,
                                                         "forename"=>$forename, "lastname"=>$lastname, "street"=>$street,
                                                         "city"=>$city, "zip"=>$zip, "phone"=>$phone));
         
@@ -121,16 +110,13 @@ if($logincustomer == NULL){
         if($returnValue != True)
         {
             $output .= "Ein unerwarteter Fehler beim Registrieren des Kunden ist aufgetreten.";
-            exit;
-        }else{
-            //Webservice call to do the customer login
-            //$loginResult = $webservice->checkLogin(array("email"=>$email, "password"=>$password));
-            
+            return;
+        }else{            
             //if the login was not successful show an error message else show rental information for confirmation
             if(!CustomerLogin::login($email,$password)){
                 $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
                 include_once('reservation.php');
-                
+                return;
             }else{
                 //if a customer is logged in this method will return the object of the customer
                 $logincustomer = CustomerLogin::getLoginCustomer();
@@ -138,15 +124,8 @@ if($logincustomer == NULL){
             }
         }
     }
-}//if($logincustomer==NULL)
+}//end of if($logincustomer==NULL)
 
-//if the login was not successful show an error message else show rental information for confirmation
-/*if($loginResult->return == NULL){
-    $error.="<li>Login nicht möglich. E-Mail und/oder Passwort sind nicht korrekt.</li>";
-    include_once('reservation.php');
-    exit;
-    
-}*/
 
 //if the custoemr is logged in, show the vehicle data to confirm
 if($logincustomer != NULL){
@@ -166,6 +145,8 @@ if($logincustomer != NULL){
     $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
     $sum = $vehicle->pricePerDay * $rentalDays;
 
+    
+    //show a confirmation to the user
     $output .= "<h1>Reservierung bestätigen</h1>";
     
     $output .= "<b>Guten Tag ".$logincustomer->salutation." ".$logincustomer->lastname.", </b><br>
@@ -174,7 +155,8 @@ if($logincustomer != NULL){
     
     $output .= "
     <table>
-    <tr><td valign='top'>Abholort:</td><td valign='top'><b>".$location->city."</b><br>".$location->street.", ".$location->zip." ".$location->city."</td></tr>
+    <tr><td valign='top'>Abholort:</td><td valign='top'><b>".$location->city."</b>
+    <br>".$location->street.", ".$location->zip." ".$location->city."</td></tr>
     <tr><td>Mietbeginn:</td><td><b>".Converter::toGermanDateTimeString($startDate)."</b></td></tr>
     <tr><td>Mietende:</td><td><b>".Converter::toGermanDateTimeString($returnDate)."</b></td></tr>
     <tr><td>Miettage:</td><td><b>".$rentalDays."</b></td></tr>
@@ -338,9 +320,6 @@ if($logincustomer != NULL){
         </td>
     </tr>
     </table>
-    
-    
     ";
 }
-
 ?>

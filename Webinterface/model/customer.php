@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Bšselager
+// Date: 17.08.2012
+//
+// Description:
+// The class Customer represents an customer.
+//*********************
+
 class Customer{
     public $id;
     public $salutation;

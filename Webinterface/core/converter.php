@@ -1,4 +1,12 @@
 <?php
+//*********************
+// Author: G.Bšselager
+// Date: 20.08.2012
+//
+// Description:
+// The class Converter contains static functions to convert various data.
+//*********************
+
 class Converter{
     
     //*********

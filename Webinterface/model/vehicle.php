@@ -1,7 +1,15 @@
 <?php
+//*********************
+// Author: G.Böselager
+// Date: 18.08.2012
+//
+// Description:
+// The class Vehicle represents a vehicle.
+//*********************
+
 class Vehicle{
     public $id;
-    public $location_id;
+    public $locationId;
     public $manufacturer;
     public $model;
     public $color;

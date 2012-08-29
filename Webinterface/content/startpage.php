@@ -25,7 +25,7 @@ if(isset($returnObj->return)){
 
 
 $currentDate = date("d.m.Y");
-$currentTime = date("H:i");
+$currentTime = date("H:i", strtotime("+1 hour"));
 $tomorrowDate =  date("d.m.Y", strtotime("+1 days"));
 
 $output .= "
@@ -111,9 +111,8 @@ $output .= "
             <td colspan='2'><span class='hWhite'>Rückgabe</span></td>
         </tr>
         <tr>
-            <td><br><br></td>
-            <td>
-            </td>
+            <td height='23'></td>
+            <td></td>
         </tr>
         <tr>
             <td>Datum:</td>

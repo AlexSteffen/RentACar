@@ -59,7 +59,7 @@ public class RentACar_Webservice {
 		try {
 			ResultSet result = DataSource.executeQuery("SELECT * FROM locations WHERE id=" + id);
 						
-			// create a object from each record and add it to the ArrayList
+			// create a object from the result
 			result.first();
 			Location location = new Location();
 			location.setId(result.getInt("id"));
@@ -341,7 +341,7 @@ public class RentACar_Webservice {
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
-	public Boolean register(String email,String password, String salutation, String forename, 
+	public Boolean doRegistration(String email,String password, String salutation, String forename, 
 			String lastname, String street, String city, 
 			String zip, String phone) throws SQLException, ClassNotFoundException 
 	{

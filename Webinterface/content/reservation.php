@@ -26,6 +26,7 @@ $vehicle = $result->return;
 $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
 $sum = $vehicle->pricePerDay * $rentalDays;
 
+//JavaScripts to show or hide the forms for new customers or existing customers
 $output .= "
 <script type='text/javascript'>
 
@@ -62,8 +63,6 @@ $(document).ready(function(){
     }
     
 });
-
-
 </script>";
 
 if($error != ""){
@@ -106,7 +105,10 @@ $output .= "
 </div>
 
 
+
 <div style='float:left;margin-left:20px;'>
+    $errorOutput
+    
     <form action='index.php?section=registration&".$urlGetParams."' method=post>
 ";
 
@@ -115,10 +117,8 @@ $output .= "
         
     }else{
         $output .= "    
-        $errorOutput
-    
-        
-        <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'><label for='existingCustomer'>Ich bin bereits Kunde</label><br>
+        <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'>
+        <label for='existingCustomer'><b>Ich bin bereits Kunde</b></label><br>
         <div id='formExistingCustomer'>
             <table cellspacing='0' cellpadding='0'>
             <tr>
@@ -137,7 +137,8 @@ $output .= "
         </div>
         
         <br>
-        <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'><label for='newCustomer'>Ich bin Neukunde</label><br>
+        <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'>
+        <label for='newCustomer'><b>Ich bin Neukunde</b></label><br>
         <div id='formNewCustomer'>
             <table cellspacing='0' cellpadding='0'>
             <tr>
