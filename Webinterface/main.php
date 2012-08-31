@@ -46,7 +46,6 @@ $webservice = new SoapClient($wsdl, array('soap_version'=>SOAP_1_2,
 //** Include the CustomerLogin. This include has to be called AFTER the SoapClient is created.
 include_once("core/customerLogin.php");
 
-
 //*************
 //** Parameterübergabe an eine Webservice-Methode per Array mit korrekten Bezeichnern der Parameter
 //$result = $client->sayHello(array("name" =>"Mein Name Test"));
