@@ -1,4 +1,4 @@
-package rentACar;
+package core;
 
 /**
  * Enumeration for the conversion mode (converting to german, us or ... format).

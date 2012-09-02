@@ -1,4 +1,4 @@
-package rentACar;
+package core;
 import java.sql.*;
 
 /**

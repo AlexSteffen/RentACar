@@ -4,7 +4,15 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import model.Customer;
+import model.Location;
+import model.Renting;
+import model.Vehicle;
+
 import org.apache.commons.io.IOUtils;
+
+import core.DataSource;
 
 
 public class RentACar_Webservice {
@@ -14,6 +22,36 @@ public class RentACar_Webservice {
 		
 	}
 	
+	/**
+	 * Returns the locations by the passed id.
+	 * @return Array of locations.
+	 */
+	public Location getLocationById(int id){
+		
+		try {
+			ResultSet result = DataSource.executeQuery("SELECT * FROM locations WHERE id=" + id);
+						
+			// create a object from the result
+			result.first();
+			Location location = new Location();
+			location.setId(result.getInt("id"));
+			location.setCity(result.getString("city"));
+			location.setZip(result.getString("zip"));
+			location.setStreet(result.getString("street"));
+			location.setPhone(result.getString("phone"));
+			location.setEmail(result.getString("email"));
+	
+			return location;
+			
+		} catch (ClassNotFoundException e) {
+			
+		} catch (SQLException e) {
+	
+		}
+		
+		return null;
+	}
+
 	/**
 	 * Returns all existing locations.
 	 * @return Array of locations.
@@ -51,68 +89,54 @@ public class RentACar_Webservice {
 	}
 	
 	/**
-	 * Returns the locations by the passed id.
-	 * @return Array of locations.
+	 * Method to return a vehicle by its id.
 	 */
-	public Location getLocationById(int id){
-		
+	public Vehicle getVehicleById(int id){
+	
 		try {
-			ResultSet result = DataSource.executeQuery("SELECT * FROM locations WHERE id=" + id);
-						
-			// create a object from the result
+			
+			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles WHERE id=" + id);
+			
 			result.first();
-			Location location = new Location();
-			location.setId(result.getInt("id"));
-			location.setCity(result.getString("city"));
-			location.setZip(result.getString("zip"));
-			location.setStreet(result.getString("street"));
-			location.setPhone(result.getString("phone"));
-			location.setEmail(result.getString("email"));
-
-			return location;
+			
+			Vehicle vehicle = new Vehicle();
+			
+			vehicle.setId(result.getInt("id"));
+			vehicle.setLocationId(result.getInt("location_id"));
+			vehicle.setManufacturer(result.getString("manufacturer"));
+			vehicle.setModel(result.getString("model"));
+			vehicle.setColor(result.getString("color"));
+			vehicle.setEngineType(result.getString("engine_type"));
+			vehicle.setEngineSize(result.getDouble("engine_size"));
+			vehicle.setEngineHp(result.getInt("engine_hp"));
+			vehicle.setEngineConsum(result.getDouble("engine_consum"));
+			vehicle.setPricePerDay(result.getDouble("price_per_day"));
+			vehicle.setType(result.getString("type"));
+			vehicle.setDoors(result.getInt("doors"));
+			vehicle.setSmokers(result.getInt("smokers"));
+			vehicle.setGear(result.getInt("gear"));
+			vehicle.setClimatic(result.getInt("climatic"));
+			vehicle.setSeats(result.getInt("seats"));
+			vehicle.setNavigationSystem(result.getInt("navigation_system"));
+			
+			if(result.getBinaryStream("image") != null){
+				vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
+			}
+			
+			return vehicle;
 			
 		} catch (ClassNotFoundException e) {
 			
 		} catch (SQLException e) {
-
+	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
 		}
 		
 		return null;
 	}
-	
-	/**
-	 * This Method deals with verification if a vehicle is available in the passed timeframe.
-	 * @param vehicleId
-	 * @param startDate
-	 * @param returnDate
-	 * @return
-	 */
-	public Boolean isVehicleAvailable(int vehicleId, String startDate, String returnDate){
-		//This query checks if the vehicle is available in the specified timeframe
-		String query = 	"SELECT count(*) FROM rentings WHERE " +
-						"vehicle_id = "+ vehicleId + 
-						"AND ("+
-						"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
-						"OR "+
-						"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date)";
-		
-		try {		
-			ResultSet result = DataSource.executeQuery(query);
-			
-			result.first();
-			
-			if(result.getInt(1) > 0){
-				return false;
-			}else{
-				return true;
-			}
-			
-		}catch(Exception e){
-			return false;
-		}
-	
-	}
-	
+
 	/**
 	 * This webmethod finds all available vehicles to the passed start and return parameters
 	 * @param startDate
@@ -141,7 +165,7 @@ public class RentACar_Webservice {
 		
 		try {		
 			ResultSet result = DataSource.executeQuery(query);
-
+	
 			while(result.next()) {
 				Vehicle vehicle = new Vehicle();
 				
@@ -184,6 +208,39 @@ public class RentACar_Webservice {
 		return vehiclesArray;
 		
 	}
+
+	/**
+	 * This Method deals with verification if a vehicle is available in the passed timeframe.
+	 * @param vehicleId
+	 * @param startDate
+	 * @param returnDate
+	 * @return
+	 */
+	public Boolean isVehicleAvailable(int vehicleId, String startDate, String returnDate){
+		//This query checks if the vehicle is available in the specified timeframe
+		String query = 	"SELECT count(*) FROM rentings WHERE " +
+						"vehicle_id = "+ vehicleId + 
+						"AND ("+
+						"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
+						"OR "+
+						"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date)";
+		
+		try {		
+			ResultSet result = DataSource.executeQuery(query);
+			
+			result.first();
+			
+			if(result.getInt(1) > 0){
+				return false;
+			}else{
+				return true;
+			}
+			
+		}catch(Exception e){
+			return false;
+		}
+	
+	}
 	
 	/**
 	 * Method to find a specific customer by its customer id.
@@ -225,6 +282,28 @@ public class RentACar_Webservice {
 			}
 	}
 	
+	/***
+	 * This method checks if a customer already exists by id.
+	 * @param email 
+	 * @return It returns a boolean whether it exists or not.
+	 */
+	public Boolean customerExists(String email)
+	{
+		try {
+			
+			// checking the email-address in the database
+			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
+			Boolean exists = result.first();
+	
+			return exists;
+			
+		}  catch (Exception e) {
+			
+			// returns null in case of an error
+			return null;
+		}
+	}
+
 	/***
 	 * Checks if a email address is already in the database.
 	 * @param email address of potential customer
@@ -277,186 +356,6 @@ public class RentACar_Webservice {
 	}
 	
 	
-	/**
-	 * Method to return a vehicle by its id.
-	 */
-	public Vehicle getVehicleById(int id){
-
-		try {
-			
-			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles WHERE id=" + id);
-			
-			result.first();
-			
-			Vehicle vehicle = new Vehicle();
-			
-			vehicle.setId(result.getInt("id"));
-			vehicle.setLocationId(result.getInt("location_id"));
-			vehicle.setManufacturer(result.getString("manufacturer"));
-			vehicle.setModel(result.getString("model"));
-			vehicle.setColor(result.getString("color"));
-			vehicle.setEngineType(result.getString("engine_type"));
-			vehicle.setEngineSize(result.getDouble("engine_size"));
-			vehicle.setEngineHp(result.getInt("engine_hp"));
-			vehicle.setEngineConsum(result.getDouble("engine_consum"));
-			vehicle.setPricePerDay(result.getDouble("price_per_day"));
-			vehicle.setType(result.getString("type"));
-			vehicle.setDoors(result.getInt("doors"));
-			vehicle.setSmokers(result.getInt("smokers"));
-			vehicle.setGear(result.getInt("gear"));
-			vehicle.setClimatic(result.getInt("climatic"));
-			vehicle.setSeats(result.getInt("seats"));
-			vehicle.setNavigationSystem(result.getInt("navigation_system"));
-			
-			if(result.getBinaryStream("image") != null){
-				vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
-			}
-			
-			return vehicle;
-			
-		} catch (ClassNotFoundException e) {
-			
-		} catch (SQLException e) {
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Method to register a customer. It checks if the customer already exists. 
-	 * If not, it adds the customer to the database
-	 * @param email
-	 * @param forename
-	 * @param lastname
-	 * @param street
-	 * @param city
-	 * @param zip
-	 * @param phone
-	 * @return It returns if the customer has been created or not. 
-	 * In case of an error it returns null.
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException 
-	 */
-	public Boolean doRegistration(String email,String password, String salutation, String forename, 
-			String lastname, String street, String city, 
-			String zip, String phone) throws SQLException, ClassNotFoundException 
-	{
-		
-		if(!customerExists(email))
-		{
-				DataSource.executeNonQuery("INSERT INTO customers (`email`, `password`, `salutation`, `forename`, " +
-						"`lastname`, `street`, `zip`, `city`, `phone`) " +
-						"VALUES('" + email + "', '" + password + "', '" + salutation + "', '" + forename + "', '" 
-						+ lastname + "', '" + street + "', '" + zip + "', '" + city + "', '" + phone + "')");
-				
-				return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	
-	/***
-	 * This method checks if a customer already exists by id.
-	 * @param email 
-	 * @return It returns a boolean whether it exists or not.
-	 */
-	public Boolean customerExists(String email)
-	{
-		try {
-			
-			// checking the email-address in the database
-			ResultSet result = DataSource.executeQuery("SELECT * FROM customers WHERE email='" + email + "'");
-			Boolean exists = result.first();
-	
-			return exists;
-			
-		}  catch (Exception e) {
-			
-			// returns null in case of an error
-			return null;
-		}
-	}
-	
-	/***
-	 * Method to do a reservation.
-	 * @param vehicle id
-	 * @param customer Id 
-	 * @param startDate
-	 * @param returnDate
-	 * @param totalPrice
-	 * @return It returns the renting
-	 */			   
-	public Renting doReservation(int vehicleId, int customerId, String startDate, String returnDate, double totalPrice)
-	{
-		try {
-			
-			if(isVehicleAvailable(vehicleId, startDate, returnDate)){
-				int rentingId = DataSource.executeInsert("INSERT INTO rentings " +
-						"(vehicle_id, customer_id, start_date, return_date, total_price) " +
-						"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
-								", " + totalPrice + ")");
-				
-
-				ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE id=" + rentingId);
-				
-				result.first();
-				
-				Renting renting = new Renting();
-				
-				renting.setId(result.getInt("id"));
-				renting.setVehicleId(result.getInt("vehicle_id"));
-				renting.setCustomerId(result.getInt("customer_id"));
-				renting.setStartDate(result.getString("start_date"));
-				renting.setReturnDate(result.getString("return_date"));
-				renting.setTotalPrice(result.getDouble("total_price")); 
-				
-				return renting;
-			}else{
-				
-				return null;
-			}
-			
-			
-		} 
-		catch (Exception e) 
-		{
-			return null;
-		}
-	}
-	
-	/***
-	 * Adding a rating to a vehicle. Max value for a rating is 5.
-	 * @param id of the renting which should be rated
-	 * @param rating value
-	 */
-	public void doRating(int customerId, int rentingId, int ratingValue) 
-	{
-		try 
-		{
-			// catch wrong values
-			if(ratingValue < 1)
-				ratingValue = 0;
-			else if(ratingValue >4)
-				ratingValue = 5;
-			
-			// updating the database with the new rating value
-			DataSource.executeNonQuery("UPDATE rentings " +
-					"SET rating=" + ratingValue + " WHERE id=" + rentingId + " AND customer_id="+customerId+" AND rating=0");
-			
-					
-		} catch (Exception e) 
-		{
-
-		}
-	}
-	
 	/***
 	 * Getting the rating for a specific vehicle.
 	 * @param vehicle id
@@ -497,8 +396,34 @@ public class RentACar_Webservice {
 			return rating;
 			
 		} catch (Exception e) {
-
+	
 			return rating;
+		}
+	}
+
+	/***
+	 * Adding a rating to a vehicle. Max value for a rating is 5.
+	 * @param id of the renting which should be rated
+	 * @param rating value
+	 */
+	public void doRating(int customerId, int rentingId, int ratingValue) 
+	{
+		try 
+		{
+			// catch wrong values
+			if(ratingValue < 1)
+				ratingValue = 0;
+			else if(ratingValue >4)
+				ratingValue = 5;
+			
+			// updating the database with the new rating value
+			DataSource.executeNonQuery("UPDATE rentings " +
+					"SET rating=" + ratingValue + " WHERE id=" + rentingId + " AND customer_id="+customerId+" AND rating=0");
+			
+					
+		} catch (Exception e) 
+		{
+
 		}
 	}
 	
@@ -549,5 +474,87 @@ public class RentACar_Webservice {
 		
 		return rentingArray;
 		
+	}
+
+	/**
+	 * Method to register a customer. It checks if the customer already exists. 
+	 * If not, it adds the customer to the database
+	 * @param email
+	 * @param forename
+	 * @param lastname
+	 * @param street
+	 * @param city
+	 * @param zip
+	 * @param phone
+	 * @return It returns if the customer has been created or not. 
+	 * In case of an error it returns null.
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
+	 */
+	public Boolean doRegistration(String email,String password, String salutation, String forename, 
+			String lastname, String street, String city, 
+			String zip, String phone) throws SQLException, ClassNotFoundException 
+	{
+		
+		if(!customerExists(email))
+		{
+				DataSource.executeNonQuery("INSERT INTO customers (`email`, `password`, `salutation`, `forename`, " +
+						"`lastname`, `street`, `zip`, `city`, `phone`) " +
+						"VALUES('" + email + "', '" + password + "', '" + salutation + "', '" + forename + "', '" 
+						+ lastname + "', '" + street + "', '" + zip + "', '" + city + "', '" + phone + "')");
+				
+				return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/***
+	 * Method to do a reservation.
+	 * @param vehicle id
+	 * @param customer Id 
+	 * @param startDate
+	 * @param returnDate
+	 * @param totalPrice
+	 * @return It returns the renting
+	 */			   
+	public Renting doReservation(int vehicleId, int customerId, String startDate, String returnDate, double totalPrice)
+	{
+		try {
+			
+			if(isVehicleAvailable(vehicleId, startDate, returnDate)){
+				int rentingId = DataSource.executeInsert("INSERT INTO rentings " +
+						"(vehicle_id, customer_id, start_date, return_date, total_price) " +
+						"VALUES(" + vehicleId + ", " + customerId + ", '" + startDate + "', '" + returnDate + "'" +
+								", " + totalPrice + ")");
+				
+	
+				ResultSet result = DataSource.executeQuery("SELECT * FROM rentings WHERE id=" + rentingId);
+				
+				result.first();
+				
+				Renting renting = new Renting();
+				
+				renting.setId(result.getInt("id"));
+				renting.setVehicleId(result.getInt("vehicle_id"));
+				renting.setCustomerId(result.getInt("customer_id"));
+				renting.setStartDate(result.getString("start_date"));
+				renting.setReturnDate(result.getString("return_date"));
+				renting.setTotalPrice(result.getDouble("total_price")); 
+				
+				return renting;
+			}else{
+				
+				return null;
+			}
+			
+			
+		} 
+		catch (Exception e) 
+		{
+			return null;
+		}
 	}
 }

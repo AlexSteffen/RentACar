@@ -1,4 +1,4 @@
-package rentACar;
+package model;
 
 public class Customer {
 
