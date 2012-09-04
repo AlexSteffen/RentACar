@@ -22,10 +22,6 @@ $result = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = new Vehicle();
 $vehicle = $result->return;
 
-//calculate the difference between the dates to get the total_price
-$rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
-$sum = $vehicle->pricePerDay * $rentalDays;
-
 //JavaScripts to show or hide the forms for new customers or existing customers
 $output .= "
 <script type='text/javascript'>
@@ -65,48 +61,20 @@ $(document).ready(function(){
 });
 </script>";
 
+$output .= "<h1>Registrierung</h1>";
+
 if($error != ""){
     $errorOutput .= "<div id='error_box'>Es sind Fehler aufgetreten:<br><ul>$error</ul></div>";
 }
 
 
 $output .= "
-<div style='float:left;margin-left:20px;width:300px;'>
+<div style='float:left;width:300px;'>
     <img width='300px' style='float:left;' src='renderVehicleImage.php?id=".$vehicleId."'>
-    
-    <div id='reservation_information'>
-    <table class='detail'>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td style='width: 170px'><b>Ihr Tarif:</b></td>
-            <td style='width: 100px'></td>
-        </tr>
-        <tr>
-            <td>Buchungsdauer:</td>
-            <td>".$rentalDays." Tag(e)</td>
-        </tr>
-        <tr>
-            <td>Preis/Tag:</td>
-            <td>".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag</td>
-        </tr>
-        <tr>
-            <td colspan='2'><hr></td>
-        </tr>
-        <tr>
-            <td><b>Ihr Gesamtbetrag</b>:</td>
-            <td>".Converter::toDecimalString($sum)." €</td>
-        </tr>
-    </table>
-    </div>
-
 </div>
 
-
-
-<div style='float:left;margin-left:20px;'>
+<div style='float:left;margin-left:20px;border:1px solid gray; width:360px;'>
+    <div style='float:left;margin:10px;width:340px;'>
     $errorOutput
     
     <form action='index.php?section=registration&".$urlGetParams."' method=post>
@@ -119,7 +87,7 @@ $output .= "
         $output .= "    
         <input type='radio' name='newOrExistingCustomer' value='existingCustomer' id='existingCustomer' onclick='showExistingCustomer()'>
         <label for='existingCustomer'><b>Ich bin bereits Kunde</b></label><br>
-        <div id='formExistingCustomer'>
+        <div id='formExistingCustomer' style='margin-left:22px;'>
             <table cellspacing='0' cellpadding='0'>
             <tr>
                 <td width='100'>E-Mail:</td>
@@ -139,7 +107,8 @@ $output .= "
         <br>
         <input type='radio' name='newOrExistingCustomer' value='newCustomer' id='newCustomer' onclick='showNewCustomer()'>
         <label for='newCustomer'><b>Ich bin Neukunde</b></label><br>
-        <div id='formNewCustomer'>
+        
+        <div id='formNewCustomer' style='margin-left:22px;'>
             <table cellspacing='0' cellpadding='0'>
             <tr>
                 <td width='100'>E-Mail:</td>
@@ -200,8 +169,9 @@ $output .= "
     
 $output .= "
     <br>
-    <input type='submit' name='register' style='width:300px;font-size:22px;' value='Weiter >>'>
+    <input type='submit' name='register' style='width:330px;font-size:22px;' value='Weiter >>'>
     </form>
+    </div>
 </div>
 ";
 

@@ -62,16 +62,12 @@ if($logincustomer == NULL){
         //webservice call to check if there is already a customer with the email address    
         $result = $webservice->customerExists(array("email"=>$email));
         
-        if($result==NULL) {
-            $error .= "<li>Es existiert bereit ein Kunde mit der angegeben E-Mail-Adresse.</li>";
+        if($result->return==true) {
+            $error .= "<li>Es existiert bereits ein Kunde mit der angegeben E-Mail-Adresse.</li>";
         }
         
         if($password=="") {
             $error .= "<li>Bitte geben Sie ein Passwort an.</li>";
-        }
-        
-        if($lastname=="") {
-            $error .= "<li>Bitte geben Sie Ihren Nachnamen an.</li>";
         }
         
         if($lastname=="") {
@@ -107,7 +103,7 @@ if($logincustomer == NULL){
         
         $returnValue = $registrationResult->return;
     
-        if($returnValue != True)
+        if($returnValue == false)
         {
             $output .= "Ein unerwarteter Fehler beim Registrieren des Kunden ist aufgetreten.";
             return;
@@ -149,37 +145,56 @@ if($logincustomer != NULL){
     //show a confirmation to the user
     $output .= "<h1>Reservierung bestätigen</h1>";
     
-    $output .= "<b>Guten Tag ".$logincustomer->salutation." ".$logincustomer->lastname.", </b><br>
+    $output .= "<b>Guten Tag ".$logincustomer->salutation." ".$logincustomer->lastname.", </b><br><br>
     bitte prüfen Sie Ihre Auswahl und klicken Sie auf 'Jetzt reservieren' um das Fahrzeug zu reservieren.<br><br>";
     
-    
-    $output .= "
-    <table>
-    <tr><td valign='top'>Abholort:</td><td valign='top'><b>".$location->city."</b>
-    <br>".$location->street.", ".$location->zip." ".$location->city."</td></tr>
-    <tr><td>Mietbeginn:</td><td><b>".Converter::toGermanDateTimeString($startDate)."</b></td></tr>
-    <tr><td>Mietende:</td><td><b>".Converter::toGermanDateTimeString($returnDate)."</b></td></tr>
-    <tr><td>Miettage:</td><td><b>".$rentalDays."</b></td></tr>
-    
-    <tr><td>Kosten:</td><td><b>".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag</b></td></tr>
-    <tr><td>Gesamtbetrag:</td><td><b>".Converter::toDecimalString($sum)." €</b></td></tr>
-    </table>
-    <br><br>";
-
         
     $output .= "
     <table class='detail'>
     <tr>
-        <td>
+        <td style='width:330px;'>
             <img width='300px' id='pic' src='renderVehicleImage.php?id=".$vehicle->id."'>
         </td>
         <td>
-            <table class='detail'>
+            <table style='border:1px solid gray;width:400px;'>
+                <tr>
+                    <td style='width: 150px'>
+                        <b>Mietinformationen:</b>
+                    </td>
+                    <td style='width: 250px'></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Abholort/Rückgabeort:</td>
+                    <td valign='top'><b>".$location->city."</b><br>".$location->street.", ".$location->zip." ".$location->city."</td>
+                </tr>
+                <tr>
+                    <td>Mietbeginn:</td>
+                    <td><b>".Converter::toGermanDateTimeString($startDate)."</b></td>
+                </tr>
+                <tr>
+                    <td>Mietende:</td>
+                    <td><b>".Converter::toGermanDateTimeString($returnDate)."</b></td>
+                </tr>
+                <tr>
+                    <td>Miettage:</td>
+                    <td>".$rentalDays."</td>
+                </tr>
+                <tr>
+                    <td>Kosten pro Tag:</td>
+                    <td>".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag</td>
+                </tr>
+                <tr>
+                    <td>Gesamtbetrag:</td>
+                    <td><b>".Converter::toDecimalString($sum)." €</b></td>
+                </tr>
+            </table>
+            <br><br>
+            <table class='detail'  style='border:1px solid gray;width:400px;'>
                 <tr>
                     <td style='width: 150px'>
                         <b>Allgemeines:</b>
                     </td>
-                    <td   style='width: 150px'></td>
+                    <td style='width: 250px'></td>
                 </tr>
                 <tr>
                     <td>
@@ -312,7 +327,7 @@ if($logincustomer != NULL){
                 <tr>
                     <td colspan='2'>
                         <form action='index.php?section=confirmation&$urlGetParams' method='post'>
-                            <input type='submit' value='Jetzt reservieren' style='width:300px;font-size:22px;'>
+                            <input type='submit' value='Jetzt reservieren' style='width:390px;font-size:22px;'>
                         </form>
                     </td>
                 </tr>

@@ -57,6 +57,12 @@ if(count($vehiclesResult->return) == 0){
         $output .= "Keine verfügbaren Fahrzeuge gefunden. Bitte ändern Sie Ihre Suchparameter.";
         
 }else{
+        //If there is a return of only 1 record you have to convert the value into an array.
+        //This is an fault of axis2
+        if(count($vehiclesResult->return) == 1){
+            $vehiclesResult->return = array($vehiclesResult->return);
+        }
+        
         //loop at all found vehicles and render HTML
         foreach($vehiclesResult->return as $item){
                 

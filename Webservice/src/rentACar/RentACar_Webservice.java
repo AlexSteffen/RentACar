@@ -17,21 +17,25 @@ import core.DataSource;
 
 public class RentACar_Webservice {
 	
+	/**
+	 * This is the default contructor that is required for an Axis2-Webservice
+	 */
 	public RentACar_Webservice() 
-	{
-		
+	{	
 	}
 	
 	/**
-	 * Returns the locations by the passed id.
-	 * @return Array of locations.
+	 * Returns the location by the passed id.
+	 * @param id ID of the location.
+	 * @return Object of a type location.
 	 */
 	public Location getLocationById(int id){
 		
 		try {
+			//SQL-Query to find out the corresponding location
 			ResultSet result = DataSource.executeQuery("SELECT * FROM locations WHERE id=" + id);
 						
-			// create a object from the result
+			// create a location object from the result
 			result.first();
 			Location location = new Location();
 			location.setId(result.getInt("id"));
@@ -41,15 +45,17 @@ public class RentACar_Webservice {
 			location.setPhone(result.getString("phone"));
 			location.setEmail(result.getString("email"));
 	
+			//return the location
 			return location;
 			
 		} catch (ClassNotFoundException e) {
-			
+			//returns null in error case
+			return null;
 		} catch (SQLException e) {
-	
+			//returns null in error case
+			return null;
 		}
-		
-		return null;
+
 	}
 
 	/**
@@ -61,6 +67,7 @@ public class RentACar_Webservice {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		
 		try {
+			//SQL-Query to find out all locations
 			ResultSet result = DataSource.executeQuery("SELECT * FROM locations");
 						
 			// create a object from each record and add it to the ArrayList
@@ -77,12 +84,14 @@ public class RentACar_Webservice {
 			}
 			
 		} catch (ClassNotFoundException e) {
-			
+			//returns null in error case
+			return null;
 		} catch (SQLException e) {
-
+			//returns null in error case
+			return null;
 		}
 		
-		// Convert the ArrayList to an array. This is required because AXIS2 can not transport generic lists over SOAP
+		//converts the ArrayList to an array. This is required because AXIS2 can not transport generic lists over SOAP
 		Location[] locationsArray = locations.toArray(new Location[locations.size()]);
 		
 		return locationsArray;
@@ -90,15 +99,18 @@ public class RentACar_Webservice {
 	
 	/**
 	 * Method to return a vehicle by its id.
+	 * @param id ID of the vehicle.
+	 * @return Object of a type vehicle.
 	 */
 	public Vehicle getVehicleById(int id){
 	
 		try {
-			
+			//SQL-Query to find out the requested vehicle
 			ResultSet result = DataSource.executeQuery("SELECT * FROM vehicles WHERE id=" + id);
 			
 			result.first();
 			
+			//creates an object from the record
 			Vehicle vehicle = new Vehicle();
 			
 			vehicle.setId(result.getInt("id"));
@@ -119,6 +131,7 @@ public class RentACar_Webservice {
 			vehicle.setSeats(result.getInt("seats"));
 			vehicle.setNavigationSystem(result.getInt("navigation_system"));
 			
+			//the image has a binary format an will be converted to a byte-array
 			if(result.getBinaryStream("image") != null){
 				vehicle.setBinaryImage(IOUtils.toByteArray(result.getBinaryStream("image")));
 			}
@@ -126,24 +139,23 @@ public class RentACar_Webservice {
 			return vehicle;
 			
 		} catch (ClassNotFoundException e) {
-			
+			//returns null in error case
+			return null;
 		} catch (SQLException e) {
-	
+			//returns null in error case
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			//returns null in error case
+			return null;
 		}
-		
-		return null;
 	}
 
 	/**
-	 * This webmethod finds all available vehicles to the passed start and return parameters
-	 * @param startDate
-	 * @param startLocation
-	 * @param returnDate
-	 * @param returnLocation
-	 * @return
+	 * This webservice method finds all available vehicles to the passed start and return parameters
+	 * @param startDate The start of the renting (date and time).
+	 * @param startLocation The location where the vehicle will be taken.
+	 * @param returnDate The return of the renting (date and time)
+	 * @return An Array of available vehicles.
 	 */
 	public Vehicle[] findVehicles(String startDate, int startLocation, String returnDate){
 		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -163,9 +175,11 @@ public class RentACar_Webservice {
 							"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date))" +
 						")";
 		
-		try {		
+		try {	
+			//SQL-Query to find out the available vehicles
 			ResultSet result = DataSource.executeQuery(query);
 	
+			//creates an object from every record
 			while(result.next()) {
 				Vehicle vehicle = new Vehicle();
 				
@@ -196,13 +210,17 @@ public class RentACar_Webservice {
 			}
 			
 		} catch (ClassNotFoundException e) {
+			//returns null in error case
 			return null;
 		} catch (SQLException e) {
+			//returns null in error case
 			return null;
 		} catch (IOException e) {
+			//returns null in error case
 			return null;
 		} 
 		
+		//converts an ArrayList to an array
 		Vehicle[] vehiclesArray = (Vehicle[])vehicles.toArray(new Vehicle[vehicles.size()]);
 		
 		return vehiclesArray;
@@ -211,26 +229,29 @@ public class RentACar_Webservice {
 
 	/**
 	 * This Method deals with verification if a vehicle is available in the passed timeframe.
-	 * @param vehicleId
-	 * @param startDate
-	 * @param returnDate
-	 * @return
+	 * @param vehicleId ID of the vehicle.
+	 * @param startDate The start of the renting (date and time).
+	 * @param returnDate The return of the renting (date and time).
+	 * @return Returns TRUE if the vehicle is available.
 	 */
 	public Boolean isVehicleAvailable(int vehicleId, String startDate, String returnDate){
+		
 		//This query checks if the vehicle is available in the specified timeframe
-		String query = 	"SELECT count(*) FROM rentings WHERE " +
-						"vehicle_id = "+ vehicleId + 
-						"AND ("+
+		String query = 	"SELECT count(*) as anzahl FROM rentings WHERE " +
+						"vehicle_id = "+ vehicleId + " " +
+						"AND " +
+						"("+
 						"('"+startDate+"' BETWEEN start_date AND return_date OR '"+returnDate+"' BETWEEN start_date AND return_date) "+
 						"OR "+
-						"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date)";
+						"('"+startDate+"' < start_date AND '"+returnDate+"' > return_date) " +
+						")";
 		
 		try {		
 			ResultSet result = DataSource.executeQuery(query);
 			
 			result.first();
 			
-			if(result.getInt(1) > 0){
+			if(result.getInt("anzahl") > 0){
 				return false;
 			}else{
 				return true;
@@ -241,6 +262,7 @@ public class RentACar_Webservice {
 		}
 	
 	}
+	
 	
 	/**
 	 * Method to find a specific customer by its customer id.
@@ -554,7 +576,12 @@ public class RentACar_Webservice {
 		} 
 		catch (Exception e) 
 		{
-			return null;
+			Renting renting = new Renting();
+			renting.setReturnDate(e.getMessage()); 
+			
+			return renting;
+			
+			//return null;
 		}
 	}
 }

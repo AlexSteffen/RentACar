@@ -36,7 +36,11 @@ if($logincustomer != NULL){
     
     $output .= "Sie haben bisher ".count($rentingsResult->return)." Fahrzeuge gemietet.<br><br>";
     
-    
+    //If there is a return of only 1 record you have to convert the value into an array.
+    //This is an fault of axis2
+    if(count($rentingsResult->return) == 1){
+        $rentingsResult->return = array($rentingsResult->return);
+    }
     
     if(count($rentingsResult->return) > 0){
 

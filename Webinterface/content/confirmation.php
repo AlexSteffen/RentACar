@@ -25,7 +25,6 @@ $vehicle = $result->return;
 $rentalDays = Converter::dateDifferenceInDays($startDate, $returnDate);
 $sum = round($vehicle->pricePerDay * $rentalDays, 2);
 
-
 //webservice call to excecute the reservation
 $renting = $webservice->doReservation(array("vehicleId"=>$vehicleId, "customerId"=>$logincustomer->id,
                                             "startDate"=>$startDate, "returnDate"=>$returnDate, "totalPrice"=>$sum));

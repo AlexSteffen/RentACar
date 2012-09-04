@@ -27,17 +27,15 @@ $output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
 
         
 $output .= "
-<span style='font-size: 14pt;'>
-<a href='index.php?section=reservation&vehicle_id=".$vehicle->id."&".$urlGetParams."'>Jetzt reservieren</a>
-</span>
 
 <table class='detail'>
 <tr>
-    <td>
+    <td style='width:330px;'>
         <img width='300px' id='pic' src='renderVehicleImage.php?id=".$vehicle->id."'>
     </td>
-    <td>
-        <table class='detail'>
+    <td align='left'>
+        <div style='float:left;border:1px solid gray; width:400px;'>
+        <table>
             <tr>
                 <td style='width: 150px'>
                     <b>Allgemeines:</b>
@@ -190,7 +188,14 @@ $output .= "
                     ".Converter::toDecimalString($vehicle->pricePerDay)." € / Tag
                 </td>
             </tr>
+            <tr>
+                <td colspan='2' align='center'>
+                <br><br>
+                    <a style='font-size: 14pt;' href='index.php?section=reservation&vehicle_id=".$vehicle->id."&".$urlGetParams."'>Dieses Fahrzeug jetzt reservieren >> </a>
+                </td>
+            </tr>            
         </table>
+        </div>
     </td>
 </tr>
 </table>
