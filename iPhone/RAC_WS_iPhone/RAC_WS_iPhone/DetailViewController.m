@@ -21,6 +21,7 @@
 @synthesize myModell;
 @synthesize myType;
 @synthesize myColor;
+@synthesize myPrice;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,6 +53,7 @@
     [self setMyModell:nil];
     [self setMyType:nil];
     [self setMyColor:nil];
+    [self setMyPrice:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -75,6 +77,12 @@
         myColor.text = car.color;
         myModell.text = car.model;
         myType.text = car.type;
+        
+        NSString *price = [NSString stringWithFormat:@"%.2f €",car.pricePerDay];
+        
+        myPrice.text = price;
+        
+        
     }
     
 }

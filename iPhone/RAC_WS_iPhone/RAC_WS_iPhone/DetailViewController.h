@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *myModell;
 @property (weak, nonatomic) IBOutlet UILabel *myType;
 @property (weak, nonatomic) IBOutlet UILabel *myColor;
+@property (weak, nonatomic) IBOutlet UILabel *myPrice;
 
 
 @end
