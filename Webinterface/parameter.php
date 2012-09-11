@@ -1,6 +1,6 @@
 <?php
 //*********************
-// Author: G.Böselager
+// Author: G.Boeselager
 // Date: 27.08.2012
 //
 // Description:
@@ -40,7 +40,7 @@ if($startDate >= $returnDate){
 }else
 //check if the dates are in the past
 if($startDate < date("Y-m-d H:i:s") || $returnDate < date("Y-m-d H:i:s")){
-    $output .= "Die Datum dürfen nicht in der Vergangenheit.";
+    $output .= "Die Datumsangaben dürfen nicht in der Vergangenheit liegen.";
     $invalidParameters=true;
 }
 

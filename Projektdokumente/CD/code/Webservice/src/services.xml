@@ -1,0 +1,42 @@
+<service>
+	<description>RentACar_Webservice</description>
+	<parameter name="ServiceClass" locked="false">
+      rentACar.RentACar_Webservice
+    </parameter>
+	<operation name="findVehicles">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="getVehicleById">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="getAllLocations">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="getLocationById">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="getCustomerById">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="doRegistration">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="customerExists">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="checkLogin">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+	<operation name="doReservation">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
+	<operation name="doRating">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
+	<operation name="getRating">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
+	<operation name="getRentingsByCustomerId">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+</service>

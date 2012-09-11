@@ -1,6 +1,6 @@
 <?php
 //*********************
-// Author: G.Böselager
+// Author: G.Boeselager
 // Date: 18.08.2012
 //
 // Description:
@@ -63,6 +63,38 @@ if(count($vehiclesResult->return) == 0){
             $vehiclesResult->return = array($vehiclesResult->return);
         }
         
+        //create the filter form
+        $currentFilterManufacturer = $_REQUEST["filter_manufacturer"];
+        
+        if($currentFilterManufacturer != "")
+                $filterRemove = "<a href='index.php?section=search&$urlGetParams'>Filter entfernen</a>";
+                
+        $output="
+        <div id='filter'>
+        <form action='index.php?section=search&$urlGetParams' method='post' style='margin-top:8px;'>
+        Filter nach Hersteller: 
+        <select name='filter_manufacturer'>
+        <option value=''>--kein Filter--</option>
+        ";
+        
+        //loop at all found vehicles to create the filter
+        $filterValues=array();
+        foreach($vehiclesResult->return as $item){
+                if(!in_array($item->manufacturer, $filterValues, true)){
+                        $filterValues[count($filterValues)] = $item->manufacturer;
+                        
+                        if($currentFilterManufacturer == $item->manufacturer) $selection=" selected"; else  $selection="";
+                        
+                        $output.="<option value='".$item->manufacturer."' $selection>".$item->manufacturer."</option>";
+                }
+        }
+        $output.="
+        </select>
+        <input type='submit' value='Filtern'>
+        $filterRemove
+        </form>
+        </div>";
+        
         //loop at all found vehicles and render HTML
         foreach($vehiclesResult->return as $item){
                 
@@ -70,6 +102,9 @@ if(count($vehiclesResult->return) == 0){
                 $vehicle = new Vehicle;
                 $vehicle = $item;       
                 
+                //do not display the vehicle if it is not allowed by the filter
+                if($currentFilterManufacturer != "" && $currentFilterManufacturer != $vehicle->manufacturer) continue;
+        
                 //webservicec call to get the location
                 $location = new Location;
                 $locationResult = $webservice->getLocationById(array("id"=>$vehicle->locationId));

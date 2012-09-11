@@ -1,6 +1,6 @@
 <?php
 //*********************
-// Author: G.Böselager
+// Author: G.Boeselager
 // Date: 15.08.2012
 //
 // Description:
@@ -32,8 +32,8 @@ include_once("model/renting.php");
 //** If you want to handle complex types from the webservice you have to set the option "classmap"
 //** with a mapping of the internal classname to the extenal classname. e.g. 'classmap' => array('Vehicle' => "vehicle")
 
-//$wsdl = "http://193.22.73.246:8080/axis2/services/RentACar?wsdl"; //FHDW Server (VPN-Connection is required)
-$wsdl = "http://localhost:8080/axis2/services/RentACar?wsdl"; //local
+$wsdl = "http://193.22.73.246:8080/axis2/services/RentACar?wsdl"; //FHDW Server (VPN-Connection is required)
+//$wsdl = "http://localhost:8080/axis2/services/RentACar?wsdl"; //local
 
 $webservice = new SoapClient($wsdl, array('soap_version'=>SOAP_1_2,
 																				'trace'=>1,
@@ -45,42 +45,5 @@ $webservice = new SoapClient($wsdl, array('soap_version'=>SOAP_1_2,
 
 //** Include the CustomerLogin. This include has to be called AFTER the SoapClient is created.
 include_once("core/customerLogin.php");
-
-//*************
-//** Parameterübergabe an eine Webservice-Methode per Array mit korrekten Bezeichnern der Parameter
-//$result = $client->sayHello(array("name" =>"Mein Name Test"));
-//echo $result->return;
-
-//*************
-//** Für Problembehebungen kann mit diesem Code der komplette Inhalt der SOAP-Antwort auf der Webseite
-//** ausgegeben werden.
-//echo "<br>LastResponse:".htmlentities($client->__getLastResponse())."<br>";
-//echo "<br>LastRequest:".htmlentities($client->__getLastRequest())."<br>";
-
-//*************
-//** Folgende Codes können verwendet werden, um alle Funktionen des Webservices bzw. alle
-//** Typen des Webservices auszugeben.
-//echo "Functions: " . var_dump($client->__getFunctions())."<br>";
-//echo "Types: " . var_dump($client->__getTypes());
-
-//*************
-//** Um den Inhalt einer SOAP-Antwort als Text auszugeben kann folgender Code verwendet werden
-//echo "Inhalt: " .var_dump($soapReturnObject->return);
-
-//*************
-//** Beispiel für den Auftruf einer Webmethod und Ausgabe des Rückgabewertes
-//$returnObj = $client->getVehicle();
-//echo $resultObj->return;
-
-//*************
-//** Beispiel, um ein zurückgegebenen Array zu durchlaufen
-//$returnObj = $client->getVehicle();
-//foreach($returnObj->return as $item){
-//    $v = new vehicle();
-//    $v = $item;
-//    echo "<br>".$v->model;
-//    echo "<br>".$v->number;
-//    echo "<br>".$v->other;
-//}
 
 ?>

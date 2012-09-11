@@ -1,6 +1,6 @@
 <?php
 //*********************
-// Author: G.Böselager
+// Author: G.Boeselager
 // Date: 16.08.2012
 //
 // Description:
@@ -23,7 +23,7 @@ if(isset($returnObj->return)){
     }
 }
 
-
+//
 $currentDate = date("d.m.Y");
 $currentTime = date("H:i", strtotime("+1 hour"));
 $tomorrowDate =  date("d.m.Y", strtotime("+1 days"));
