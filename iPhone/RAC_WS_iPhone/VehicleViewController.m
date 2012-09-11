@@ -46,10 +46,7 @@
 
 - (void)handleFindVehicles:(id)value {
     
-    /*
-    RentACarVehicle *vehicle = [[RentACarVehicle alloc]init];
-    vehicle = value;
-    */
+
     
     RentACarVehicle *car = [[RentACarVehicle alloc]init];
     car = value;
