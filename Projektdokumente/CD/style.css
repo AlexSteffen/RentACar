@@ -42,3 +42,7 @@ text-decoration:underline;
 .small {
 font-size:10pt;
 }
+
+ul li {
+ padding: 4px;
+}

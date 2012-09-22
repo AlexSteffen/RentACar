@@ -23,10 +23,10 @@ if(isset($returnObj->return)){
     }
 }
 
-//
-$currentDate = date("d.m.Y");
+//determine the dates for preselection
+$currentDate = date("d.m.Y", strtotime("+1 days"));
 $currentTime = date("H:i", strtotime("+1 hour"));
-$tomorrowDate =  date("d.m.Y", strtotime("+1 days"));
+$tomorrowDate =  date("d.m.Y", strtotime("+2 days"));
 
 $output .= "
 <script type='text/javascript'>

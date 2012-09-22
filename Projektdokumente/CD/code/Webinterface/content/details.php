@@ -20,7 +20,9 @@ $vehicle = new Vehicle;
 $returnObj = $webservice->getVehicleById(array("id" => $vehicleId));
 $vehicle = $returnObj->return;
 
-$output .= "<span style='font-size:12pt;'>Mietzeitraum von: <b>".
+$output .= "
+<h1>Detailansicht</h1>
+<span style='font-size:12pt;'>Mietzeitraum von: <b>".
         Converter::toGermanDateTimeString($startDate) .
         "</b> bis <b>".
         Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>";
@@ -172,13 +174,9 @@ $output .= "
             </tr>
             <tr>
                 <td>
-                    <b>Reservierung:</b>
+                    <b>Kosten:</b>
                 </td>
                 <td></td>
-            </tr>
-            <tr>
-                <td>Verfügbarkeit:</td>
-                <td>Nein</td>
             </tr>
             <tr>
                 <td>

@@ -28,6 +28,18 @@ h1{
     color: #3f7fa8;
     font-size: 18pt;
 }
+
+#filter{
+    float: left;
+    clear: both;
+    height: 35px;
+    width: 900px;
+    color: black;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    border-bottom: 5px solid white;
+}
+
 /* styles for the list of cars */
 #cardetails{
     float: left;

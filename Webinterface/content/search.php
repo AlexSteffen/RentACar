@@ -43,13 +43,7 @@ $vehiclesResult = $webservice->findVehicles(array("startDate"=>$startDate,
                                        ));
 
 
-$output .= "
-        <h1>Verfügbare Fahrzeuge</h1>
-        <span style='font-size:12pt;'>Mietzeitraum von: <b>".
-        Converter::toGermanDateTimeString($startDate) .
-        "</b> bis <b>".
-        Converter::toGermanDateTimeString($returnDate)."</b></span><br><br>
-        ";
+$output .= "<h1>Verfügbare Fahrzeuge</h1>";
 
 //if no available vehicles found show an error message else show a list of vehicles
 if(count($vehiclesResult->return) == 0){
@@ -66,12 +60,18 @@ if(count($vehiclesResult->return) == 0){
         //create the filter form
         $currentFilterManufacturer = $_REQUEST["filter_manufacturer"];
         
+        //generate a link for removing filter
         if($currentFilterManufacturer != "")
                 $filterRemove = "<a href='index.php?section=search&$urlGetParams'>Filter entfernen</a>";
                 
-        $output="
+        $output.="
         <div id='filter'>
-        <form action='index.php?section=search&$urlGetParams' method='post' style='margin-top:8px;'>
+        <span style='float:left;margin-top:10px;margin-left:5px;'>Mietzeitraum von: <b>".
+        Converter::toGermanDateTimeString($startDate) .
+        "</b> bis <b>".
+        Converter::toGermanDateTimeString($returnDate)."</b></span>
+        
+        <form action='index.php?section=search&$urlGetParams' method='post' style='float:right;margin-top:8px;'>
         Filter nach Hersteller: 
         <select name='filter_manufacturer'>
         <option value=''>--kein Filter--</option>
@@ -83,6 +83,7 @@ if(count($vehiclesResult->return) == 0){
                 if(!in_array($item->manufacturer, $filterValues, true)){
                         $filterValues[count($filterValues)] = $item->manufacturer;
                         
+                        //select the filtered vehicle in the drop-down list
                         if($currentFilterManufacturer == $item->manufacturer) $selection=" selected"; else  $selection="";
                         
                         $output.="<option value='".$item->manufacturer."' $selection>".$item->manufacturer."</option>";

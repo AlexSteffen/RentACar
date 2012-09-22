@@ -111,11 +111,11 @@ $output .= "
         <div id='formNewCustomer' style='margin-left:22px;'>
             <table cellspacing='0' cellpadding='0'>
             <tr>
-                <td width='100'>E-Mail:</td>
+                <td width='100'>E-Mail: (*)</td>
                 <td><input type='text' name='email' size='35' value='".$email."' class='registration'></td>
             </tr>
             <tr>
-                <td>Passwort:</td>
+                <td>Passwort: (*)</td>
                 <td><input type='password' name='password' size='35' value='".$password."' class='registration'></td>
             </tr>
             <tr>
@@ -123,7 +123,7 @@ $output .= "
                 <td></td>
             </tr>
             <tr>
-                <td>Anrede:</td>
+                <td>Anrede: (*)</td>
                 <td>
                 <select name='salutation' class='registration'>
                 <option value='Herr' ".($salutation=="Herr"?"selected":"").">Herr</option>
@@ -133,23 +133,23 @@ $output .= "
                 </td>
             </tr>
             <tr>
-                <td>Nachname:</td>
+                <td>Nachname: (*)</td>
                 <td><input type='text' name='lastname' size='35' value='".$lastname."' class='registration'></td>
             </tr>
             <tr>
-                <td>Vorname:</td>
+                <td>Vorname: (*)</td>
                 <td><input type='text' name='forename' size='35' value='".$forename."' class='registration'></td>
             </tr>
             <tr>
-                <td>Straße:</td>
+                <td>Straße: (*)</td>
                 <td><input type='text' name='street' size='35' value='".$street."' class='registration'></td>
             </tr>
             <tr>
-                <td>PLZ:</td>
+                <td>PLZ: (*)</td>
                 <td><input type='text' name='zip' size='35' value='".$zip."' class='registration'></td>
             </tr>
             <tr>
-                <td>Wohnort:</td>
+                <td>Wohnort: (*)</td>
                 <td><input type='text' name='city' size='35' value='".$city."' class='registration'></td>
             </tr>
             <tr>

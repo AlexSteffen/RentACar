@@ -32,8 +32,8 @@ include_once("model/renting.php");
 //** If you want to handle complex types from the webservice you have to set the option "classmap"
 //** with a mapping of the internal classname to the extenal classname. e.g. 'classmap' => array('Vehicle' => "vehicle")
 
-//$wsdl = "http://193.22.73.246:8080/axis2/services/RentACar?wsdl"; //FHDW Server (VPN-Connection is required)
-$wsdl = "http://localhost:8080/axis2/services/RentACar?wsdl"; //local
+$wsdl = "http://193.22.73.246:8080/axis2/services/RentACar?wsdl"; //FHDW Server (VPN-Connection is required)
+//$wsdl = "http://localhost:8080/axis2/services/RentACar?wsdl"; //local
 
 $webservice = new SoapClient($wsdl, array('soap_version'=>SOAP_1_2,
 																				'trace'=>1,

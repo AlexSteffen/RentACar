@@ -32,7 +32,7 @@ $renting = $webservice->doReservation(array("vehicleId"=>$vehicleId, "customerId
 
 if($renting->return != null)
 {
-    $output .= "Vielen Dank für Ihre Reservierung!";
+    $output .= "<h1>Vielen Dank für Ihre Reservierung!</h1>Sie können Ihren Mietvorgang im <a href='index.php?section=login'>Kundencenter</a> bewerten!";
 }
 else
 {
